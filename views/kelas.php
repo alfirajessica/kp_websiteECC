@@ -46,7 +46,65 @@ $level = $arr->get_level();
             </button>
           </div>
           <div class="modal-body">
-            <form role="form">
+          <form role="form">
+                <table class="table table-borderless table-md text-right">
+                    <tbody>
+                        <tr>
+                            <td scope="row">Pilih Dosen : </td>
+                            <td class="text-left">
+                              <select class="form-control" name="" id="">
+                              <option>a</option>
+                              <option>b</option>
+                              <option>c</option>
+                              </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Pilih Hari : </td>
+                            <td class="text-left">
+                            <select class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                  <option>Senin</option>
+                  <option>Selasa</option>
+                  <option>Rabu</option>
+                  <option>Kamis</option>
+                  <option>Jumat</option>
+                </select>
+                <small id="helpId" class="form-text text-muted">Help text</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Jam Awal : </td>
+                            <td class="text-left">
+                            <input class="form-control" type="time" value="10:30:00" id="example-time-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Jam Akhir : </td>
+                            <td class="text-left">
+                            <input class="form-control" type="time" value="10:30:00" id="example-time-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Kuota : </td>
+                            <td class="text-left">
+                                <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Nilai Akhir : </td>
+                            <td class="text-left">
+                                <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Peringkat : </td>
+                            <td class="text-left">A/B/C/D</td>
+                        </tr>
+                        
+                    </tbody>
+                </table> 
+            </form>
+            <!-- <form role="form">
               <div class="form-group">
                 <label for="">Pilih Dosen</label>
                 <select class="form-control" name="" id="">
@@ -87,7 +145,7 @@ $level = $arr->get_level();
                 <small id="helpId" class="form-text text-muted">Help text</small>
               </div>
 
-            </form>
+            </form> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

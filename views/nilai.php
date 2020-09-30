@@ -35,7 +35,7 @@ $level = $arr->get_level();
       <!-- Footer -->
       <?php include_once('footer.php') ?>
       
-      <!-- Modal atur/isi nilai placement  -->
+    <!-- Modal atur/isi nilai placement  -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -50,40 +50,40 @@ $level = $arr->get_level();
           </div>
           <div class="modal-body">
             <form role="form">
-                <table class="table table-borderless table-sm text-right">
+                <table class="table table-borderless table-md text-right">
                     <tbody>
                         <tr>
-                            <th scope="row">NRP : </th>
+                            <td scope="row">NRP : </td>
                             <td class="text-left">217180382</td>
                         </tr>
                         <tr>
-                            <th scope="row">Nama : </th>
+                            <td scope="row">Nama : </td>
                             <td class="text-left">Alfira Jessica</td>
                         </tr>
                         <tr>
-                            <th scope="row">Jurusan : </th>
+                            <td scope="row">Jurusan : </td>
                             <td class="text-left">S1-Sistem Informasi Bisnis</td>
                         </tr>
                         <tr>
-                            <th scope="row">Nilai UTS : </th>
+                            <td scope="row">Nilai UTS : </td>
                             <td class="text-left">
                                 <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Nilai UAS : </th>
+                            <td scope="row">Nilai UAS : </td>
                             <td class="text-left">
                                 <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Nilai Akhir : </th>
+                            <td scope="row">Nilai Akhir : </td>
                             <td class="text-left">
                                 <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Peringkat : </th>
+                            <td scope="row">Peringkat : </td>
                             <td class="text-left">A/B/C/D</td>
                         </tr>
                         

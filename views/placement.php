@@ -24,7 +24,7 @@ $level = $arr->get_level();
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Social traffic</h3>
+                                <h3 class="mb-0">How To Use</h3>
                             </div>
                             <div class="col text-right">
                                 <a href="#!" class="btn btn-sm btn-primary">See all</a>
@@ -38,11 +38,9 @@ $level = $arr->get_level();
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <div class="alert alert-default" role="alert">
-                            <strong>Standar nilai ECC per level</strong> This is a default alert—check it out!
-                            </div>
-                        </h5>
+                        <div class="alert alert-warning" role="alert">
+                            Standar nilai ECC per-level
+                        </div>
                         
                         <div class="card-text">
                             <table class="table table-borderless table-sm text-right">
@@ -74,7 +72,7 @@ $level = $arr->get_level();
                                     <tr>
                                         <th scope="row"></th>
                                         <td class="text-left">
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                        <a href="#" class="btn btn-primary">Save</a>
                                         </td>
                                     </tr>
                                     
@@ -91,9 +89,13 @@ $level = $arr->get_level();
             <div class="col-md-12"> <!-- col-md-12 -->
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">List Barang</strong>
+                        <strong class="card-title">List Mahasiswa</strong>
                     </div>
-                    <div class="card-body">                           
+
+                    <div class="card-body">  
+                        <button type="submit">Import</button>  
+                        <button type="submit">Export</button>  
+                        <br>                       
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered">
                                 <thead>
@@ -106,6 +108,18 @@ $level = $arr->get_level();
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td>217180382</td>
+                                        <td>Alfira Jessica</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>
+                                            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">
+                                            <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
+                                            <span class="btn-inner--text">Input nilai</span>
+                                            </button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -113,6 +127,55 @@ $level = $arr->get_level();
                 </div>
             </div> <!-- end of col-md-12 -->
         </div> <!-- end of row -->
+
+        <!-- Modal atur/isi nilai placement  -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header"> 
+            
+                <h3>Periode/</h3> 
+                <p for="">Kelas</p>                   
+            
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form role="form">
+                <table class="table table-borderless table-md text-right">
+                    <tbody>
+                        <tr>
+                            <td scope="row">NRP : </td>
+                            <td class="text-left">217180382</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Nama : </td>
+                            <td class="text-left">Alfira Jessica</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Nilai Placement : </td>
+                            <td class="text-left">
+                                <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Peringkat : </td>
+                            <td class="text-left">A/B/C/D</td>
+                        </tr>
+                        
+                    </tbody>
+                </table> 
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
 
       
       <!-- Footer -->

@@ -87,7 +87,7 @@
                     <tr>
                         <td scope="col" class="sort" data-sort="name">Kelas B</td>
                         <td scope="col" class="sort" data-sort="budget">
-                        Dosen : A / Hari : Senin / Jam : 06.30 / Kuota : 30
+                        Dosen : A <br> Hari : Senin <br> Jam : 06.30 <br> Kuota : 30 
                         </td>
                         <td scope="col" class="sort" data-sort="budget">
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#exampleModal">Ubah Dosen/Hari/Jam/kuota</button>
@@ -183,11 +183,12 @@
         var char = ['A','B','C','D','E','F'];
 
         console.log( level_sel.value + " - " + sel.value );
+        var detailkelas = "Dosen : A <br> Hari : Senin <br> Jam : 06.30 <br> Kuota : 30 ";
         var btn_aksi1 = "<button type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Atur Dosen/Hari/Jam/kuota</button>";
          for (var i = 0; i < sel.value; i += 1) {
             var nama_kelas = level_sel.value + " - " + char[i];
             
-             $("#table1").append(" <tr><td>" + nama_kelas + "</td> <td>" + btn_aksi1 + "</td> <td>" + i + "</td> </tr>");
+             $("#table1").append(" <tr><td>" + nama_kelas + "</td> <td>" + detailkelas +" </td> <td>" + btn_aksi1 + "</td> </tr>");
          }  
     }
 
