@@ -177,9 +177,23 @@ $level = $arr->get_level();
         });
     }
 
+    function set_periode() {
+      var date = new Date();
+      var month = date.getMonth();
+        $.post("../ajaxes/a_periode.php",
+        {
+            jenis:"set_periodedb",
+            getmonth:month,
+        },
+        function(data){
+            console.log(data);
+        });
+    }
+
     $(document).ready(function(){
 
       periode();
+      set_periode();
       datatable_lihatkelas();
    });    
 </script>

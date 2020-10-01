@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2020 at 10:21 AM
+-- Generation Time: Oct 01, 2020 at 06:42 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -27,10 +27,10 @@ SET time_zone = "+00:00";
 -- Table structure for table `kelas`
 --
 
-DROP TABLE IF EXISTS `kelas`;
 CREATE TABLE `kelas` (
   `id_periode` int(10) NOT NULL,
   `id_kelas` varchar(10) NOT NULL,
+  `level_ecc` varchar(10) NOT NULL,
   `nama_kelas` varchar(10) NOT NULL,
   `hari` varchar(10) NOT NULL,
   `jam` varchar(10) NOT NULL,
@@ -39,13 +39,19 @@ CREATE TABLE `kelas` (
   `status_kelas` varchar(2) NOT NULL COMMENT '0 - Tidak aktif, 1 - Aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `kelas`
+--
+
+INSERT INTO `kelas` (`id_periode`, `id_kelas`, `level_ecc`, `nama_kelas`, `hari`, `jam`, `kuota`, `dosen`, `status_kelas`) VALUES
+(1, 'idcoba1', 'Level 1', 'Kelas A', 'Senin', '06.30', 30, 'aaaa', '1');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `kelas_mhs`
 --
 
-DROP TABLE IF EXISTS `kelas_mhs`;
 CREATE TABLE `kelas_mhs` (
   `id_kelas` varchar(10) NOT NULL,
   `nrp` varchar(10) NOT NULL,
@@ -59,7 +65,6 @@ CREATE TABLE `kelas_mhs` (
 -- Table structure for table `mahasiswa`
 --
 
-DROP TABLE IF EXISTS `mahasiswa`;
 CREATE TABLE `mahasiswa` (
   `nrp` varchar(10) NOT NULL,
   `nama_mhs` varchar(30) NOT NULL,
@@ -74,7 +79,6 @@ CREATE TABLE `mahasiswa` (
 -- Table structure for table `nilai`
 --
 
-DROP TABLE IF EXISTS `nilai`;
 CREATE TABLE `nilai` (
   `id_nilai` varchar(10) NOT NULL,
   `nrp` varchar(10) NOT NULL,
@@ -90,19 +94,21 @@ CREATE TABLE `nilai` (
 -- Table structure for table `periode`
 --
 
-DROP TABLE IF EXISTS `periode`;
 CREATE TABLE `periode` (
   `id_periode` int(10) NOT NULL,
   `semester` varchar(10) NOT NULL COMMENT 'Gasal / Genap',
-  `thn_akademik` varchar(10) NOT NULL COMMENT 'YYYY/YYYY dst'
+  `thn_akademik_awal` int(10) NOT NULL COMMENT 'tahun akademik awal YYYY',
+  `thn_akademik_akhir` int(10) NOT NULL COMMENT 'tahun akademik akhir/YYYY'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `periode`
 --
 
-INSERT INTO `periode` (`id_periode`, `semester`, `thn_akademik`) VALUES
-(1, 'Gasal', '2020/2021');
+INSERT INTO `periode` (`id_periode`, `semester`, `thn_akademik_awal`, `thn_akademik_akhir`) VALUES
+(1, 'Genap', 2021, 2022),
+(5, 'Gasal', 2021, 2022),
+(6, 'Genap', 2022, 2023);
 
 -- --------------------------------------------------------
 
@@ -110,7 +116,6 @@ INSERT INTO `periode` (`id_periode`, `semester`, `thn_akademik`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `username` varchar(10) NOT NULL,
   `password` varchar(100) NOT NULL,
@@ -168,7 +173,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `id_periode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_periode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -58,4 +58,22 @@ $level = $arr->get_level();
 </body>
 <!-- Argon Scripts -->
 <?php include_once('scripts.php')?>
+<script>
+function set_periode() {
+      var date = new Date();
+      var month = date.getMonth();
+        $.post("../ajaxes/a_periode.php",
+        {
+            jenis:"set_periodedb",
+            getmonth:month,
+        },
+        function(data){
+            console.log(data);
+        });
+    }
+
+    $(document).ready(function(){
+    set_periode();
+    });    
+</script>
 </html>
