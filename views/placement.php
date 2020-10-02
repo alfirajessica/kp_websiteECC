@@ -40,8 +40,19 @@ $level = $arr->get_level();
                             Standar nilai ECC per-level
                         </div>
 
+
                         <div class="card-text">
-                            <table class="table table-borderless table-sm text-right">
+
+                            
+                            <h3>Import</h3>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                <input type="button" onclick="importfile()" name="submit" value="Import File Excel" class="btn btn-primary form-control">
+
+                            </div>
+                            <br><br>
+                            <table id="import" style="display:none;" class="table table-borderless table-sm text-right">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Level 1 : </th>
@@ -78,16 +89,6 @@ $level = $arr->get_level();
 
                                 </tbody>
                             </table>
-                            <div id="import" style="display:none;">
-                            <h3>Import</h3>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                <input type="button" onclick="importfile()" name="submit" value="Import File Excel" class="btn btn-primary form-control">
-
-                            </div>
-                            </div>
-                    
 
                         </div>
 
@@ -107,8 +108,7 @@ $level = $arr->get_level();
                     </div>
 
                     <div class="card-body">
-                        <button type="submit">Import</button>
-                        <button type="submit">Export</button>
+                      
                         <br>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered">
@@ -121,21 +121,11 @@ $level = $arr->get_level();
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>217180382</td>
-                                        <td>Alfira Jessica</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>
-                                            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">
-                                                <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                                                <span class="btn-inner--text">Input nilai</span>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                <tbody id="datanya">
+                                   
                                 </tbody>
                             </table>
+                            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
                         </div>
                     </div>
                 </div>
@@ -161,16 +151,16 @@ $level = $arr->get_level();
                                 <tbody>
                                     <tr>
                                         <td scope="row">NRP : </td>
-                                        <td class="text-left">217180382</td>
+                                        <td class="text-left" id="crnrp"></td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Nama : </td>
-                                        <td class="text-left">Alfira Jessica</td>
+                                        <td class="text-left" id="crnama"></td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Nilai Placement : </td>
                                         <td class="text-left">
-                                            <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder="">
+                                            <input type="number" class="form-control-sm" name="" id="crnilaiplacement" aria-describedby="helpId" placeholder="">
                                         </td>
                                     </tr>
                                     <tr>
@@ -183,8 +173,8 @@ $level = $arr->get_level();
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" onclick="update()">Simpan Perubahan</button>
                     </div>
                 </div>
             </div>
@@ -219,11 +209,22 @@ $level = $arr->get_level();
 
 
     function tetapkan() {
+       
         var lev1 = $("#level1").val();
         var lev2 = $("#level2").val();
         var lev3 = $("#level3").val();
         var lev4 = $("#level4").val();
-        $.post("../ajaxes/a_placement.php", {
+
+        if (lev1=="") {
+            alert("Masukan nilai standar level 1 !");
+        }else if (lev2=="") {
+            alert("Masukan nilai standar level 2 !");
+        }else if (lev3=="") {
+            alert("Masukan nilai standar level 3 !");
+        }else if (lev4=="") {
+            alert("Masukan nilai standar level 4 !");
+        }else {
+            $.post("../ajaxes/a_placement.php", {
                 jenis: "setstandard",
                 lev1:lev1,
                 lev2:lev2,
@@ -231,9 +232,12 @@ $level = $arr->get_level();
                 lev4:lev4
             },
             function(data) {
-                alert(data);
+                //alert(data);
             });
-        $("#import").css("display","block");
+
+        }
+
+       
     }
 
     function importfile() {
@@ -242,8 +246,8 @@ $level = $arr->get_level();
         var fd = new FormData();
         var files = $('#file1')[0].files[0];
         fd.append('file', files);
-
-        var arr =
+        if (files!=undefined) {
+            var arr =
             $.ajax({
                 url: 'excel-upload.php',
                 type: 'post',
@@ -251,21 +255,63 @@ $level = $arr->get_level();
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    if (response == "success") {
-                        //window.location.href="";
-                        alert(response);
+                    if (response.includes("success")) {
+                        $("#import").css("display","block");
                     } else {
                         console.log(response);
                     }
                 },
             });
+        }
+     
         reloadtable();
     }
-
-    function relodtable() {
-        // tampilkan temp_mahasiswa
+    reloadtable();
+    function reloadtable() {
+        $.post("../ajaxes/a_placement.php", {
+                jenis: "getdata",
+            },
+            function(data) {
+               $("#datanya").html(data);
+            });
 
     }
+
+    function exportfile() {
+        window.location.href="exportplacement.php";
+    }
+
+    function editnilai(params) {
+        $.post("../ajaxes/a_placement.php", {
+                jenis: "selectednrp",
+                id:params
+            },
+            function(data) {
+                var arr=JSON.parse(data);
+                $("#crnrp").html(params);
+        $("#crnama").html(arr.nama);
+        $("#crnilaiplacement").html(arr.nilaiplacement);
+            });
+
+       
+    }
+
+    function update() {
+       
+        var nrp=$("#crnrp").html();
+        var nilai=$("#crnilaiplacement").val();
+        $.post("../ajaxes/a_placement.php", {
+                jenis: "update",
+                id:nrp,
+                nilai:nilai,
+            },
+            function(data) {
+                alert(data);
+                reloadtable();
+                $('#exampleModal').modal('hide');
+            });
+    }
+
 </script>
 
 
