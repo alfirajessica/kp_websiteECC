@@ -13,6 +13,7 @@
     $result=$conn->query($sql);
     while($row=$result->fetch_assoc()){
         $nilai=intval($row["nilai_placement"]);
+        $nrp=intval($row["nrp"]);
 
         $placement="0";
         if ($nilai<=$lev1) {
@@ -25,7 +26,7 @@
             $placement="4";
         }
 
-        $sql1="update temp_mahasiswa set level='$placement'";
+        $sql1="update temp_mahasiswa set level='$placement' where nrp='$nrp'";
         $result1=$conn->query($sql1);
     }
 
