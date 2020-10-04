@@ -43,7 +43,7 @@ $level = $arr->get_level();
 
                         <div class="card-text">
 
-                            <button class="btn btn-success text-light" onclick="window.location.href='templeteexport.php'" target="_blank">Download Templete</button>
+                            <button class="btn btn-success text-light" onclick="window.location.href='nilaitest.xlsx'" target="_blank">Download Templete</button>
                             <h3>Import</h3>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
@@ -232,7 +232,7 @@ $level = $arr->get_level();
                 lev4:lev4
             },
             function(data) {
-                //alert(data);
+                window.location.reload();
             });
 
         }

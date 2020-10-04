@@ -16,7 +16,7 @@ session_start();
         $highestrow = $worksheet->getHighestRow();
 
         for ($row = 0; $row <= $highestrow; $row++) {
-            if ($row > 1) {
+            if ($row >1) {
                 $nrp = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                 $nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                 $nilai = $worksheet->getCellByColumnAndRow(2, $row)->getValue();

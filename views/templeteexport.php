@@ -38,11 +38,7 @@
 	require_once "../config/conn.php";
 	?>
 
-	<center>
-		<h5>Daftar Placement Mahasiswa Tanggal <?php echo date("d M Y h:i:s");  ?></h5>
-	</center>
-
-	<table border="1" >
+	<table>
 		<tr>
 			<th>Nrp</th>
 			<th>Nama Mahasiswa</th>
