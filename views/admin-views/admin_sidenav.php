@@ -12,11 +12,11 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    <a id="dashboard" href="dashboard.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <h3 class="menu-title">Fitur</h3><!-- /.menu-title -->
                 <li>
-                    <a href="placement.php"> <i class="menu-icon fa fa-laptop"></i>Placement</a>
+                    <a id="placement" href="placement.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-laptop"></i>Placement</a>
                 </li>
                 <li>
                     <a href="kelas.php"> <i class="menu-icon fa fa-laptop"></i>Kelas</a>
@@ -27,8 +27,15 @@
                 <li>
                     <a href="nilai.php"> <i class="menu-icon fa fa-laptop"></i>Nilai</a>
                 </li>
-                
+                <li>
+                    <a href="dosen.php"> <i class="menu-icon fa fa-laptop"></i>Dosen ECC</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
 </aside><!-- /#left-panel -->
+
+<script>
+
+
+</script>

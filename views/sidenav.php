@@ -49,3 +49,8 @@
         </div>
     </header><!-- /header -->
 
+<script>
+function dipilih(clicked_id) {
+    console.log(clicked_id);
+}
+</script>

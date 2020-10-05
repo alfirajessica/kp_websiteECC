@@ -90,66 +90,14 @@ $level = $arr->get_level();
                                 <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
                             </td>
                         </tr>
-                        <tr>
-                            <td scope="row">Nilai Akhir : </td>
-                            <td class="text-left">
-                                <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Peringkat : </td>
-                            <td class="text-left">A/B/C/D</td>
-                        </tr>
-                        
                     </tbody>
                 </table> 
             </form>
-            <!-- <form role="form">
-              <div class="form-group">
-                <label for="">Pilih Dosen</label>
-                <select class="form-control" name="" id="">
-                  <option>a</option>
-                  <option>b</option>
-                  <option>c</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="">Pilih Hari</label>
-                <select class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                  <option>Senin</option>
-                  <option>Selasa</option>
-                  <option>Rabu</option>
-                  <option>Kamis</option>
-                  <option>Jumat</option>
-                </select>
-                <small id="helpId" class="form-text text-muted">Help text</small>
-              </div>
-
-              <div class="form-group">
-                <label for="example-time-input" class="form-control-label">Jam Awal</label>
-                <input class="form-control" type="time" value="10:30:00" id="example-time-input">
-                <small id="helpId" class="form-text text-muted">Help text</small>
-              </div>
-
-              <div class="form-group">
-                <label for="example-time-input" class="form-control-label">Jam Akhir</label>
-                <input class="form-control" type="time" value="10:30:00" id="example-time-input">
-                <small id="helpId" class="form-text text-muted">Help text</small>
-              </div>
-
-              <div class="form-group">
-                <label for="">Kuota</label>
-                <input type="number"
-                  class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                <small id="helpId" class="form-text text-muted">Help text</small>
-              </div>
-
-            </form> -->
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" onclick="simpankelas()">Save changes</button>
           </div>
         </div>
       </div>
@@ -165,7 +113,12 @@ $level = $arr->get_level();
 
 
 <script>
+  $(document).ready(function(){
 
+      periode();
+      set_periode();
+      datatable_lihatkelas();
+   });    
   function periode() {
         $.post("../ajaxes/a_periode.php",
         {
@@ -190,12 +143,11 @@ $level = $arr->get_level();
         });
     }
 
-    $(document).ready(function(){
+    // function simpankelas() {
+      
+    // }
 
-      periode();
-      set_periode();
-      datatable_lihatkelas();
-   });    
+    
 </script>
 
 </html>

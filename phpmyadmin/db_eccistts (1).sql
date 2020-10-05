@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2020 at 06:42 AM
+-- Generation Time: Oct 05, 2020 at 01:25 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -113,6 +113,39 @@ INSERT INTO `periode` (`id_periode`, `semester`, `thn_akademik_awal`, `thn_akade
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `temp_mahasiswa`
+--
+
+CREATE TABLE `temp_mahasiswa` (
+  `nrp` int(11) NOT NULL,
+  `nama_mahasiswa` text NOT NULL,
+  `nilai_placement` int(11) NOT NULL,
+  `level` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temp_nilaiplacement`
+--
+
+CREATE TABLE `temp_nilaiplacement` (
+  `level1` int(11) NOT NULL,
+  `level2` int(11) NOT NULL,
+  `level3` int(11) NOT NULL,
+  `level4` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `temp_nilaiplacement`
+--
+
+INSERT INTO `temp_nilaiplacement` (`level1`, `level2`, `level3`, `level4`) VALUES
+(200, 300, 400, 500);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -120,16 +153,18 @@ CREATE TABLE `user` (
   `username` varchar(10) NOT NULL,
   `password` varchar(100) NOT NULL,
   `nama` varchar(30) NOT NULL,
-  `level` varchar(10) NOT NULL COMMENT 'admin - dosen'
+  `level` varchar(10) NOT NULL COMMENT 'admin - dosen',
+  `status` int(2) NOT NULL COMMENT '0 - tdk aktif, 1 - aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `nama`, `level`) VALUES
-('217180382', '64ec997f263a63e35d3737e47799ebc53f406bcb', 'alfira', 'admin'),
-('alfira1', 'ce3eaa938d09504bae9458dffb805f2de7c9da4e', 'Fira', 'dosen');
+INSERT INTO `user` (`username`, `password`, `nama`, `level`, `status`) VALUES
+('217180345', 'kevin', 'kevin', 'dosen', 1),
+('217180382', '64ec997f263a63e35d3737e47799ebc53f406bcb', 'alfira', 'admin', 1),
+('alfira1', 'ce3eaa938d09504bae9458dffb805f2de7c9da4e', 'Fira', 'dosen', 1);
 
 --
 -- Indexes for dumped tables
