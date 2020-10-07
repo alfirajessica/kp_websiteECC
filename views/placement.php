@@ -325,8 +325,7 @@ $level = $arr->get_level();
             periode:$("#periode").val()
         },
         function(data) {
-            alert(data);
-            window.location.href='';
+            alert("Berhasil Memasukan Mahasiswa !");
         });
         }else{
             alert("Pilih Periode !");

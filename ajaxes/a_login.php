@@ -6,7 +6,7 @@
         $arrdecoded=json_decode($_POST["input"]);
         $conn=getConn();
         
-        $stmt = $conn->prepare("select username,nama,level from user where username=? and password=?");
+        $stmt = $conn->prepare("select username,nama,level,status from user where username=? and password=?");
         $stmt->bind_param('ss', $u,$p);
         $u=$arrdecoded->u;
         $p=sha1($arrdecoded->p);
@@ -20,14 +20,19 @@
                 $username=$row["username"];
                 $name=$row["nama"];
                 $level=$row["level"];
-                $newUser = new User($username,$name,$level);
-                $_SESSION["user"]=serialize($newUser);
+                $status=$row["status"];
+                $res=array("status"=>0,"data"=>"Akun anda masih belum aktif","link"=>"login.php");
+                if ($status=="1") {
+                    $newUser = new User($username,$name,$level);
+                    $_SESSION["user"]=serialize($newUser);
+                    $res=array("status"=>1,"data"=>"Berhasil silahkan masuk","link"=>"dashboard.php");
+                }
             }
-            $res=array("status"=>1,"data"=>"Berhasil silahkan masuk","link"=>"dashboard.php");
         }else{
             $res=array("status"=>0,"data"=>"Username atau Password yang dimasukan salah !","link"=>"");
-        }
         
+        }
+       
         echo json_encode($res);
 
         $conn->close();
