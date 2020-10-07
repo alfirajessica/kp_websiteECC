@@ -44,6 +44,7 @@
 
 	<table border="1" >
 		<tr>
+			<th></th>
 			<th>Nrp</th>
 			<th>Nama Mahasiswa</th>
 			<th>Nilai Placement</th>
@@ -53,8 +54,9 @@
 		$conn = getConn();
 		$kal = "";
 		$sql = "select * from temp_mahasiswa";
+		$i=1;
 		$result = $conn->query($sql);
-			$stat="";
+		$stat="";
 		if ($result->num_rows > 0) {
 			// output data of each row
 			while ($row = $result->fetch_assoc()) {
@@ -65,11 +67,14 @@
 				$level = $row["level"];
 	
 				
-				$kal .= "<tr><td>$nrp</td>
+				$kal .= "<tr>
+				   <td>$i</td>
+				  <td>$nrp</td>
 				  <td>$nama</td>
 				  <td>$nilai</td>
 				  <td>$level</td>
 				  </tr>"; 
+				  $i++;
 			}
 		} else {
 			$kal = "";

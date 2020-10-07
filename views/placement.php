@@ -126,6 +126,7 @@ $level = $arr->get_level();
                                 </tbody>
                             </table>
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">Tempatkan Mahasiswa</button>
                         </div>
                     </div>
                 </div>
@@ -310,6 +311,16 @@ $level = $arr->get_level();
                 reloadtable();
                 $('#exampleModal').modal('hide');
             });
+    }
+
+    function insertfile() {
+        $.post("../ajaxes/a_placement.php", {
+            jenis: "insertmahasiswa",
+        },
+        function(data) {
+            alert(data);
+            window.location.href=
+        });
     }
 
 </script>
