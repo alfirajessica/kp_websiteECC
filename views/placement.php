@@ -44,6 +44,7 @@ $level = $arr->get_level();
                         <div class="card-text">
 
                             <button class="btn btn-success text-light" onclick="window.location.href='nilaitest.xlsx'" target="_blank">Download Templete</button>
+                           
                             <h3>Import</h3>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
@@ -125,6 +126,10 @@ $level = $arr->get_level();
                                    
                                 </tbody>
                             </table>
+                            <select class='form-control' id="periode">
+                                <!-- ajax -->
+                                
+                            </select>
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
                             <button type="button" class="btn btn-primary text-light" onclick="insertfile()">Tempatkan Mahasiswa</button>
                         </div>
@@ -314,14 +319,27 @@ $level = $arr->get_level();
     }
 
     function insertfile() {
-        $.post("../ajaxes/a_placement.php", {
-            jenis: "insertmahasiswa",
+        if ($("#periode").val()>0) {
+            $.post("../ajaxes/a_placement.php", {
+            jenis: "insertmhs",
+            periode:$("#periode").val()
         },
         function(data) {
             alert(data);
-            window.location.href=
+            window.location.href='';
         });
+        }else{
+            alert("Pilih Periode !");
+        }
+       
     }
+
+    $.post("../ajaxes/a_placement.php", {
+            jenis: "getperiode"
+        },
+        function(data) {
+           $("#periode").html(data);
+        });
 
 </script>
 
