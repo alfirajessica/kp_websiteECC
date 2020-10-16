@@ -92,6 +92,46 @@ if ($_POST["jenis"] == "setstandard") {
         echo "Berhasil update !";
     }
     updatelevel();
+}else if ($_POST["jenis"]=="insertmhs") {
+    $periode=$_POST["periode"];
+    $conn=getConn();
+    $sql = "select * from temp_mahasiswa";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $nrp = $row["nrp"];
+        $nama = $row["nama_mahasiswa"];
+        $level = $row["level"];
+        $nilai = $row["nilai_placement"];
+        $status = "1";
+        if ($level=="1") {
+            $level="I";
+        }else if ($level=="2") {
+            $level="II";
+        }else if ($level=="3") {
+            $level="III";
+        }else if ($level=="4") {
+            $level="IV";
+        }
+        $sql1 = "INSERT INTO `mahasiswa`(`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`, `id_periode`) VALUES ('$nrp','$nama','$level','$nilai','$status','$periode')";
+        $result1 = $conn->query($sql1);
+    }
+    $turncateqry = "TRUNCATE temp_mahasiswa";
+    $turnres = mysqli_query($conn, $turncateqry);
+    echo "Berhasil";
+}else if ($_POST["jenis"]=="getperiode") {
+    $kal="";
+    $periode=$_POST["periode"];
+    $conn=getConn();
+    $sql = "select * from periode";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $idperiode = $row["id_periode"];
+        $sem = $row["semester"];
+        $awal = $row["thn_akademik_awal"];
+        $akhir = $row["thn_akademik_akhir"];
+        $kal.="<option value='$idperiode'>$sem $awal-$akhir</option>";
+    }
+    echo $kal;
 }
 
 function updatelevel(){

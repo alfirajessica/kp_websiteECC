@@ -8,7 +8,7 @@ if($_POST["jenis"]=="simpandosen_baru"){
     $passdosen = $_POST["getpassdosen"];
     $level = "dosen";
 
-
+$userdosen=sha1($userdosen);
     $sql = "insert into user (username,password,nama,level,status) values ('$userdosen','$passdosen','$namadosen','$level',1)";
     if ($conn->query($sql)) {
         echo "berhasil tambah dosen baru";
