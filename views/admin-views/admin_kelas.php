@@ -25,7 +25,7 @@
                 <form role="form">
                     <div class="form-group">
                         <label for="">Periode</label>
-                        <select name="select" id="periode" onchange="pilihperiode()" class="form-control"  aria-describedby="help_pilihperiode">                                  
+                        <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
                         </select>
                         <small id="helpId" class="form-text text-muted">Help text</small>
                     </div>
@@ -230,6 +230,7 @@
     
     //Generate banyak kelas yang akan dibuka per-levelnya
     function kelas_blmaktif() {
+        //$("#table1 body").empty();
         var periode = document.getElementById('periode');
         $.post("../ajaxes/a_kelas.php",
             {
@@ -242,10 +243,10 @@
             });
     }
 
-    function pilihperiode() {
-        $("#table1").empty();
-        kelas_blmaktif();
-    }
+    // function pilihperiode() {
+        
+    //     kelas_blmaktif();
+    // }
     
     function generate() {
        // kelas_blmaktif();
