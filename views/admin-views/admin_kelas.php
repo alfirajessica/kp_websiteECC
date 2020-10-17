@@ -23,29 +23,38 @@
     
                 <!-- form tambah kelas -->
                 <form role="form">
+
                     <div class="form-group">
                         <label for="">Periode</label>
+                        <div class="input-group mb-3">
                         <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
                         </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Simpan</button>
+                        </div>
+                        </div>
                         <small id="helpId" class="form-text text-muted">Help text</small>
                     </div>
+                    
+                    
 
                     <div class="form-group">
                         <label for="">Level</label>
-                        <select class="form-control" name="" id="leveldipilih" aria-describedby="helpId" placeholder="">
+                        <select disabled class="form-control" id="leveldipilih" aria-describedby="helpId" placeholder="" >
                         <option value="-1">pilih level</option>
                         <option>Level 1</option>
                         <option>Level 2</option>
                         <option>Level 3</option>
                         <option>Level 4</option>
                         </select>
-                        <small id="helpId" class="form-text text-muted">Help text</small>
+                        <small id="help_level" class="form-text text-muted">Help text</small>
                     </div>
 
                     <div class="form-group">
                     <label for="">Banyak Kelas akan dibuka</label>
                         <div class="input-group mb-3">
-                        <select class="form-control" id="banyakkelas" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <select disabled class="form-control" id="banyakkelas" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <option value="0">0</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -53,10 +62,10 @@
                             <option>5</option>
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2" onclick="generate()" >Generate kelas</button>
+                            <button disabled class="btn btn-outline-primary" type="button" id="btn_generate" onclick="generate()" >Generate kelas</button>
                         </div>
                         </div>
-                        <small id="helpId" class="form-text text-muted">Help text</small>
+                        <small id="help_bykkelas" class="form-text text-muted">Help text</small>
                     </div>
                 </form>
                 <!-- end of form tambah kelas -->
@@ -73,7 +82,7 @@
                     <thead>
                     <tr>
                         <th style="display:none"> Id kelas </th>
-                        <th scope="col" class="sort" data-sort="name">Nama Kelas</th>
+                        <th> Nama Kelas</th>
                         <th scope="col" class="sort" data-sort="budget">Dosen/Hari/Jam/kuota</th>
                         <th scope="col" class="sort" data-sort="budget">Status</th>
                         <th scope="col" class="sort" data-sort="budget">Aksi</th>
@@ -166,7 +175,8 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Atur Dosen/Jam/Kuota kelas ini</h5>
+            <h5 class="modal-title" id="title_namakelas"></h5>
+            <h6  id="title_idkelas"></h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -220,73 +230,185 @@
             
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="updatekelasini()">Save changes</button>
+            <button type="button" class="btn btn-primary" onclick="updatekelasini()" data-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>
     </div>
     <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
 <script >
+
+    //saat menekan tombol simpan periode
+    function  simpan_periode() {
+        //cek kelas yang belum diaktifkan pada periode tsb
+        kelas_blmaktif();
+
+        //disabled button simpan dan select periode
+        const btn_simpanperiode = document.getElementById("btn_simpanperiode");
+        btn_simpanperiode.disabled = true;
+
+        const sel_periode = document.getElementById("periode");
+        sel_periode.disabled = true;
+
+        //enabled level dan generate
+        const sel_level = document.getElementById("leveldipilih");
+        sel_level.disabled = false;
+
+        const sel_bykkelas = document.getElementById("banyakkelas");
+        sel_bykkelas.disabled = false;
+
+        const btn_generate = document.getElementById("btn_generate");
+        btn_generate.disabled = false;
+    }
     
     //Generate banyak kelas yang akan dibuka per-levelnya
     function kelas_blmaktif() {
-        //$("#table1 body").empty();
+        $("#table1 tbody").empty();
         var periode = document.getElementById('periode');
+        var header = "<thead><tr>"+
+                        "<th style='display:none'> Id kelas </th>"+
+                        "<th> Nama Kelas</th>"+
+                        "<th>Dosen/Hari/Jam/kuota</th>"+
+                        "<th>Status</th>"+
+                        "<th>Aksi</th>"+
+                    "</tr></thead>"
         $.post("../ajaxes/a_kelas.php",
             {
                 idperiode:periode.value,
                 jenis:"kelas_blmaktif",
             },
             function(data){
-               console.log(data);
-               $("#table1").append(data);
+               $("#table1").html(data);
+               $("#table1").append(header);
             });
     }
 
-    // function pilihperiode() {
-        
-    //     kelas_blmaktif();
-    // }
     
     function generate() {
-       // kelas_blmaktif();
         var periode = document.getElementById('periode');
         var sel = document.getElementById('banyakkelas');
         var level_sel = document.getElementById('leveldipilih');
         var char = ['A','B','C','D','E','F'];
 
-        console.log(periode.value + level_sel.value);
-        if (periode.value == "-1") {
-            alert("anda belum pilih periode!");
-        }
-        else if(level_sel.value == "-1"){
-            alert("anda belum pilih level");
-        }
-        else if (periode.value != "-1" && level_sel.value != "-1") {
-            var detailkelas = "Dosen : - <br> Hari : - <br> Jam : - <br> Kuota : 0 ";
-        var statuskelas = "Belum Aktif";
-        var btn_aksi1 = "<button type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Atur Dosen/Hari/Jam/kuota</button>";
-        var btn_aksi2 = "<button type='button' class='btn btn-danger btn-sm' >Hapus</button>";
-        for (var i = 0; i < sel.value; i += 1) {
-            var nama_kelas = level_sel.value + " - " + char[i];
+        //cek apakah level telah dipilih dan byk kelasnya
+        if (level_sel.value == "-1") {
+            $("#help_level").text("level belum dipilih");
             
-            $("#table1").append(" <tr><td></td><td>" + nama_kelas + "</td> <td>" + detailkelas +" </td> <td>"+ statuskelas +"</td> <td>" + btn_aksi1 + btn_aksi2 +"</td> </tr>");
+        }
+        else if (sel.value == "0"){
+            $("#help_bykkelas").text("banyak kelas belum dipilih");
+            
+        }
+        else if(level_sel.value != "-1" && sel.value != "0"){
+            var detailkelas = "Dosen : - <br> Hari : - <br> Jam : - <br> Kuota : 0 ";
+            var statuskelas = "Belum Aktif";
+            var btn_aksi1 = "<button onclick='atur_kelas()' type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Atur Dosen/Hari/Jam/kuota</button>";
+            var btn_aksi2 = "<button onclick='hapus_kelas()' type='button' class='btn btn-danger btn-sm' >Hapus</button>";
 
-            //yang dimasukkan ke db :
-            // id periode, id_kelas, level ecc, nama kelas, hari, jam, kuota, dosen, status kelas
+            //cek dulu apakah pada periode yang dipilih telah ada level yang dipilih skrg
+            //var tempnamakelas = "";
             $.post("../ajaxes/a_kelas.php",
-            {
-                idperiode:periode.value,
-                level:level_sel.value,
-                namakls:char[i],
-                jenis:"insert_kelasdb",
-            },
-            function(data){
-                console.log(data);
-            });
-        }  
+                {
+                    idperiode:periode.value,
+                    level:level_sel.value,
+                    jenis:"cek_kelas",
+                },
+                function(data){
+                    
+                    var namakelas = data;
+
+                    //generate kelasnya 
+                    for (var i = 0; i < sel.value; i += 1) {
+
+                        if (namakelas == "") 
+                        {
+                            console.log("---");
+                            var nama_kelas = level_sel.value + " - " + char[i];
+                            var kar = char[i];
+                        }
+                        else if (namakelas != "") {
+                            console.log(namakelas);
+                            var index = char.indexOf(namakelas);
+                            
+                            var nama_kelas = level_sel.value + " - " + char[index+i+1];
+                            var kar = char[index+i+1];
+                        }
+                        
+
+                        $("#table1").append("<tbody><tr><td style='display:none'></td><td>" + nama_kelas + "</td> <td>" + detailkelas +" </td> <td>"+   statuskelas +"</td> <td>" + btn_aksi1 + btn_aksi2 +"</td> </tr></tbody>");
+
+                        //yang dimasukkan ke db : id periode, id_kelas, level ecc, nama kelas, hari, jam, kuota,    dosen, status kelas
+                        $.post("../ajaxes/a_kelas.php",
+                        {
+                            idperiode:periode.value,
+                            level:level_sel.value,
+                            namakls:kar,
+                            jenis:"insert_kelasdb",
+                        },
+                        function(data){
+                            console.log(data);
+                            
+                        });
+                    } 
+                    kelas_blmaktif(); 
+                }
+            );
+                    
         }
         
+    }
+
+    //button hapus kelas, jika terjadi kelebihan kelas 
+    function hapus_kelas(idkelas) {
+        
+        $.post("../ajaxes/a_kelas.php",
+        {
+            idkelas:idkelas,
+            jenis:"hapus_kelas",
+        },
+        function(data){
+            console.log(data);
+            
+        });
+        kelas_blmaktif(); 
+    }
+
+   // var idkelas="";
+    function atur_kelas(idkelas) {
+        //idkelas=idkelas;
+        $.post("../ajaxes/a_kelas.php",
+        {
+            idkelas:idkelas,
+            jenis:"get_detail_aturkelas",
+        },
+        function(data){
+            $("#title_namakelas").html("Atur kelas " + data);
+            $("#title_idkelas").val(idkelas);
+        });
+
+        kelas_blmaktif(); 
+    }
+
+    function updatekelasini() {
+        var idkelas = $("#title_idkelas").val();
+        console.log(idkelas);
+
+
+        $.post("../ajaxes/a_kelas.php",
+        {
+            idkelas:idkelas,
+            dosen : $("#all_dosen").val(),
+            hari: $("#pilihhari").val(),
+            jam_awal : $("#jamawal").val(),
+            jam_akhir : $("#jamakhir").val(),
+            kuota : $("#kuota").val(),
+            jenis:"update_kelas",
+
+        },
+        function(data){
+            console.log(data);
+        });
+        kelas_blmaktif(); 
     }
 
     function datatable_lihatkelas() {
@@ -303,14 +425,14 @@
              "ordering":true, //set true agar bisa di sorting
              "order":[[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
              "ajax":{
-                 "url":"../datatables/admin-datatable/kelas_dt.php",
+                 "url":"../datatables/admin-datatable/kelas_aktifdt.php",
                  "type":"POST"
              },
              "deferRender":true,
              "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
              "columns":[
                 
-                 {"data":"nama_kelas"},
+                 {"data":"level_ecc"},
                  {"data":"hari"},
                  {"data":"dosen"},
                  {"data":"status_kelas",
@@ -343,24 +465,6 @@
         });
     }
 
-    function updatekelasini() {
-       //get id kelas
-       
-
-
-        /*$.post("../ajaxes/a_kelas.php",
-        {
-            dosen : document.getElementById('all_dosen').value,
-            hari: document.getElementById('pilihhari').value,
-            jam_awal : document.getElementById('jamawal').value,
-            jam_akhir : document.getElementById('jamakhir').value,
-            kuota : document.getElementById('kuota').value,
-            jenis:"update_kelas",
-
-        },
-        function(data){
-            $("#all_dosen").html(data); //di atur kelas
-        });*/
-    }
+    
     
 </script>

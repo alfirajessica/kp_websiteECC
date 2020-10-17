@@ -48,7 +48,7 @@ $level = $arr->get_level();
       periode();
       set_periode();
       datatable_lihatkelas();
-      kelas_blmaktif();
+      //kelas_blmaktif();
     // pilihperiode();
       get_dosen();
    });    
