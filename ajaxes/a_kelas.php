@@ -2,11 +2,11 @@
 require_once "../config/conn.php";
 $conn=getConn();
 
-if($_POST["jenis"]=="kelas_blmaktif"){
+/*if($_POST["jenis"]=="kelas_blmaktif"){
     $idperiode = $_POST["idperiode"];
     $kal="";
     $detailkelas="";
-    $sql="select * from kelas where status_kelas='0' order by level_ecc ASC, nama_kelas ASC";
+    $sql="select * from kelas where status_kelas='0' and id_periode='$idperiode' order by level_ecc ASC, nama_kelas ASC";
     $result1 = $conn->query($sql);
     if ($result1->num_rows > 0) {
         while ($row1 = $result1->fetch_assoc()) {
@@ -37,7 +37,13 @@ if($_POST["jenis"]=="kelas_blmaktif"){
                 $btn_aksi1 = "<button onclick='ubah_kelas(".$idkelas.")' type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Dosen/Hari/Jam/kuota</button>";
             }
             else if ($dosen == "-") {
-                $detailkelas = "Dosen : $dosen <br> Hari : $hari <br> Jam : $jam <br> Kuota : $kuota ";
+                $dosen = "<p class='text-danger'> kosong </p>";
+                $hari = "<p class='text-danger'> Belum terisi </p>";
+                $jam ="<p class='text-danger'> Belum terisi </p>";
+                $kuota = "<p class='text-danger'> 0 </p>";
+                $detailkelas = "Dosen : ".$dosen."  Hari : ".$hari." Jam : ".$jam."  Kuota : ".$kuota."";
+                
+                
                 $btn_aksi1 = "<button onclick='atur_kelas(".$idkelas.")' type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Atur Dosen/Hari/Jam/kuota</button>";
             }
             $btn_aksi2 = "<button onclick='hapus_kelas(".$idkelas.")' type='button' class='btn btn-danger btn-sm' >Hapus</button>";
@@ -50,13 +56,31 @@ if($_POST["jenis"]=="kelas_blmaktif"){
     }
     echo $kal;
     $conn->close();
+}*/
+if($_POST["jenis"]=="get_nama_dosen"){
+    $username = $_POST["username"];
+    $nama="";
+    $sqldosen = "select * from user where username='$username'";
+    $resultdosen = $conn->query($sqldosen);
+    if ($resultdosen->num_rows > 0) {
+        while ($rowdosen = $resultdosen->fetch_assoc()) {
+           // $username = $rowdosen["username"];
+            $namadosen = $rowdosen["nama"];
+            
+            //$detailkelas = "Dosen : $namadosen <br> Hari : $hari <br> Jam : $jam <br> Kuota : $kuota ";
+        }
+        $nama = $namadosen;
+    }
+    echo $nama;
+    $conn->close();
 }
+
 
 if($_POST["jenis"]=="cek_kelas"){
     $idperiode = $_POST["idperiode"];
     $level = $_POST["level"];
     $kal="";
-    $sql="select * from kelas where status_kelas='0' and id_periode='$idperiode' and level_ecc='$level'";
+    $sql="select * from kelas where id_periode='$idperiode' and level_ecc='$level'";
     $result1 = $conn->query($sql);
     if ($result1->num_rows > 0) {
         while ($row1 = $result1->fetch_assoc()) {
@@ -85,9 +109,11 @@ if($_POST["jenis"]=="insert_kelasdb"){
     $idperiode = $_POST["idperiode"];
     $level = $_POST["level"];
     $namakelas = $_POST["namakls"];
+    $hari = $_POST["hari"];
+    $jam = "06:30";
     $statuskelas = 0;
 
-    $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam,kuota,dosen,status_kelas) values ($idperiode,null,'$level','$namakelas','-','-',0,'-','$statuskelas')";
+    $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam,kuota,dosen,status_kelas) values ($idperiode,null,'$level','$namakelas','$hari','$jam',0,null,'$statuskelas')";
     if ($conn->query($sql)) {
         echo "berhasil tambah kelas";
     }else {
@@ -122,8 +148,32 @@ if($_POST["jenis"]=="get_detail_aturkelas"){
     }
     echo $kal;
     $conn->close();
-
 }
+
+if($_POST["jenis"]=="get_detail_ubahkelas"){
+    $idkelas=$_POST["idkelas"];
+    $kal="";
+    $sql = "select * from kelas where id_kelas='$idkelas'";
+    $query = mysqli_query($conn,$sql); // get the data from the db
+    $result = array();
+    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
+
+        $result ["level_ecc"] = $row['level_ecc'];
+        $result ["nama_kelas"] = $row['nama_kelas'];
+        $result ["dosen"] = $row['dosen'];
+        $result ["hari"] = $row['hari'];
+        $result ["jam"] = $row['jam'];
+        $result ["kuota"] = $row['kuota'];
+        
+    }
+    
+    $conn->close();
+    header('Content-Type: application/json');
+    echo json_encode($result); // return value of $result
+    
+  //  $conn->close();
+}
+
 
 
 if($_POST["jenis"]=="update_kelas"){
