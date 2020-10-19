@@ -228,9 +228,10 @@
                         <tr>
                             <td scope="row">Pilih Dosen : </td>
                             <td class="text-left">
-                              <select class="form-control" name="" id="all_dosen">
+                              <select class="form-control" name="" id="all_dosen" aria-describedby="help_alldosen">
                               
                               </select>
+                              <small id="help_alldosen" class="form-text text-muted"></small>
                             </td>
                         </tr>
                         <tr>
@@ -271,7 +272,7 @@
             
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="updatekelasini()" data-dismiss="modal">Save changes</button>
+            <button id="btn_updatekelas" type="button" class="btn btn-primary" onclick="updatekelasini()" >Save changes</button>
           </div>
         </div>
       </div>
@@ -467,14 +468,8 @@
     }
 
     function atur_kelas(idkelas) {
-        //idkelas=idkelas;
-        var kuota = $("#kuota").val();
-
-        if (kuota == 0) {
-            $("#help_kuota").val("kuota belum terisi");
-        }
-        else if (kuota != 0) {
-            $.post("../ajaxes/a_kelas.php",
+        
+        $.post("../ajaxes/a_kelas.php",
         {
             idkelas:idkelas,
             jenis:"get_detail_aturkelas",
@@ -482,11 +477,9 @@
         function(data){
             $("#title_namakelas").html("Atur kelas " + data);
             $("#title_idkelas").val(idkelas);
+            $("#kuota").val(0);
             $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
         });
-
-        
-        }
         
     }
 
@@ -512,22 +505,51 @@
 
     function updatekelasini() {
         var idkelas = $("#title_idkelas").val();
+        var kuota =  $("#kuota").val();
+        var dosen = $("#all_dosen").val();
+        console.log(kuota + " - " + $("#all_dosen").val());
         
-        $.post("../ajaxes/a_kelas.php",
-        {
-            idkelas:idkelas,
-            dosen : $("#all_dosen").val(),
-            hari: $("#pilihhari").val(),
-            jam_awal : $("#jamawal").val(),
-            jam_akhir : $("#jamakhir").val(),
-            kuota : $("#kuota").val(),
-            jenis:"update_kelas",
+        //pengecekan dosen terpilih atau tidak
+        if (dosen == "-1" ) {
+            $("#help_alldosen").html("Dosen ECC belum dipilih"); 
+        }
+        else if (dosen != "-1"){
+            $("#help_alldosen").html("");
+        }
+        
+        //pengecekkan kuota terisi atau tidak
+        if (kuota == 0) {
+            $("#help_kuota").html("kuota belum terisi");
+        }
+        else if (kuota != 0){
+            $("#help_kuota").html("");
+        }
 
-        },
-        function(data){
-            console.log(data);
-            $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
-        });
+        //jika semua terisi
+        if (kuota != 0 && dosen != "-1") {
+            
+            $("#btn_updatekelas").attr("data-dismiss", "modal"); 
+            $("#help_kuota").html("");
+            $("#help_alldosen").html("");
+
+            $.post("../ajaxes/a_kelas.php",
+            {
+                idkelas:idkelas,
+                dosen : $("#all_dosen").val(),
+                hari: $("#pilihhari").val(),
+                jam_awal : $("#jamawal").val(),
+                jam_akhir : $("#jamakhir").val(),
+                kuota : $("#kuota").val(),
+                jenis:"update_kelas",
+
+            },
+            function(data){
+                console.log(data);
+                $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
+            });
+        
+        }
+        
         //kelas_blmaktif(); 
     }
 
