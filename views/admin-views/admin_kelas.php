@@ -528,7 +528,7 @@
         //jika semua terisi
         if (kuota != 0 && dosen != "-1") {
             
-            $("#btn_updatekelas").attr("data-dismiss", "modal"); 
+            
             $("#help_kuota").html("");
             $("#help_alldosen").html("");
 
@@ -546,7 +546,9 @@
             function(data){
                 console.log(data);
                 $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
+                $("#btn_updatekelas").attr("data-dismiss", "modal"); 
             });
+            
         
         }
         
