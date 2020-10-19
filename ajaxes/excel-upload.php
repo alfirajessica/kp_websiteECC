@@ -1,7 +1,7 @@
 <?php
 include '../config/conn.php';
-require 'PHPExcel/Classes/PHPExcel.php';
-require_once 'PHPExcel/Classes/PHPExcel/IOFactory.php';
+require '../PHPExcel/Classes/PHPExcel.php';
+require_once '../PHPExcel/Classes/PHPExcel/IOFactory.php';
 session_start();
 
     $conn = getConn();

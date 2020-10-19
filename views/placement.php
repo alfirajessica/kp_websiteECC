@@ -253,7 +253,7 @@ $level = $arr->get_level();
         if (files!=undefined) {
             var arr =
             $.ajax({
-                url: 'excel-upload.php',
+                url: '../ajaxes/excel-upload.php',
                 type: 'post',
                 data: fd,
                 contentType: false,
@@ -337,6 +337,8 @@ $level = $arr->get_level();
         function(data) {
            $("#periode").html(data);
         });
+
+
 
 </script>
 
