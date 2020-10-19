@@ -247,8 +247,6 @@ $level = $arr->get_level();
     }
 
     function importfile() {
-
-      
         var fd = new FormData();
         var files = $('#file1')[0].files[0];
         fd.append('file', files);
