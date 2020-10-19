@@ -7,6 +7,7 @@ if($_POST["jenis"]=="get_allperiode"){
     $sql1="select * from periode";
     $result1 = $conn->query($sql1);
     if ($result1->num_rows > 0) {
+        $kal="<option value='-1'>pilih periode ..</option>";
         while ($row1 = $result1->fetch_assoc()) {
             $idperiode=$row1["id_periode"];
             $semester=$row1["semester"];

@@ -23,18 +23,7 @@ if($_POST["jenis"]=="update_statusdosen"){
     $status = $_POST["getstatusdosen"];
 
     $tempStatus="";
-    // $sql1 = "select * from user where username='$username'";
-    // $result=$conn->query($sql1);
-
-    // if($result->num_rows>0){
-    //     while ($row=$result->fetch_assoc()){
-    //         $status =$row['status'];
-            
-    //     }
-        
-        
-    // }
-
+   
     if ($status == 1) {
         $tempStatus = 0;
     }
@@ -48,10 +37,27 @@ if($_POST["jenis"]=="update_statusdosen"){
     }else{
     echo "gagal";
     }
-    
-
-    
     $conn->close();
+}
+
+
+if($_POST["jenis"]=="get_alldosen"){
+    $conn=getConn();
+    $sql1="select * from user where level='dosen' and status=1";
+    $result1 = $conn->query($sql1);
+    $kal="<option value='-1' >pilih dosen</option>";
+    if ($result1->num_rows > 0) {
+        while ($row1 = $result1->fetch_assoc()) {
+            $username=$row1["username"];
+            $nama=$row1["nama"];
+            $kal.="<option value='$username'>$nama</option>";
+        }
+    }else{
+        $kal="<option value='-1'>..</option>";
+    }
+    echo $kal;
+    $conn->close();
+    
 }
 
 

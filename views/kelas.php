@@ -34,77 +34,7 @@ $level = $arr->get_level();
 
       <!-- Footer -->
       <?php include_once('footer.php') ?>
-
-      <!-- Modal atur dosen/jam/kuota kelas ecc  -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Atur Dosen/Jam/Kuota kelas ini</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-          <form role="form">
-                <table class="table table-borderless table-md text-right">
-                    <tbody>
-                        <tr>
-                            <td scope="row">Pilih Dosen : </td>
-                            <td class="text-left">
-                              <select class="form-control" name="" id="">
-                              <option>a</option>
-                              <option>b</option>
-                              <option>c</option>
-                              </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Pilih Hari : </td>
-                            <td class="text-left">
-                            <select class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                  <option>Senin</option>
-                  <option>Selasa</option>
-                  <option>Rabu</option>
-                  <option>Kamis</option>
-                  <option>Jumat</option>
-                </select>
-                <small id="helpId" class="form-text text-muted">Help text</small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Jam Awal : </td>
-                            <td class="text-left">
-                            <input class="form-control" type="time" value="10:30:00" id="example-time-input">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Jam Akhir : </td>
-                            <td class="text-left">
-                            <input class="form-control" type="time" value="10:30:00" id="example-time-input">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Kuota : </td>
-                            <td class="text-left">
-                                <input type="number" class="form-control-sm" name="" id="" aria-describedby="helpId" placeholder=""> 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
-            </form>
-            
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="simpankelas()">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
   
-      
     </div><!-- container-fluid -->
   
   
@@ -117,8 +47,13 @@ $level = $arr->get_level();
 
       periode();
       set_periode();
-      datatable_lihatkelas();
+      //datatable_lihatkelas();
+      //kelas_blmaktif();
+    // pilihperiode();
+      get_dosen();
    });    
+
+  
   function periode() {
         $.post("../ajaxes/a_periode.php",
         {
