@@ -30,6 +30,9 @@
                 <li>
                     <a href="dosen.php"> <i class="menu-icon fa fa-laptop"></i>Dosen ECC</a>
                 </li>
+                <li>
+                    <a href="ruangan.php"> <i class="menu-icon fa fa-laptop"></i>Ruang ECC</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

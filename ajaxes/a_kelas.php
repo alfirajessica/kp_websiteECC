@@ -80,8 +80,22 @@ if($_POST["jenis"]=="cek_kelas"){
     $idperiode = $_POST["idperiode"];
     $level = $_POST["level"];
     $kal="";
-    $sql="select * from kelas where id_periode='$idperiode' and level_ecc='$level'";
-    $result1 = $conn->query($sql);
+    $sql="select * from kelas where id_periode='$idperiode' and level_ecc='$level' order by nama_kelas asc";
+    $query = mysqli_query($conn,$sql); // get the data from the db
+    $result = array();
+    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
+
+        $result ["level_ecc"] = $row['level_ecc'];
+        $result ["nama_kelas"] = $row['nama_kelas'];
+        $result ["hari"] = $row['hari'];
+        
+    }
+    
+    $conn->close();
+    header('Content-Type: application/json');
+    echo json_encode($result); // return value of $result
+
+    /*$result1 = $conn->query($sql);
     if ($result1->num_rows > 0) {
         while ($row1 = $result1->fetch_assoc()) {
             $idperiode=$row1["id_periode"];
@@ -98,7 +112,7 @@ if($_POST["jenis"]=="cek_kelas"){
         
     }
     echo $kal;
-    $conn->close();
+    $conn->close();*/
 
 
 }
@@ -113,6 +127,13 @@ if($_POST["jenis"]=="insert_kelasdb"){
     $jam = "06:30";
     $statuskelas = 0;
 
+    /*$sel = $_POST["sel"];
+    $start_char = $_POST["last_char"];
+    $start_day = $_POST["start_day"];
+    $chars = ['A','B','C','D','E','F','G'];
+    $days = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];*/
+
+    
     $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam,kuota,dosen,status_kelas) values ($idperiode,null,'$level','$namakelas','$hari','$jam',0,null,'$statuskelas')";
     if ($conn->query($sql)) {
         echo "berhasil tambah kelas";
@@ -120,6 +141,8 @@ if($_POST["jenis"]=="insert_kelasdb"){
         echo "gagal";
     }
     $conn->close();
+
+    
 }
 
 if($_POST["jenis"]=="hapus_kelas"){

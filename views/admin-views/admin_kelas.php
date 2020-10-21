@@ -73,11 +73,11 @@
                         <div class="input-group mb-3">
                         <select disabled class="form-control" id="banyak_hari" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <option value="0">pilih hari</option>
-                            <option value="Senin">Senin</option>
-                            <option value="Selasa">Selasa</option>
-                            <option value="Rabu">Rabu</option>
-                            <option value="Kamis">Kamis</option>
-                            <option value="Jumat">Jumat</option>
+                            <option>Senin</option>
+                            <option>Selasa</option>
+                            <option>Rabu</option>
+                            <option>Kamis</option>
+                            <option>Jumat</option>
                         </select>
                         </div>
                         <small id="help_bykhari" class="form-text text-muted">Help text</small>
@@ -371,7 +371,7 @@
         var sel = document.getElementById('banyakkelas');
         var level_sel = document.getElementById('leveldipilih');
         var sel_hari = $("banyak_hari").val();
-        var char = ['A','B','C','D','E','F','G'];
+        var char = ['Kelas A','Kelas B','Kelas C','Kelas D','Kelas E','Kelas F','Kelas G'];
         var days = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
 
         //cek apakah level telah dipilih dan byk kelasnya
@@ -396,7 +396,7 @@
             var btn_aksi2 = "<button onclick='hapus_kelas()' type='button' class='btn btn-danger btn-sm' >Hapus</button>";*/
 
             //cek dulu apakah pada periode yang dipilih telah ada level yang dipilih skrg
-            //var tempnamakelas = "";
+            //var tempnamakelas,namakelas="";
             $.post("../ajaxes/a_kelas.php",
                 {
                     idperiode:periode.value,
@@ -404,33 +404,41 @@
                     jenis:"cek_kelas",
                 },
                 function(data){
+                    //get nama kelas terakhir dari level tsb
+                    var namakelas = data["nama_kelas"];
+
+                    //index hari yg dipilih
+                    var indexday_start = data["hari"];
                     
-                    var namakelas = data; //output A-G
+                    console.log(namakelas + " - " + indexday_start);
+                    
+                    //cek apakah namakelas ada atau tdk
+                    for (var i = 0; i < sel.value; i += 1) 
+                    {
 
-                    //generate kelasnya 
-                    for (var i = 0; i < sel.value; i += 1) {
-
-                        var indexday_start = days.indexOf($("#banyak_hari").val());
-                        if (namakelas == "") 
+                        if (namakelas == null) 
                         {
-                            console.log("---");
-                            
-                            var nama_kelas = level_sel.value + " - " + char[i];
                             var kar = char[i];
                             console.log(kar);
-                            var day = days[indexday_start+i];
+                            var day = days[i];
                             console.log(day);
-                        }
-                        else if (namakelas != "") {
-                            console.log(namakelas);
-                            var index = char.indexOf(namakelas);
+
                             
-                            var nama_kelas = level_sel.value + " - " + char[index+i+1];
-                            var kar = char[index+i+1];
-                            var day = days[indexday_start+i];
                         }
-                        
-                        //yang dimasukkan ke db : id periode, id_kelas, level ecc, nama kelas, hari, jam, kuota,    dosen, status kelas
+                        else if (namakelas != null) {
+    
+                            //get index ke berapa namakelas dan hari yang ada di db berdasarkan array
+                            var index = char.indexOf(namakelas);
+                            var indexday = days.indexOf(indexday_start);
+                            
+                            var kar = char[index+i+1];
+                            console.log(kar);
+                            var day = days[indexday+i+1];
+                            console.log(day);
+
+                            
+                        }
+
                         $.post("../ajaxes/a_kelas.php",
                         {
                             idperiode:periode.value,
@@ -440,11 +448,11 @@
                             jenis:"insert_kelasdb",
                         },
                         function(data){
-                            console.log(data);
+                            console.log("berhasil " + data);
                             $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
                         });
-                    } 
-                    //datatable_kelasnonaktif();
+                        
+                    }
                 }
             );
                     
