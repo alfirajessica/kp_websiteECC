@@ -247,15 +247,13 @@ $level = $arr->get_level();
     }
 
     function importfile() {
-
-      
         var fd = new FormData();
         var files = $('#file1')[0].files[0];
         fd.append('file', files);
         if (files!=undefined) {
             var arr =
             $.ajax({
-                url: 'excel-upload.php',
+                url: '../ajaxes/excel-upload.php',
                 type: 'post',
                 data: fd,
                 contentType: false,
@@ -339,6 +337,8 @@ $level = $arr->get_level();
         function(data) {
            $("#periode").html(data);
         });
+
+
 
 </script>
 

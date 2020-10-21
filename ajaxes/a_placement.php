@@ -112,7 +112,7 @@ if ($_POST["jenis"] == "setstandard") {
         }else if ($level=="4") {
             $level="IV";
         }
-        $sql1 = "INSERT INTO `mahasiswa`(`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`, `id_periode`) VALUES ('$nrp','$nama','$level','$nilai','$status','$periode')";
+        $sql1 = "INSERT INTO `mahasiswa`(`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$nrp','$nama','$level','$nilai','$status')";
         $result1 = $conn->query($sql1);
     }
     $turncateqry = "TRUNCATE temp_mahasiswa";
