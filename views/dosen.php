@@ -213,25 +213,8 @@ $level = $arr->get_level();
                 },
                 
              ],
-        }); 
-        //end of datatble list barang
-
-        /*var getUser,getStatus="";
-        $('#table_lihatsemuadosen tbody').on( 'click', 'button', function () {
-            var action = this.id;
-            data = table.row($(this).closest('tr')).data();
-
-            if (action == "nonaktifkan") {
-                getUser =data[Object.keys(data)["username"]];
-               // getStatus =data[Object.keys(data)[4]];
-               // update_statusdosesn(getUser,getStatus);
-                console.log(getUser);
-            }
-        });*/
-
-        
-
-    }
+        });     
+}
 
     
 </script>

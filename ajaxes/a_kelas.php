@@ -95,26 +95,7 @@ if($_POST["jenis"]=="cek_kelas"){
     header('Content-Type: application/json');
     echo json_encode($result); // return value of $result
 
-    /*$result1 = $conn->query($sql);
-    if ($result1->num_rows > 0) {
-        while ($row1 = $result1->fetch_assoc()) {
-            $idperiode=$row1["id_periode"];
-            $idkelas = $row1["id_kelas"];
-            $level = $row1["level_ecc"];
-            $namakelas = $row1["nama_kelas"];
-        }
-        if ($namakelas != " ") {
-            $kal=$namakelas;
-        }
-        else if ($namakelas == " ") {
-            $kal = "";
-        }
-        
-    }
-    echo $kal;
-    $conn->close();*/
-
-
+    
 }
 
 if($_POST["jenis"]=="insert_kelasdb"){
@@ -122,24 +103,39 @@ if($_POST["jenis"]=="insert_kelasdb"){
     // id periode, id_kelas, level ecc, nama kelas, hari, jam, kuota, dosen, status kelas
     $idperiode = $_POST["idperiode"];
     $level = $_POST["level"];
-    $namakelas = $_POST["namakls"];
-    $hari = $_POST["hari"];
-    $jam = "06:30";
+    $bykkelas = $_POST["bykkelas"];
+    $namakelas = $_POST["namakelas"];
+    
+    $ket="";
+    $jam_awal = "06:30";
+    $jam_akhir = "08:00";
     $statuskelas = 0;
 
-    /*$sel = $_POST["sel"];
-    $start_char = $_POST["last_char"];
-    $start_day = $_POST["start_day"];
-    $chars = ['A','B','C','D','E','F','G'];
-    $days = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];*/
+    $chars = ['A','B','C','D','E','F','G','H','I','J'];
 
-    
-    $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam,kuota,dosen,status_kelas) values ($idperiode,null,'$level','$namakelas','$hari','$jam',0,null,'$statuskelas')";
-    if ($conn->query($sql)) {
-        echo "berhasil tambah kelas";
-    }else {
-        echo "gagal";
+    for ($i=0; $i < $bykkelas ; $i++) { 
+        if ($namakelas == "") 
+        {
+            $kar = $chars[$i];
+        }
+
+        else if ($namakelas != null) 
+        {
+            $indexkar = array_search("$namakelas",$chars);
+            $kar = $chars[$indexkar+$i+1];
+        }
+
+        $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam_awal,jam_akhir,kuota,dosen,status_kelas,id_ruangkelas) values ($idperiode,null,'$level','$kar','','$jam_awal','$jam_akhir',0,null,'$statuskelas',0)";
+        if ($conn->query($sql)) {
+            $ket = "berhasil tambah kelas";
+        }else {
+            $ket = "gagal";
+        }
+
+
     }
+
+    echo $ket.$bykkelas;
     $conn->close();
 
     
@@ -147,14 +143,49 @@ if($_POST["jenis"]=="insert_kelasdb"){
 
 if($_POST["jenis"]=="hapus_kelas"){
     $idkelas=$_POST["idkelas"];
+    $ket="";
+
+    //delete kelas dengan idkelas tsb
     $sql = "delete from kelas where id_kelas='$idkelas'";
     if ($conn->query($sql)) {
-        echo "berhasil hapus";
+        $ket= "berhasil hapus";
     }else {
-        echo "gagal";
+        $ket= "gagal hapus";
     }
+
+    echo $ket;
+    $conn->close();
+    
+}
+
+if($_POST["jenis"]=="upd_kelas2"){
+    $idperiode = $_POST["idperiode"];
+    $level = $_POST["level"];
+    $ket="";
+    $chars = ['A','B','C','D','E','F','G','H','I','J'];
+    
+    $query = "select id_kelas from kelas where id_periode='$idperiode' and level_ecc='$level'";
+    if ($result = mysqli_query($conn, $query)) {
+        //simpan semua id kelas pada $set
+        for ($set = array (); $row = $result->fetch_assoc(); $set[] = $row['id_kelas']);
+        //print_r($set);
+
+        //update nama kelas -- generate ulang 
+        for ($i=0; $i <count($set) ; $i++) { 
+        
+            $kar = $chars[$i];
+            $sql = "update kelas set nama_kelas='$kar' where id_periode='$idperiode' and level_ecc='$level' and id_kelas=$set[$i]";
+            if ($conn->query($sql)) {
+                $ket = "berhasil ubah semua kelas";
+            }else {
+                $ket = "gagal ubah semua kelas";
+            }
+        }
+    }
+    
     $conn->close();
 }
+
 
 if($_POST["jenis"]=="get_detail_aturkelas"){
     $idkelas=$_POST["idkelas"];
