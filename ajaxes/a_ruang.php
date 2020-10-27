@@ -2,6 +2,23 @@
 require_once "../config/conn.php";
 $conn=getConn();
 
+if ($_POST["jenis"]=="get_allruang") {
+    $sql1="select * from ruang_kelas where status_ruang=1";
+    $result1 = $conn->query($sql1);
+    $kal="<option value='-1' >pilih ruang</option>";
+    if ($result1->num_rows > 0) {
+        while ($row1 = $result1->fetch_assoc()) {
+            $idruang=$row1["id_ruangkelas"];
+            $namaruang=$row1["nama_ruang"];
+            $kal.="<option value='$idruang'>$namaruang</option>";
+        }
+    }else{
+        $kal="<option value='-1'>..</option>";
+    }
+    echo $kal;
+    $conn->close();
+}
+
 if($_POST["jenis"]=="cek_ruang"){
     $namaruang = strtoupper($_POST["namaruang"]);
     $sqlcek = "select * from ruang_kelas where nama_ruang='$namaruang'";

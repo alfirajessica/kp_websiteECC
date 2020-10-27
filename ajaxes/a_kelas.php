@@ -125,7 +125,7 @@ if($_POST["jenis"]=="insert_kelasdb"){
             $kar = $chars[$indexkar+$i+1];
         }
 
-        $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam_awal,jam_akhir,kuota,dosen,status_kelas,id_ruangkelas) values ($idperiode,null,'$level','$kar','','$jam_awal','$jam_akhir',0,null,'$statuskelas',0)";
+        $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam_awal,jam_akhir,kuota,dosen,status_kelas,id_ruangkelas) values ($idperiode,null,'$level','$kar','','$jam_awal','$jam_akhir',0,'-','$statuskelas',0)";
         if ($conn->query($sql)) {
             $ket = "berhasil tambah kelas";
         }else {
@@ -236,11 +236,12 @@ if($_POST["jenis"]=="update_kelas"){
     $idkelas = $_POST["idkelas"];
     $dosen = $_POST["dosen"];
     $hari = $_POST["hari"];
+    $ruang = $_POST["ruang"];
     $jamawal = $_POST["jam_awal"];
     $jamakhir = $_POST["jam_akhir"];
     $kuota = $_POST["kuota"];
 
-    $sql = "update kelas set hari='$hari', jam='$jamawal', kuota='$kuota', dosen='$dosen' where id_kelas='$idkelas'";
+    $sql = "update kelas set hari='$hari', jam_awal='$jamawal', jam_akhir='$jamakhir', kuota='$kuota', dosen='$dosen', id_ruangkelas='$ruang' where id_kelas='$idkelas'";
     
     if ($conn->query($sql)) {
         echo "berhasil ubah kelas";
@@ -248,5 +249,13 @@ if($_POST["jenis"]=="update_kelas"){
         echo "gagal";
     }
     $conn->close();
+}
+
+if($_POST["jenis"]=="aktifkan_allkelas"){
+    //cek semua kelas sesuai idperiode yang dipilih
+    $idperiode = $_POST["idperiode"];
+
+    $sqlcek = "select * from kelas where id_periode='$idperiode'";
+    
 }
 ?>

@@ -51,6 +51,7 @@ $level = $arr->get_level();
       //kelas_blmaktif();
     // pilihperiode();
       get_dosen();
+      get_ruang();
    });    
 
   
