@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2020 at 05:38 AM
+-- Generation Time: Oct 27, 2020 at 04:46 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -31,31 +31,34 @@ CREATE TABLE `kelas` (
   `id_periode` int(10) NOT NULL,
   `id_kelas` int(10) NOT NULL,
   `level_ecc` varchar(10) NOT NULL,
-  `nama_kelas` char(1) CHARACTER SET latin1 NOT NULL,
+  `nama_kelas` varchar(10) CHARACTER SET utf8 NOT NULL,
   `hari` varchar(10) NOT NULL,
-  `jam` varchar(10) NOT NULL,
+  `jam_awal` varchar(10) NOT NULL,
+  `jam_akhir` varchar(10) NOT NULL,
   `kuota` int(10) NOT NULL,
-  `dosen` varchar(30) DEFAULT NULL,
-  `status_kelas` varchar(2) NOT NULL COMMENT '0 - Tidak aktif, 1 - Aktif'
+  `dosen` varchar(10) NOT NULL,
+  `status_kelas` varchar(2) NOT NULL COMMENT '0 - Tidak aktif, 1 - Aktif',
+  `id_ruangkelas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kelas`
 --
 
-INSERT INTO `kelas` (`id_periode`, `id_kelas`, `level_ecc`, `nama_kelas`, `hari`, `jam`, `kuota`, `dosen`, `status_kelas`) VALUES
-(1, 258, 'Level 1', 'A', 'Senin', '06:30', 0, NULL, '0'),
-(1, 259, 'Level 1', 'B', 'Selasa', '06:30', 0, NULL, '0'),
-(1, 260, 'Level 1', 'C', 'Rabu', '06:30', 0, NULL, '0'),
-(1, 261, 'Level 1', 'D', 'Kamis', '06:30', 0, NULL, '0'),
-(1, 262, 'Level 2', 'A', 'Selasa', '06:30', 0, NULL, '0'),
-(1, 263, 'Level 2', 'B', 'Rabu', '06:30', 0, NULL, '0'),
-(1, 264, 'Level 2', 'C', 'Kamis', '06:30', 0, NULL, '0'),
-(1, 265, 'Level 3', 'A', 'Senin', '06:30', 0, NULL, '0'),
-(1, 266, 'Level 3', 'B', 'Selasa', '06:30', 0, NULL, '0'),
-(1, 267, 'Level 3', 'C', 'Kamis', '06:30', 0, NULL, '0'),
-(1, 268, 'Level 3', 'D', 'Jumat', '06:30', 0, NULL, '0'),
-(1, 269, 'Level 4', 'A', 'Selasa', '06:30', 0, NULL, '0');
+INSERT INTO `kelas` (`id_periode`, `id_kelas`, `level_ecc`, `nama_kelas`, `hari`, `jam_awal`, `jam_akhir`, `kuota`, `dosen`, `status_kelas`, `id_ruangkelas`) VALUES
+(1, 553, 'Level 1', 'A', 'Selasa', '06:30', '08:00', 20, '217180345', '0', 15),
+(1, 554, 'Level 1', 'B', 'Selasa', '06:30', '08:00', 10, '217180345', '0', 17),
+(1, 555, 'Level 1', 'C', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 557, 'Level 1', 'D', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 558, 'Level 1', 'E', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 559, 'Level 2', 'A', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 560, 'Level 2', 'B', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 561, 'Level 3', 'A', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 562, 'Level 3', 'B', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 563, 'Level 2', 'C', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 564, 'Level 3', 'C', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 565, 'Level 3', 'D', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 566, 'Level 3', 'E', '', '06:30', '08:00', 0, '-', '0', 0);
 
 -- --------------------------------------------------------
 
@@ -124,6 +127,28 @@ INSERT INTO `periode` (`id_periode`, `semester`, `thn_akademik_awal`, `thn_akade
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ruang_kelas`
+--
+
+CREATE TABLE `ruang_kelas` (
+  `id_ruangkelas` int(11) NOT NULL,
+  `nama_ruang` varchar(10) NOT NULL,
+  `status_ruang` varchar(2) NOT NULL COMMENT '(0 - nonaktif) (1 - aktif)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ruang_kelas`
+--
+
+INSERT INTO `ruang_kelas` (`id_ruangkelas`, `nama_ruang`, `status_ruang`) VALUES
+(15, 'B-301', '1'),
+(16, 'B-302', '0'),
+(17, 'U-401', '1'),
+(18, 'U-402', '1');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `temp_mahasiswa`
 --
 
@@ -185,8 +210,7 @@ INSERT INTO `user` (`username`, `password`, `nama`, `level`, `status`) VALUES
 -- Indexes for table `kelas`
 --
 ALTER TABLE `kelas`
-  ADD PRIMARY KEY (`id_kelas`),
-  ADD KEY `fk_dosen` (`dosen`);
+  ADD PRIMARY KEY (`id_kelas`);
 
 --
 -- Indexes for table `mahasiswa`
@@ -207,6 +231,12 @@ ALTER TABLE `periode`
   ADD PRIMARY KEY (`id_periode`);
 
 --
+-- Indexes for table `ruang_kelas`
+--
+ALTER TABLE `ruang_kelas`
+  ADD PRIMARY KEY (`id_ruangkelas`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -220,7 +250,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+  MODIFY `id_kelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=567;
 
 --
 -- AUTO_INCREMENT for table `periode`
@@ -229,14 +259,10 @@ ALTER TABLE `periode`
   MODIFY `id_periode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `ruang_kelas`
 --
-
---
--- Constraints for table `kelas`
---
-ALTER TABLE `kelas`
-  ADD CONSTRAINT `fk_dosen` FOREIGN KEY (`dosen`) REFERENCES `user` (`username`);
+ALTER TABLE `ruang_kelas`
+  MODIFY `id_ruangkelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
