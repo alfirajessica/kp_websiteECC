@@ -20,16 +20,20 @@ if ($_POST["jenis"] == "setstandard") {
         $nilai = intval($row["nilai_placement"]);
         $nrp = intval($row["nrp"]);
 
-        $placement = "0";
-        if ($nilai <= $lev1) {
-            $placement = "1";
-        } else if ($nilai <= $lev2) {
-            $placement = "2";
-        } else if ($nilai <= $lev3) {
-            $placement = "3";
-        } else {
-            $placement = "4";
+        $placement = "belum ada level";
+        if ($nilai==0) {
+            $placement = "belum ada level";
         }
+        else if ($nilai <= $lev1) {
+            $placement = "I";
+        } else if ($nilai <= $lev2) {
+            $placement = "II";
+        } else if ($nilai <= $lev3) {
+            $placement = "III";
+        } else {
+            $placement = "IV";
+        }
+    
 
         $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";
         $result1 = $conn->query($sql1);
@@ -102,17 +106,20 @@ if ($_POST["jenis"] == "setstandard") {
         $nama = $row["nama_mahasiswa"];
         $level = $row["level"];
         $nilai = $row["nilai_placement"];
-        $status = "1";
-        if ($level=="1") {
-            $level="I";
-        }else if ($level=="2") {
-            $level="II";
-        }else if ($level=="3") {
-            $level="III";
-        }else if ($level=="4") {
-            $level="IV";
+        $placement = "belum ada level";
+        if ($nilai==0) {
+            $placement = "belum ada level";
         }
-        $sql1 = "INSERT INTO `mahasiswa`(`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$nrp','$nama','$level','$nilai','$status')";
+        else if ($nilai <= $lev1) {
+            $placement = "I";
+        } else if ($nilai <= $lev2) {
+            $placement = "II";
+        } else if ($nilai <= $lev3) {
+            $placement = "III";
+        } else {
+            $placement = "IV";
+        }
+        $sql1 = "INSERT INTO `mahasiswa`(`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$nrp','$nama','$level','$nilai','$placement')";
         $result1 = $conn->query($sql1);
     }
     $turncateqry = "TRUNCATE temp_mahasiswa";
@@ -132,6 +139,16 @@ if ($_POST["jenis"] == "setstandard") {
         $kal.="<option value='$idperiode'>$sem $awal-$akhir</option>";
     }
     echo $kal;
+}else if ($_POST["jenis"]=="loadsel") {
+    $kal="";
+    $nrp=$_POST["nrp"];
+    $conn=getConn();
+    $stmt=$conn->prepare("select * from temp_mahasiswa where nrp=? ");
+    $stmt->bind_param("s",$nrp);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    echo json_encode($row);
 }
 
 function updatelevel(){
@@ -154,15 +171,18 @@ function updatelevel(){
         $nilai = intval($row["nilai_placement"]);
         $nrp = intval($row["nrp"]);
 
-        $placement = "0";
-        if ($nilai <= $lev1) {
-            $placement = "1";
+        $placement = "belum ada level";
+        if ($nilai==0) {
+            $placement = "belum ada level";
+        }
+        else if ($nilai <= $lev1) {
+            $placement = "I";
         } else if ($nilai <= $lev2) {
-            $placement = "2";
+            $placement = "II";
         } else if ($nilai <= $lev3) {
-            $placement = "3";
+            $placement = "III";
         } else {
-            $placement = "4";
+            $placement = "IV";
         }
 
         $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";

@@ -141,8 +141,8 @@ $level = $arr->get_level();
             </div> <!-- end of col-md-12 -->
         </div> <!-- end of row -->
 
-        <!-- Modal atur/isi nilai placement  -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal ubah nilai  -->
+        <div class="modal fade" id="isinilai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -174,7 +174,7 @@ $level = $arr->get_level();
                                     </tr>
                                     <tr>
                                         <td scope="row">Peringkat : </td>
-                                        <td class="text-left">A/B/C/D</td>
+                                        <td class="text-left" id="cperingkat">A/B/C/D</td>
                                     </tr>
 
                                 </tbody>
@@ -183,7 +183,7 @@ $level = $arr->get_level();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn btn-primary" onclick="update()">Simpan Perubahan</button>
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="update()">Simpan Perubahan</button>
                     </div>
                 </div>
             </div>
@@ -270,6 +270,7 @@ $level = $arr->get_level();
                     success: function(response) {
                         if (response.includes("success")) {
                             $("#btnimport").css("display", "none");
+                            $("#import").css("display", "block");
                         } else {
                             console.log(response);
                         }
@@ -323,8 +324,7 @@ $level = $arr->get_level();
             },
             function(data) {
                 alert(data);
-                reloadtable();
-                $('#exampleModal').modal('hide');
+                $('#isinilai').modal('hide');
             });
     }
 
@@ -389,13 +389,39 @@ $level = $arr->get_level();
                 },
                 {
                     "data": "level",
-                   
                 },{
-                    
+                    "data":"status",
+                    "render": function (data, type, row) {  
+                        if (parseInt(row.nilai_placement)==0) //nilai masih 0
+                        {
+                            return "<button class='btn btn-primary rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('"+row.nrp+"')\"  >Input Nilai</button>";
+                        }
+                        else if (parseInt(row.nilai_placement)>0) //ubah nilai lebih dari 0
+                        {
+                            return "<button class='btn btn-warning rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('"+row.nrp+"')\"  >Ubah Nilai</button>";
+                        }
+                       
+                    }
                 }
 
             ],
         });
+    }
+
+    function loadmhs(nrp) {
+        $.post(
+            "../ajaxes/a_placement.php",
+            {
+                jenis:"loadsel",
+                nrp:nrp
+            },function (data) {
+                var arr=JSON.parse(data);
+                $("#crnrp").html(arr.nrp);
+                $("#crnama").html(arr.nama_mahasiswa);
+                $("#crnilaiplacement").val(arr.nilai_placement);
+                $("#cperingkat").html(arr.level);
+            }
+        );
     }
 </script>
 
