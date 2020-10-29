@@ -106,22 +106,15 @@ if ($_POST["jenis"] == "setstandard") {
         $nama = $row["nama_mahasiswa"];
         $level = $row["level"];
         $nilai = $row["nilai_placement"];
-        $placement = "belum ada level";
-        if ($nilai==0) {
-            $placement = "belum ada level";
-        }
-        else if ($nilai <= $lev1) {
-            $placement = "I";
-        } else if ($nilai <= $lev2) {
-            $placement = "II";
-        } else if ($nilai <= $lev3) {
-            $placement = "III";
-        } else {
-            $placement = "IV";
-        }
-        $sql1 = "INSERT INTO `mahasiswa`(`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$nrp','$nama','$level','$nilai','$placement')";
+
+        $sql1 = "INSERT INTO `mahasiswa`(`id_periode`,`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$periode','$nrp','$nama','$level','$nilai','1')";
         $result1 = $conn->query($sql1);
-    }
+
+        $sql2 = "update mahasiswa set nilai_placement='$nilai',current_level='$level',status_mhs='$placement' where nrp=$nrp";
+        $result2 = $conn->query($sql2);
+        }
+
+
     $turncateqry = "TRUNCATE temp_mahasiswa";
     $turnres = mysqli_query($conn, $turncateqry);
     echo "Berhasil";

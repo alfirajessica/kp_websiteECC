@@ -51,7 +51,8 @@ $level = $arr->get_level();
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
                                     <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
-                                    <input type="button" onclick="importfile()" id="btnimport" value="Import File Excel" class="btn btn-primary form-control">
+                                    <input type="button" onclick="importfile()" id="btnimport" value="*Import File Excel" class="btn btn-primary form-control">
+                                    <label for="">* dengan menekan tomobol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label>
                                 </div>
                                 <br><br>
 
@@ -87,8 +88,6 @@ $level = $arr->get_level();
                                                 <a onclick="tetapkan()" class="btn btn-primary text-light">Tempatkan</a>
                                             </td>
                                         </tr>
-
-
 
                                     </tbody>
                                 </table>
@@ -134,7 +133,8 @@ $level = $arr->get_level();
 
                             </select>
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
-                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">Tempatkan Mahasiswa</button>
+                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">*Tempatkan Mahasiswa</button>
+                            <label>* dengan menekan tombol ini anda setuju menghapus data sementara mahasiswa untuk dimasukan ke dalam data mahasiswa permanent pastikan data sementara sudah benar</label>
                         </div>
                     </div>
                 </div>
@@ -277,6 +277,8 @@ $level = $arr->get_level();
                     },
                 });
 
+        }else{
+            alert("Pilih file excel dahulu !");
         }
 
         // reloadtable();
@@ -336,12 +338,11 @@ $level = $arr->get_level();
                     periode: $("#periode").val()
                 },
                 function(data) {
-                    alert("Berhasil Memasukan Mahasiswa !");
+                    alert("Berhasil memasukan mahasiswa !");
                     location.reload();
-
                 });
         } else {
-            alert("Pilih Periode !");
+            alert("Pilih Periode dahulu !");
         }
 
     }
