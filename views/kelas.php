@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -23,9 +22,12 @@ $level = $arr->get_level();
                 <div class="card">
                     <?php 
                     if($level == "admin")
-                    { require("admin-views/admin_kelas.php"); }
-                    else if ($level == "dosen") {
-                    require("dosen-views/dosen_kelas.php");
+                    { 
+                        require("admin-views/admin_kelas.php"); 
+                    }
+                    else if ($level == "dosen") 
+                    {
+                        require("dosen-views/dosen_kelas.php");
                     }
                     ?>
                 </div>
@@ -49,7 +51,8 @@ $level = $arr->get_level();
       set_periode();
       //datatable_lihatkelas();
       //kelas_blmaktif();
-    // pilihperiode();
+      //pilihperiode();
+    
       get_dosen();
       get_ruang();
    });    
@@ -83,6 +86,7 @@ $level = $arr->get_level();
       
     // }
 
+   
     
 </script>
 

@@ -44,53 +44,56 @@ $level = $arr->get_level();
                         <div class="card-text">
 
                             <button class="btn btn-success text-light" onclick="window.location.href='nilaitest.xlsx'" target="_blank">Download Templete</button>
-                           
+
                             <h3>Import</h3>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                <input type="button" onclick="importfile()" name="submit" value="Import File Excel" class="btn btn-primary form-control">
+
+                            <div id="formkelas">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
+                                    <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
+                                    <input type="button" onclick="importfile()" id="btnimport" value="Import File Excel" class="btn btn-primary form-control">
+                                </div>
+                                <br><br>
+
+                                <table id="import" style="display:none;" class="table table-borderless table-sm text-right">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Level 1 : </th>
+                                            <td class="text-left">
+                                                <input type="number" class="form-control-sm" name="" id="level1" aria-describedby="helpId" placeholder="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Level 2 : </th>
+                                            <td class="text-left">
+                                                <input type="number" class="form-control-sm" name="" id="level2" aria-describedby="helpId" placeholder="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Level 3 : </th>
+                                            <td class="text-left">
+                                                <input type="number" class="form-control-sm" name="" id="level3" aria-describedby="helpId" placeholder="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Level 4 : </th>
+                                            <td class="text-left">
+                                                <input type="number" class="form-control-sm" name="" id="level4" aria-describedby="helpId" placeholder="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td class="text-left">
+                                                <a onclick="tetapkan()" class="btn btn-primary text-light">Tempatkan</a>
+                                            </td>
+                                        </tr>
+
+
+
+                                    </tbody>
+                                </table>
 
                             </div>
-                            <br><br>
-                            <table id="import" style="display:none;" class="table table-borderless table-sm text-right">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Level 1 : </th>
-                                        <td class="text-left">
-                                            <input type="number" class="form-control-sm" name="" id="level1" aria-describedby="helpId" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Level 2 : </th>
-                                        <td class="text-left">
-                                            <input type="number" class="form-control-sm" name="" id="level2" aria-describedby="helpId" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Level 3 : </th>
-                                        <td class="text-left">
-                                            <input type="number" class="form-control-sm" name="" id="level3" aria-describedby="helpId" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Level 4 : </th>
-                                        <td class="text-left">
-                                            <input type="number" class="form-control-sm" name="" id="level4" aria-describedby="helpId" placeholder="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td class="text-left">
-                                            <a onclick="tetapkan()" class="btn btn-primary text-light">Tempatkan</a>
-                                        </td>
-                                    </tr>
-
-
-
-                                </tbody>
-                            </table>
-
                         </div>
 
 
@@ -109,7 +112,7 @@ $level = $arr->get_level();
                     </div>
 
                     <div class="card-body">
-                      
+
                         <br>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered">
@@ -123,12 +126,12 @@ $level = $arr->get_level();
                                     </tr>
                                 </thead>
                                 <tbody id="datanya">
-                                   
+
                                 </tbody>
                             </table>
                             <select class='form-control' id="periode">
                                 <!-- ajax -->
-                                
+
                             </select>
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
                             <button type="button" class="btn btn-primary text-light" onclick="insertfile()">Tempatkan Mahasiswa</button>
@@ -209,105 +212,114 @@ $level = $arr->get_level();
 
     $(document).ready(function() {
         periode();
+        datatable_lihatsemuamahasiswa();
 
     });
 
+    $("#file1").change(function() {
+        var files = $('#file1')[0].files[0];
+        $("#lbl_file1").html(files.name);
+    });
 
 
     function tetapkan() {
-       
+
         var lev1 = $("#level1").val();
         var lev2 = $("#level2").val();
         var lev3 = $("#level3").val();
         var lev4 = $("#level4").val();
 
-        if (lev1=="") {
+        if (lev1 == "") {
             alert("Masukan nilai standar level 1 !");
-        }else if (lev2=="") {
+        } else if (lev2 == "") {
             alert("Masukan nilai standar level 2 !");
-        }else if (lev3=="") {
+        } else if (lev3 == "") {
             alert("Masukan nilai standar level 3 !");
-        }else if (lev4=="") {
+        } else if (lev4 == "") {
             alert("Masukan nilai standar level 4 !");
-        }else {
+        } else {
             $.post("../ajaxes/a_placement.php", {
-                jenis: "setstandard",
-                lev1:lev1,
-                lev2:lev2,
-                lev3:lev3,
-                lev4:lev4
-            },
-            function(data) {
-                window.location.reload();
-            });
+                    jenis: "setstandard",
+                    lev1: lev1,
+                    lev2: lev2,
+                    lev3: lev3,
+                    lev4: lev4
+                },
+                function(data) {
+                    window.location.reload();
+                });
 
         }
 
-       
+
     }
 
     function importfile() {
+
         var fd = new FormData();
         var files = $('#file1')[0].files[0];
         fd.append('file', files);
-        if (files!=undefined) {
+        if (files != undefined) {
             var arr =
-            $.ajax({
-                url: '../ajaxes/excel-upload.php',
-                type: 'post',
-                data: fd,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.includes("success")) {
-                        $("#import").css("display","block");
-                    } else {
-                        console.log(response);
-                    }
-                },
-            });
-        }
-     
-        reloadtable();
-    }
-    reloadtable();
-    function reloadtable() {
-        $.post("../ajaxes/a_placement.php", {
-                jenis: "getdata",
-            },
-            function(data) {
-               $("#datanya").html(data);
-            });
+                $.ajax({
+                    url: '../ajaxes/excel-upload.php',
+                    type: 'post',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.includes("success")) {
+                            $("#btnimport").css("display", "none");
+                        } else {
+                            console.log(response);
+                        }
+                    },
+                });
 
+        }
+
+        // reloadtable();
     }
+    
+    //reloadtable();
+
+    // function reloadtable() {
+    //     $.post("../ajaxes/a_placement.php", {
+    //             jenis: "getdata",
+    //         },
+    //         function(data) {
+    //             $("#datanya").html(data);
+    //         });
+
+    // }
 
     function exportfile() {
-        window.location.href="exportplacement.php";
+        window.location.href = "exportplacement.php";
     }
 
     function editnilai(params) {
         $.post("../ajaxes/a_placement.php", {
                 jenis: "selectednrp",
-                id:params
+                id: params
             },
             function(data) {
-                var arr=JSON.parse(data);
+                var arr = JSON.parse(data);
                 $("#crnrp").html(params);
-        $("#crnama").html(arr.nama);
-        $("#crnilaiplacement").html(arr.nilaiplacement);
+                $("#crnama").html(arr.nama);
+                $("#crnilaiplacement").html(arr.nilaiplacement);
             });
 
-       
+
     }
 
     function update() {
-       
-        var nrp=$("#crnrp").html();
-        var nilai=$("#crnilaiplacement").val();
+
+        var nrp = $("#crnrp").html();
+        var nilai = $("#crnilaiplacement").val();
         $.post("../ajaxes/a_placement.php", {
                 jenis: "update",
-                id:nrp,
-                nilai:nilai,
+                id: nrp,
+                nilai: nilai,
             },
             function(data) {
                 alert(data);
@@ -317,29 +329,74 @@ $level = $arr->get_level();
     }
 
     function insertfile() {
-        if ($("#periode").val()>0) {
+
+        if ($("#periode").val() > 0) {
             $.post("../ajaxes/a_placement.php", {
-            jenis: "insertmhs",
-            periode:$("#periode").val()
-        },
-        function(data) {
-            alert("Berhasil Memasukan Mahasiswa !");
-        });
-        }else{
+                    jenis: "insertmhs",
+                    periode: $("#periode").val()
+                },
+                function(data) {
+                    alert("Berhasil Memasukan Mahasiswa !");
+                    location.reload();
+
+                });
+        } else {
             alert("Pilih Periode !");
         }
-       
+
     }
 
     $.post("../ajaxes/a_placement.php", {
             jenis: "getperiode"
         },
         function(data) {
-           $("#periode").html(data);
+            $("#periode").html(data);
         });
 
+    function datatable_lihatsemuamahasiswa() {
+        //datatable list barang
+        var table = "";
+        table = $('#example').DataTable({
+            dom: 'Bfrtip',
+            "processing": true,
+            "serverSide": true,
+            "bInfo": false,
+            dom: "<'myfilter'f><'mylength'l>t",
+            "pagingType": "numbers",
+            "ordering": true, //set true agar bisa di sorting
+            "order": [
+                [0, 'asc']
+            ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+            "ajax": {
+                "url": "../datatables/admin-datatable/temp-mahasiswa_dt.php",
+                "type": "POST"
+            },
+            "deferRender": true,
+            "aLengthMenu": [
+                [10, 20, 50],
+                [10, 20, 50]
+            ], //combobox limit
+            "columns": [
 
+                {
+                    "data": "nrp"
+                },
+                {
+                    "data": "nama_mahasiswa"
+                },
+                {
+                    "data": "nilai_placement",
+                },
+                {
+                    "data": "level",
+                   
+                },{
+                    
+                }
 
+            ],
+        });
+    }
 </script>
 
 
