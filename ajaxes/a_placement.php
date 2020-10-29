@@ -21,10 +21,9 @@ if ($_POST["jenis"] == "setstandard") {
         $nrp = intval($row["nrp"]);
 
         $placement = "belum ada level";
-        if ($nilai==0) {
+        if ($nilai == 0) {
             $placement = "belum ada level";
-        }
-        else if ($nilai <= $lev1) {
+        } else if ($nilai <= $lev1) {
             $placement = "I";
         } else if ($nilai <= $lev2) {
             $placement = "II";
@@ -33,19 +32,14 @@ if ($_POST["jenis"] == "setstandard") {
         } else {
             $placement = "IV";
         }
-    
+
 
         $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";
         $result1 = $conn->query($sql1);
     }
-
-
-
-
-
 } else if ($_POST["jenis"] == "getdata") {
-   $kal="";
-   $conn=getConn();
+    $kal = "";
+    $conn = getConn();
     $sql = "select * from temp_mahasiswa";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
@@ -53,7 +47,7 @@ if ($_POST["jenis"] == "setstandard") {
         $nama = $row["nama_mahasiswa"];
         $nilai = $row["nilai_placement"];
         $level = $row["level"];
-        $kal.= " <tr>
+        $kal .= " <tr>
         <td>$nrp</td>
         <td>$nama</td>
         <td>$nilai</td>
@@ -67,10 +61,9 @@ if ($_POST["jenis"] == "setstandard") {
     </tr>";
     }
     echo $kal;
-
-}else if ($_POST["jenis"]=="selectednrp") {
-    $nrp=$_POST["id"];
-    $conn=getConn();
+} else if ($_POST["jenis"] == "selectednrp") {
+    $nrp = $_POST["id"];
+    $conn = getConn();
     $sql = "select * from temp_mahasiswa where nrp='$nrp'";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
@@ -78,17 +71,16 @@ if ($_POST["jenis"] == "setstandard") {
         $nama = $row["nama_mahasiswa"];
         $nilai = $row["nilai_placement"];
         $level = $row["level"];
-        $arr=array(
-            "nama"=>$nama,
-            "nilaiplacement"=>$nilai
+        $arr = array(
+            "nama" => $nama,
+            "nilaiplacement" => $nilai
         );
-        
     }
     echo json_encode($arr);
-}else if($_POST["jenis"]=="update"){
-    $nrp=$_POST["id"];
-    $nilai=$_POST["nilai"];
-    $conn=getConn();
+} else if ($_POST["jenis"] == "update") {
+    $nrp = $_POST["id"];
+    $nilai = $_POST["nilai"];
+    $conn = getConn();
 
     $sql0 = "update temp_mahasiswa set nilai_placement='$nilai' where nrp='$nrp'";
     $result0 = $conn->query($sql0);
@@ -96,9 +88,9 @@ if ($_POST["jenis"] == "setstandard") {
         echo "Berhasil update !";
     }
     updatelevel();
-}else if ($_POST["jenis"]=="insertmhs") {
-    $periode=$_POST["periode"];
-    $conn=getConn();
+} else if ($_POST["jenis"] == "insertmhs") {
+    $periode = $_POST["periode"];
+    $conn = getConn();
     $sql = "select * from temp_mahasiswa";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
@@ -112,16 +104,16 @@ if ($_POST["jenis"] == "setstandard") {
 
         $sql2 = "update mahasiswa set nilai_placement='$nilai',current_level='$level',status_mhs='$placement' where nrp=$nrp";
         $result2 = $conn->query($sql2);
-        }
+    }
 
 
     $turncateqry = "TRUNCATE temp_mahasiswa";
     $turnres = mysqli_query($conn, $turncateqry);
     echo "Berhasil";
-}else if ($_POST["jenis"]=="getperiode") {
-    $kal="";
-    $periode=$_POST["periode"];
-    $conn=getConn();
+} else if ($_POST["jenis"] == "getperiode") {
+    $kal = "";
+    $periode = $_POST["periode"];
+    $conn = getConn();
     $sql = "select * from periode";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
@@ -129,23 +121,39 @@ if ($_POST["jenis"] == "setstandard") {
         $sem = $row["semester"];
         $awal = $row["thn_akademik_awal"];
         $akhir = $row["thn_akademik_akhir"];
-        $kal.="<option value='$idperiode'>$sem $awal-$akhir</option>";
+        $kal .= "<option value='$idperiode'>$sem $awal-$akhir</option>";
     }
     echo $kal;
-}else if ($_POST["jenis"]=="loadsel") {
-    $kal="";
-    $nrp=$_POST["nrp"];
-    $conn=getConn();
-    $stmt=$conn->prepare("select * from temp_mahasiswa where nrp=? ");
-    $stmt->bind_param("s",$nrp);
+} else if ($_POST["jenis"] == "loadsel") {
+    $kal = "";
+    $nrp = $_POST["nrp"];
+    $conn = getConn();
+    $stmt = $conn->prepare("select * from temp_mahasiswa where nrp=? ");
+    $stmt->bind_param("s", $nrp);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     echo json_encode($row);
+} else if ($_POST["jenis"] == "addtempmhs") {
+    $nrp = $_POST["nrp"];
+    $nama = $_POST["nama"];
+    $nilai = $_POST["nilai"];
+    $conn = getConn();
+    $stmt = $conn->prepare("INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`) VALUES (?,?,?)");
+    $stmt->bind_param("isi", $nrp, $nama, $nilai);
+    $res=$stmt->execute();
+    $conn->close();
+    if ($res=='1') {
+      echo "Berhasil insert !";
+    }else{
+        echo "Gagal insert !";
+    }
+    updatelevel();
 }
 
-function updatelevel(){
-    $conn=getConn();
+function updatelevel()
+{
+    $conn = getConn();
     $sqla = "select * from temp_nilaiplacement";
     $resulta = $conn->query($sqla);
     while ($rowa = $resulta->fetch_assoc()) {
@@ -158,17 +166,17 @@ function updatelevel(){
         echo "nilai gagal";
     }
 
-     $sql = "select * from temp_mahasiswa";
+    $sql = "select * from temp_mahasiswa";
     $result = $conn->query($sql);
+
     while ($row = $result->fetch_assoc()) {
         $nilai = intval($row["nilai_placement"]);
         $nrp = intval($row["nrp"]);
 
         $placement = "belum ada level";
-        if ($nilai==0) {
+        if ($nilai == 0) {
             $placement = "belum ada level";
-        }
-        else if ($nilai <= $lev1) {
+        } else if ($nilai <= $lev1) {
             $placement = "I";
         } else if ($nilai <= $lev2) {
             $placement = "II";
@@ -180,10 +188,8 @@ function updatelevel(){
 
         $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";
         $result1 = $conn->query($sql1);
+
     }
 
-    if (!$result1) {
-        echo "update level gagal";
-    }
+    
 }
-

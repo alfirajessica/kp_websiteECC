@@ -17,7 +17,7 @@ $level = $arr->get_level();
         <div class="row">
             <!-- row -->
             <!-- aturan pakai -->
-            <div class="col-xl-4">
+            <!-- <div class="col-xl-4">
                 <div class="card">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
@@ -30,7 +30,9 @@ $level = $arr->get_level();
                         </div>
                     </div>
                 </div>
-            </div> <!-- aturan pakai -->
+            </div>  -->
+
+            <!-- aturan pakai -->
 
             <!-- standar nilai ecc -->
             <div class="col-xl-8">
@@ -111,7 +113,21 @@ $level = $arr->get_level();
                     </div>
 
                     <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama">
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="addnrp" class="form-control" placeholder="Masukan Nrp">
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="addnilai" class="form-control" placeholder="Masukan Nilai placement">
+                                </div>
+                            </div>
 
+                            <button type="button" class="btn btn-primary" onclick="addtempmahasiswa()">Masukan</button>
+                        </form>
                         <br>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered">
@@ -169,7 +185,7 @@ $level = $arr->get_level();
                                     <tr>
                                         <td scope="row">Nilai Placement : </td>
                                         <td class="text-left">
-                                            <input type="number" class="form-control-sm" name="" id="crnilaiplacement" aria-describedby="helpId" placeholder="">
+                                            <input min=0 type="number" class="form-control-sm" name="" id="crnilaiplacement" aria-describedby="helpId" placeholder="">
                                         </td>
                                     </tr>
                                     <tr>
@@ -183,7 +199,7 @@ $level = $arr->get_level();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="update()">Simpan Perubahan</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="update()">Simpan Perubahan</button>
                     </div>
                 </div>
             </div>
@@ -246,7 +262,7 @@ $level = $arr->get_level();
                     lev4: lev4
                 },
                 function(data) {
-                    window.location.reload();
+                    $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                 });
 
         }
@@ -277,13 +293,13 @@ $level = $arr->get_level();
                     },
                 });
 
-        }else{
+        } else {
             alert("Pilih file excel dahulu !");
         }
 
         // reloadtable();
     }
-    
+
     //reloadtable();
 
     // function reloadtable() {
@@ -326,6 +342,7 @@ $level = $arr->get_level();
             },
             function(data) {
                 alert(data);
+                $('#example').DataTable().ajax.reload(); //reload ajax datatab
                 $('#isinilai').modal('hide');
             });
     }
@@ -339,7 +356,7 @@ $level = $arr->get_level();
                 },
                 function(data) {
                     alert("Berhasil memasukan mahasiswa !");
-                    location.reload();
+                    $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                 });
         } else {
             alert("Pilih Periode dahulu !");
@@ -390,18 +407,17 @@ $level = $arr->get_level();
                 },
                 {
                     "data": "level",
-                },{
-                    "data":"status",
-                    "render": function (data, type, row) {  
-                        if (parseInt(row.nilai_placement)==0) //nilai masih 0
+                }, {
+                    "data": "status",
+                    "render": function(data, type, row) {
+                        if (parseInt(row.nilai_placement) == 0) //nilai masih 0
                         {
-                            return "<button class='btn btn-primary rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('"+row.nrp+"')\"  >Input Nilai</button>";
-                        }
-                        else if (parseInt(row.nilai_placement)>0) //ubah nilai lebih dari 0
+                            return "<button class='btn btn-primary rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\"  >Input Nilai</button>";
+                        } else if (parseInt(row.nilai_placement) > 0) //ubah nilai lebih dari 0
                         {
-                            return "<button class='btn btn-warning rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('"+row.nrp+"')\"  >Ubah Nilai</button>";
+                            return "<button class='btn btn-warning rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\"  >Ubah Nilai</button>";
                         }
-                       
+
                     }
                 }
 
@@ -411,12 +427,12 @@ $level = $arr->get_level();
 
     function loadmhs(nrp) {
         $.post(
-            "../ajaxes/a_placement.php",
-            {
-                jenis:"loadsel",
-                nrp:nrp
-            },function (data) {
-                var arr=JSON.parse(data);
+            "../ajaxes/a_placement.php", {
+                jenis: "loadsel",
+                nrp: nrp
+            },
+            function(data) {
+                var arr = JSON.parse(data);
                 $("#crnrp").html(arr.nrp);
                 $("#crnama").html(arr.nama_mahasiswa);
                 $("#crnilaiplacement").val(arr.nilai_placement);
@@ -424,6 +440,31 @@ $level = $arr->get_level();
             }
         );
     }
+
+    function addtempmahasiswa(){
+            var nrp=$("#addnrp").val();
+            var nama=$("#addnrp").val();
+            var nilai=$("#addnilai").val();
+
+            $.post(
+                "../ajaxes/a_placement.php",{
+                    jenis:"addtempmhs",
+                    nrp:nrp,
+                    nama:nama,
+                    nilai:nilai
+                },function (data) {
+                    if (data.includes("Berhasil")) {
+                        $("#addnrp").val("");
+                        $("#addnrp").val("");
+                        $("#addnilai").val("");
+                        $('#example').DataTable().ajax.reload(); //reload ajax datatable 
+                    }
+                    alert(data);
+                }
+
+            );
+    }
+    
 </script>
 
 
