@@ -207,25 +207,25 @@ if($_POST["jenis"]=="get_detail_aturkelas"){
 if($_POST["jenis"]=="get_detail_ubahkelas"){
     $idkelas=$_POST["idkelas"];
     $kal="";
-    $sql = "select * from kelas where id_kelas='$idkelas'";
+    $sql="select * from kelas where id_kelas='$idkelas'";
     $query = mysqli_query($conn,$sql); // get the data from the db
     $result = array();
     while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
 
         $result ["level_ecc"] = $row['level_ecc'];
         $result ["nama_kelas"] = $row['nama_kelas'];
-        $result ["dosen"] = $row['dosen'];
         $result ["hari"] = $row['hari'];
-        $result ["jam"] = $row['jam'];
+        $result ["jam_awal"] = $row['jam_awal'];
+        $result ["jam_akhir"] = $row['jam_akhir'];
         $result ["kuota"] = $row['kuota'];
-        
+        $result ["dosen"] = $row['dosen'];
+        $result ["id_ruangkelas"] = $row['id_ruangkelas'];
     }
     
     $conn->close();
     header('Content-Type: application/json');
     echo json_encode($result); // return value of $result
-    
-  //  $conn->close();
+
 }
 
 
@@ -244,18 +244,47 @@ if($_POST["jenis"]=="update_kelas"){
     $sql = "update kelas set hari='$hari', jam_awal='$jamawal', jam_akhir='$jamakhir', kuota='$kuota', dosen='$dosen', id_ruangkelas='$ruang' where id_kelas='$idkelas'";
     
     if ($conn->query($sql)) {
-        echo "berhasil ubah kelas";
+        echo "1"; //berhasil
     }else {
-        echo "gagal";
+        echo "0"; //gagal
     }
     $conn->close();
 }
 
-if($_POST["jenis"]=="aktifkan_allkelas"){
-    //cek semua kelas sesuai idperiode yang dipilih
+if($_POST["jenis"]=="cek_dataterisi"){
+    
     $idperiode = $_POST["idperiode"];
 
-    $sqlcek = "select * from kelas where id_periode='$idperiode'";
+    //cek dulu apakah semua kelas sudah terisi datanya
+    $sqlcek = "select * from kelas where id_periode='$idperiode' and hari='' or kuota='0' or dosen='-' or id_ruangkelas='0'";
+    $query = mysqli_query($conn,$sqlcek); // get the data from the db
+    $result = array();
+    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
+
+        $result ["id_kelas"] = $row['id_kelas'];
+        $result ["nama_kelas"] = $row['nama_kelas'];
+        $result ["hari"] = $row['hari'];
+        $result ["jam_awal"] = $row['jam_awal'];
+        $result ["jam_akhir"] = $row['jam_akhir'];
+        $result ["kuota"] = $row['kuota'];
+        $result ["dosen"] = $row['dosen'];
+        $result ["id_ruangkelas"] = $row['id_ruangkelas'];
+    }
     
+    $conn->close();
+    header('Content-Type: application/json');
+    echo json_encode($result); // return value of $result
+
+}
+if($_POST["jenis"]=="aktifkan_allkelas"){
+    $idperiode = $_POST["idperiode"];
+    $sql = "update kelas set status_kelas='1' where id_periode='$idperiode'";
+    
+    if ($conn->query($sql)) {
+        echo "1"; //berhasil
+    }else {
+        echo "0"; //gagal
+    }
+    $conn->close();
 }
 ?>

@@ -101,10 +101,10 @@
                 <div class="form-group">
                     <label for="">Pilih Periode</label>
                     <div class="input-group mb-3">
-                        <select name="select" id="periode_all"  class="form-control" aria-describedby="help_pilihperiode">                                  
+                        <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Cari</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="btn_cari()">Cari</button>
                         </div>
                     </div>
                     <small id="helpId" class="form-text text-muted">Help text</small>
@@ -112,13 +112,15 @@
                     
                 </div>
 
+                
                 <div class="table-responsive">
-                    <table id="table_lihatkelas" class="table table-striped table-bordered" width="100%">
+                    <table id="table_kelasaktif" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
-                                <th>Nama Kelas</th>
-                                <th>Dosen/Jam/Hari</th>
-                                <th>Mahasiswa Terdaftar</th>
+                                <th>Level</th>
+                                <th>Kelas</th>
+                                <th>Jadwal</th>
+                                <th>Dosen</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -126,6 +128,7 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- end of tabel kelas yang tergenerate -->
 
                 
             </div> <!-- end of lihat kelas -->
@@ -139,7 +142,8 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="title_namakelas"></h5>
-            <h6  id="title_idkelas"></h6>
+            <h6 id="title_idkelas"></h6>
+            <h6 id="title_table"></h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -174,7 +178,7 @@
                         <tr>
                             <td scope="row">Pilih Ruang : </td>
                             <td class="text-left">
-                              <select class="form-control" name="" id="all_ruang" aria-describedby="help_allruang">
+                              <select class="form-control" name="" id="all_ruang" aria-describedby="help_allruang" onchange="ruang_onchange(this.value)">
                               
                               </select>
                               <small id="help_allruang" class="form-text text-muted"></small>
@@ -195,7 +199,7 @@
                         <tr>
                             <td scope="row">Kuota : </td>
                             <td class="text-left">
-                                <input type="number" class="form-control-sm" name="" id="kuota" aria-describedby="help_kuota" placeholder=""> 
+                                <input type="number" min="0" max="1000" class="form-control-sm" name="" id="kuota" aria-describedby="help_kuota" placeholder="" onchange="kuota_onchange(this.value)"> 
                                 <small id="help_kuota" class="form-text text-muted"></small>
                             </td>
                         </tr>
@@ -344,8 +348,21 @@ function atur_kelas(idkelas) {
     
 }
 
+function kuota_onchange(kuota) {
+    console.log(kuota);
+    if (kuota < 0) {
+        $("#help_kuota").html("kuota tidak boleh kecil dari 0");
+    }
+    else if (kuota == 0) {
+        $("#help_kuota").html("kuota belum terisi");
+    }
+    else if (kuota > 0){
+        $("#help_kuota").html("");
+    }
+}
 function updatekelasini() {
     var idkelas = $("#title_idkelas").val();
+    var table = $("#title_table").val();
     var kuota =  $("#kuota").val();
     var dosen = $("#all_dosen").val();
     var hari = $("#pilihhari").val();
@@ -376,16 +393,13 @@ function updatekelasini() {
         $("#help_allruang").html("");
     }
     
-    //pengecekkan kuota terisi atau tidak
-    if (kuota == 0) {
-        $("#help_kuota").html("kuota belum terisi");
+    if (kuota <= 0) {
+        $("#help_kuota").html("kuota tidak boleh kecil dari 1");
     }
-    else if (kuota != 0){
-        $("#help_kuota").html("");
-    }
+    
 
     //jika semua terisi
-    if (kuota != 0 && dosen != "-1" && hari != "-1" && ruang != "-1") {
+    if (kuota > 0 && dosen != "-1" && hari != "-1" && ruang != "-1") {
           
         $("#help_kuota, #help_alldosen, #help_allruang, #help_pilihhari").html("");
        
@@ -403,8 +417,14 @@ function updatekelasini() {
         },
         function(data){
             console.log(data);
-            $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
-            $("#btn_updatekelas").attr("data-dismiss", "modal"); 
+            if (data == "1") {
+                $("#btn_updatekelas").attr("data-dismiss", "modal"); 
+                $(table).DataTable().ajax.reload(); //reload ajax datatable 
+            }
+            else if(data == "0"){
+                alert("gagal mengubah");
+            }
+            
         });
         
     
@@ -413,39 +433,60 @@ function updatekelasini() {
     
 }
 
-/*function get_nama_dosen(dosen_) {
-        console.log(dosen_);
-        $.post("../ajaxes/a_kelas.php",
-        {
-            username:dosen_,
-           // idkelas:idkelas_,
-            jenis:"get_nama_dosen",
-
-        },
-        function(data){
-            console.log(data);
-            dosen_ = data;
-           //get_nama_dosen(dosen_);
-            $('#table1').DataTable({
-                data:dosen_
-            });
-        });
-}*/
-
 function aktifkan_allkelas() {
     var periode = $("#periode").val();
     $.post("../ajaxes/a_kelas.php",
-        {
-            idperiode:periode,
-            jenis:"aktifkan_allkelas",
+    {
+        idperiode:periode,
+        jenis:"cek_dataterisi",
 
-        },
-        function(data){
-            console.log(data);
-            
-        });
+    },
+    function(data){
+        console.log(data["id_kelas"]);
+        var cek=data["id_kelas"];
+
+        if (cek != null) //ada yg belum terisi
+        {
+            alert("Anda belum dapat mengaktifkan semua kelas! Pastikan semua data terisi")
+        }
+        else if (cek == null) //terisi semua
+        {
+            console.log("-+-");
+            $.post("../ajaxes/a_kelas.php",
+            {
+                idperiode:periode,
+                jenis:"aktifkan_allkelas",
+            },
+            function(data){
+                console.log(data);
+                $('#table1').DataTable().ajax.reload(); //reload ajax datatable 
+            });
+        }
+    });
 }
 
+function ubah_kelas(idkelas,table) {
+    console.log("ubah kelas " + idkelas + " " + table);
+    
+    $.post("../ajaxes/a_kelas.php",
+    {
+        idkelas:idkelas,
+        jenis:"get_detail_ubahkelas",
+    },
+    function(data){
+        $("#title_namakelas").html(data["level_ecc"] + " - " + data["nama_kelas"]);
+        $("#title_idkelas").val(idkelas);
+        $("#title_table").val(table);
+        $("#all_dosen").val(data["dosen"]);
+        $("#all_ruang").val(data["id_ruangkelas"]);
+        $("#pilihhari").val(data["hari"]);
+        $("#jamawal").val(data["jam_awal"]);
+        $("#jamakhir").val(data["jam_awal"]);
+        $("#kuota").val(data["kuota"]);
+        $(table).DataTable().ajax.reload(); //reload ajax datatable 
+        //$('#table_lihatkelas').DataTable().ajax.reload(); //reload ajax datatable 
+    });
+}
 
 
 
@@ -554,18 +595,128 @@ function datatable_kelasnonaktif() {
                     var idkelas = row.id_kelas;
                     var level = row.level_ecc;
                     var idperiode = row.id_periode;
+                    var table= "#table1";
                     if (row.dosen == "-") //kelas aktif
                     {
                         return "<button onclick=\"atur_kelas(\'"+idkelas+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Atur Jadwal</button>" + "<button onclick=\"hapus_kelas(\'"+idkelas+"\',\'"+level+"\',\'"+idperiode+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     }
                     else if (row.dosen != "-") //kelas tdk aktif
                     {
-                        return "<button onclick=\"ubah_kelas(\'"+idkelas+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"hapus_kelas(\'"+idkelas+"\',\'"+level+"\',\'"+idperiode+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"hapus_kelas(\'"+idkelas+"\',\'"+level+"\',\'"+idperiode+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     }
                     
                 }
             },
 
+            ],
+    }) 
+    //end of datatble list barang
+}
+
+//lihat kelas
+function  btn_cari() {
+    console.log("button cari");
+    //cek kelas yang belum diaktifkan pada periode tsb
+    datatable_kelasaktif();
+}
+
+
+function datatable_kelasaktif() {
+    var periode = $("#periode_lihatkelas").val();
+    //datatable list barang
+    var table= "";
+    table = $('#table_kelasaktif').DataTable( 
+    {
+        dom: 'Bfrtip',
+            "buttons": [ 'copy', 'excel', 'pdf' ],
+            "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
+            },
+            "serverSide":true,
+            "ordering":true, //set true agar bisa di sorting
+            "ajax":{
+                "url":"../datatables/admin-datatable/kelas_aktifdt.php",
+                "type":"POST",
+                "data":{"idperiode":periode},
+            },
+            "deferRender":true,
+            "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
+            "columns":[
+            
+            {"data":"level_ecc"},
+            {"data":"nama_kelas"},
+            {"data":"hari",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    var hari = row.hari;
+                    var jam_awal = row.jam_awal;
+                    var jam_akhir = row.jam_akhir;
+                    var ruang = row.id_ruangkelas;
+                    var kuota = row.kuota;
+
+                    if (hari == "") {
+                        hari = "<label class='text-danger'> Belum terisi </label>";
+                    }
+                    if (jam_awal == null) {
+                        jam_awal = "<label class='text-danger'> Belum terisi </label>";
+                    }
+                    if (ruang == null) {
+                        ruang = "<label class='text-danger'> Belum terisi </label>";
+                    }
+                    else if (ruang !=0) {
+                        ruang = row.nama_ruang;
+                    }
+                    if (kuota == 0) 
+                    {
+                        kuota = "<label class='text-danger'> Belum terisi </label>";
+                    }
+                    return "Hari : " + hari + "<br> Jam : " + jam_awal + "-" + jam_akhir + "<br> Ruang : " + ruang + "<br> Kuota : " + kuota;
+
+                   
+                }
+            },
+            {"data":"dosen",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    if (row.dosen == '-') //kelas aktif
+                    {
+                        return "<p class='text-danger'> Belum terisi </p>";
+                    }
+                    else if (row.dosen != '-') //kelas tdk aktif
+                    {
+                        return row.nama;
+                       
+                    }
+                    
+                }
+            },
+            {"data":"status_kelas",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    var idkelas = row.id_kelas;
+                    var table = "#table_kelasaktif";
+
+                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#exampleModal'>Lihat Mahasiswa</button>";
+                    
+                    
+                }
+            },
+            
             ],
     }) 
     //end of datatble list barang
