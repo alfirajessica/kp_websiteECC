@@ -19,9 +19,9 @@
                 <li>
                     <a href="kelas.php"> <i class="menu-icon fa fa-laptop"></i>Kelas</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="absensi.php"> <i class="menu-icon fa fa-laptop"></i>Absensi</a>
-                </li>
+                </li> -->
                 <li>
                     <a href="nilai.php"> <i class="menu-icon fa fa-laptop"></i>Nilai</a>
                 </li>
