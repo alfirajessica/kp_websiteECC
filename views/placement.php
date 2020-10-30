@@ -54,7 +54,7 @@ $level = $arr->get_level();
                                     <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
                                     <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
                                     <input type="button" onclick="importfile()" id="btnimport" value="*Import File Excel" class="btn btn-primary form-control">
-                                    <label for="">* dengan menekan tomobol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label>
+                                    <label for="">* dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label>
                                 </div>
                                 <br><br>
 
@@ -119,10 +119,10 @@ $level = $arr->get_level();
                                     <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama">
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="addnrp" class="form-control" placeholder="Masukan Nrp">
+                                    <input type="number" id="addnrp" class="form-control" placeholder="Masukan Nrp">
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="addnilai" class="form-control" placeholder="Masukan Nilai placement">
+                                    <input type="number" id="addnilai" class="form-control" placeholder="Masukan Nilai placement">
                                 </div>
                             </div>
 
@@ -149,8 +149,8 @@ $level = $arr->get_level();
 
                             </select>
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
-                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">*Tempatkan Mahasiswa</button>
-                            <label>* dengan menekan tombol ini anda setuju menghapus data sementara mahasiswa untuk dimasukan ke dalam data mahasiswa permanent pastikan data sementara sudah benar</label>
+                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">Tempatkan Mahasiswa</button>
+                           
                         </div>
                     </div>
                 </div>
@@ -262,6 +262,7 @@ $level = $arr->get_level();
                     lev4: lev4
                 },
                 function(data) {
+                    $("#import").css("display","none");
                     $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                 });
 
@@ -285,7 +286,6 @@ $level = $arr->get_level();
                     processData: false,
                     success: function(response) {
                         if (response.includes("success")) {
-                            $("#btnimport").css("display", "none");
                             $("#import").css("display", "block");
                         } else {
                             console.log(response);
@@ -443,7 +443,7 @@ $level = $arr->get_level();
 
     function addtempmahasiswa(){
             var nrp=$("#addnrp").val();
-            var nama=$("#addnrp").val();
+            var nama=$("#addnama").val();
             var nilai=$("#addnilai").val();
 
             $.post(
@@ -455,10 +455,11 @@ $level = $arr->get_level();
                 },function (data) {
                     if (data.includes("Berhasil")) {
                         $("#addnrp").val("");
-                        $("#addnrp").val("");
+                        $("#addnam").val("");
                         $("#addnilai").val("");
-                        $('#example').DataTable().ajax.reload(); //reload ajax datatable 
+                      
                     }
+                    $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                     alert(data);
                 }
 
