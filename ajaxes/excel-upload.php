@@ -8,7 +8,7 @@ session_start();
     $uploadfile = $_FILES['file']['tmp_name'];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
     //turncate tokopedia
-    $turncateqry = "TRUNCATE temp_mahasiswa";
+    //$turncateqry = "TRUNCATE temp_mahasiswa";
     $turncateres = mysqli_query($conn, $turncateqry);
 
     //get data from excel
@@ -22,8 +22,11 @@ session_start();
                 $nilai = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
                 
                 if ($nrp != '') {
-                    $insertqry = "INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`,`level`) VALUES ('$nrp','$nama','$nilai','0')";
+                    $insertqry = "INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`,`level`) VALUES ('$nrp','$nama','$nilai','belum ada level')";
                     $insertres = mysqli_query($conn, $insertqry);
+
+                    $updateqry = "update temp_mahasiswa setnama_mahasiswa='$nama',nilai_placement='$nilai',level='belum ada level' where nrp='$nrp' ";
+                    $updateres = mysqli_query($conn, $updateqry);
                 }
             } else {
                 // ini berati headernya di $row=1 
