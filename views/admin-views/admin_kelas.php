@@ -496,6 +496,7 @@ function datatable_kelasnonaktif() {
     var table= "";
     table = $('#table1').DataTable( 
     {
+        destroy:true,
         dom: 'Bfrtip',
             "buttons": [ 'copy', 'excel', 'pdf' ],
             "processing":true,
@@ -627,6 +628,7 @@ function datatable_kelasaktif() {
     var table= "";
     table = $('#table_kelasaktif').DataTable( 
     {
+        destroy:true,
         dom: 'Bfrtip',
             "buttons": [ 'copy', 'excel', 'pdf' ],
             "processing":true,

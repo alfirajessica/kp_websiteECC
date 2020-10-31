@@ -31,7 +31,7 @@
                     <a href="ruangan.php"> <i class="menu-icon fa fa-laptop"></i>Ruang ECC</a>
                 </li>
                 <li>
-                    <a href="absensi.php"> <i class="menu-icon fa fa-laptop"></i>Mahasiswa</a>
+                    <a href="mahasiswa.php"> <i class="menu-icon fa fa-laptop"></i>Mahasiswa</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
