@@ -15,55 +15,70 @@ $level = $arr->get_level();
     <!-- container-fluid -->
     <div class="container-fluid mt--6">
         <div class="row">
+            <!-- row -->
+            <!-- aturan pakai -->
             
+
+            <!-- aturan pakai -->
+
             <!-- standar nilai ecc -->
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="alert alert-warning" role="alert">
-                            Standar nilai ECC per-level
-                        </div>
-
-
                         <div class="card-text">
-
-                            <button class="btn btn-success text-light" onclick="window.location.href='nilaitest.xlsx'" target="_blank">Download Templete</button>
-
-                            <h3>Import</h3>
-
-                            <div id="formkelas">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
-                                    <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
-                                    <input type="button" onclick="importfile()" id="btnimport" value="*Import File Excel" class="btn btn-primary form-control">
-                                    <label for="">* dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label>
+                            <form>
+                                <div class="form-group">
+                                    <label> Silakan gunakan template ini sebelum melakukan import </label>
+                                    <button class="btn btn-success text-light" onclick="window.location.href='nilaitest.xlsx'" target="_blank">Download Templete</button>
                                 </div>
-                                <br><br>
 
-                                <table id="import" style="display:none;" class="table table-borderless table-sm text-right">
+                                <div class="form-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
+                                        <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
+                                    </div>
+                                    <!-- <input type="file" name="uploadfile" id="file1" class="input form-control"> -->
+                                    <!-- <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
+                                    <label class="custom-file-label" id="lbl_file1">Pilih file ...</label> -->
+                                    <!-- <input type="button" onclick="importfile()" id="btnimport" value="*Import File Excel" class="btn btn-primary form-control">
+                                    <label for="">* dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label> -->
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="">dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label>
+                                  <input type="button" onclick="importfile()" id="btnimport" value="*Import File Excel" class="btn btn-primary form-control">
+                                  <small id="helpId" class="text-muted">Help text</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <table id="import" style="display:none;" class="table table-borderless table-sm text-right">
                                     <tbody>
                                         <tr>
                                             <th scope="row">Level 1 : </th>
                                             <td class="text-left">
-                                                <input type="number" class="form-control-sm" name="" id="level1" aria-describedby="helpId" placeholder="">
+                                                <input type="number" class="form-control-sm" name="" id="level1" aria-describedby="help_level1">
+                                                <small id="help_level1" class="form-text text-muted"></small>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Level 2 : </th>
                                             <td class="text-left">
-                                                <input type="number" class="form-control-sm" name="" id="level2" aria-describedby="helpId" placeholder="">
+                                                <input type="number" class="form-control-sm" name="" id="level2" aria-describedby="help_level2">
+                                                <small id="help_level2" class="form-text text-muted"></small>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Level 3 : </th>
                                             <td class="text-left">
-                                                <input type="number" class="form-control-sm" name="" id="level3" aria-describedby="helpId" placeholder="">
+                                                <input type="number" class="form-control-sm" name="" id="level3" aria-describedby="help_level3">
+                                                <small id="help_level3" class="form-text text-muted"></small>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Level 4 : </th>
                                             <td class="text-left">
-                                                <input type="number" class="form-control-sm" name="" id="level4" aria-describedby="helpId" placeholder="">
+                                                <input type="number" class="form-control-sm" name="" id="level4" aria-describedby="help_level4">
+                                                <small id="help_level4" class="form-text text-muted"></small>
                                             </td>
                                         </tr>
                                         <tr>
@@ -72,17 +87,60 @@ $level = $arr->get_level();
                                                 <a onclick="tetapkan()" class="btn btn-primary text-light">Tempatkan</a>
                                             </td>
                                         </tr>
-
                                     </tbody>
-                                </table>
-
-                            </div>
+                                    </table>
+                                </div>
+                            </form>
                         </div>
-
-
                     </div>
                 </div>
             </div> <!-- end of standar nilai ecc -->
+
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                        <div class="alert alert-warning" role="alert">
+                            Standar nilai ECC per-level
+                        </div>
+                        <form role="form">
+                        <table class="table table-borderless table-md text-right">
+                            <tbody>
+                                <tr>
+                                    <td scope="row">Nrp : </td>
+                                    <td class="text-left">
+                                        <input type="number" id="addnrp" class="form-control" placeholder="Masukan Nrp" aria-describedby="help_nrp">
+                                        <small id="help_nrp" class="form-text text-muted"></small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">Nama : </td>
+                                    <td class="text-left">
+                                        <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama" aria-describedby="help_nama">
+                                        <small id="help_nama" class="form-text text-muted"></small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">Nama : </td>
+                                    <td class="text-left">
+                                        <input type="number" id="addnilai" class="form-control" placeholder="Masukan Nilai placement" aria-describedby="help_nilai">
+                                        <small id="help_nilai" class="form-text text-muted"></small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="addtempmahasiswa()">Masukan</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                        
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div> <!-- end of row -->
 
         <!-- row -->
@@ -95,22 +153,6 @@ $level = $arr->get_level();
                     </div>
 
                     <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <div class="col">
-                                    <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama">
-                                </div>
-                                <div class="col">
-                                    <input type="number" id="addnrp" class="form-control" placeholder="Masukan Nrp">
-                                </div>
-                                <div class="col">
-                                    <input type="number" id="addnilai" class="form-control" placeholder="Masukan Nilai placement">
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn btn-primary" onclick="addtempmahasiswa()">Masukan</button>
-                        </form>
-                        <br>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered">
                                 <thead>
@@ -131,8 +173,8 @@ $level = $arr->get_level();
 
                             </select>
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
-                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">Tempatkan Mahasiswa</button>
-                           
+                            <button type="button" class="btn btn-primary text-light" onclick="insertfile()">*Tempatkan Mahasiswa</button>
+                            <label>* dengan menekan tombol ini anda setuju menghapus data sementara mahasiswa untuk dimasukan ke dalam data mahasiswa permanent pastikan data sementara sudah benar</label>
                         </div>
                     </div>
                 </div>
@@ -228,14 +270,15 @@ $level = $arr->get_level();
         var lev4 = $("#level4").val();
 
         if (lev1 == "") {
-            alert("Masukan nilai standar level 1 !");
+            $("#help_level1").text("Masukan nilai standar level 1!");
         } else if (lev2 == "") {
-            alert("Masukan nilai standar level 2 !");
+            $("#help_level2").text("Masukan nilai standar level 2!");
         } else if (lev3 == "") {
-            alert("Masukan nilai standar level 3 !");
+            $("#help_level3").text("Masukan nilai standar level 3!");
         } else if (lev4 == "") {
-            alert("Masukan nilai standar level 4 !");
+            $("#help_level4").text("Masukan nilai standar level 4!");
         } else {
+            $("#help_level1, #help_level2, #help_level3, #help_level4").text("");
             $.post("../ajaxes/a_placement.php", {
                     jenis: "setstandard",
                     lev1: lev1,
@@ -244,8 +287,8 @@ $level = $arr->get_level();
                     lev4: lev4
                 },
                 function(data) {
-                    $("#import").css("display","none");
                     $('#example').DataTable().ajax.reload(); //reload ajax datatable 
+                    $("#import").css("display", "none");
                 });
 
         }
@@ -268,6 +311,7 @@ $level = $arr->get_level();
                     processData: false,
                     success: function(response) {
                         if (response.includes("success")) {
+                            $("#btnimport").css("display", "none");
                             $("#import").css("display", "block");
                         } else {
                             console.log(response);
@@ -437,11 +481,10 @@ $level = $arr->get_level();
                 },function (data) {
                     if (data.includes("Berhasil")) {
                         $("#addnrp").val("");
-                        $("#addnam").val("");
+                        $("#addnama").val("");
                         $("#addnilai").val("");
-                      
+                        $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                     }
-                    $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                     alert(data);
                 }
 
