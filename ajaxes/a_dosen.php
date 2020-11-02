@@ -5,10 +5,10 @@ $conn=getConn();
 if($_POST["jenis"]=="simpandosen_baru"){
     $namadosen = $_POST["getnamadosen"];
     $userdosen = $_POST["getuserdosen"];
-    $passdosen = $_POST["getpassdosen"];
+    $passdosen = $_POST["getuserdosen"];
     $level = "dosen";
 
-$userdosen=sha1($userdosen);
+    $passdosen=sha1($passdosen);
     $sql = "insert into user (username,password,nama,level,status) values ('$userdosen','$passdosen','$namadosen','$level',1)";
     if ($conn->query($sql)) {
         echo "berhasil tambah dosen baru";
