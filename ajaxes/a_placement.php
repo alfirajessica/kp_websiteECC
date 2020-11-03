@@ -149,6 +149,16 @@ if ($_POST["jenis"] == "setstandard") {
         echo "Gagal insert !";
     }
     updatelevel();
+}else if($_POST["jenis"]=="cekdata"){
+    $conn = getConn();
+    $stmt = $conn->prepare("select count(nrp) as jum from temp_mahasiswa");
+    $res=$stmt->execute();
+    $res1=$stmt->get_result();
+    $row=$res1->fetch_assoc();
+    $conn->close();
+    if ($row["jum"]>0) {
+      echo "ada";
+    }
 }
 
 function updatelevel()
