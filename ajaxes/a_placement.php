@@ -159,7 +159,10 @@ if ($_POST["jenis"] == "setstandard") {
     if ($row["jum"]>0) {
       echo "ada";
     }
+}else if($_POST["jenis"]=="updatelevel"){
+    updatelevel();
 }
+
 
 function updatelevel()
 {
@@ -199,6 +202,7 @@ function updatelevel()
         $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";
         $result1 = $conn->query($sql1);
 
+        
     }
 
     

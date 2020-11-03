@@ -347,7 +347,7 @@ $level = $arr->get_level();
         } else {
             alert("Pilih file excel dahulu !");
         }
-
+        updatelevel();
     }
 
 
@@ -377,6 +377,7 @@ $level = $arr->get_level();
         } else {
             alert("Pilih file excel dahulu !");
         }
+        updatelevel();
     }
 
 
@@ -576,6 +577,20 @@ $level = $arr->get_level();
             }
 
         );
+    }
+    
+    function updatelevel() {
+        $.post(
+            "../ajaxes/a_placement.php", {
+                jenis: "updatelevel",
+            },
+            function(data) {
+               console.log(data);
+               $('#example').DataTable().ajax.reload(); //reload ajax datatable 
+            }
+
+        );
+
     }
 </script>
 
