@@ -29,7 +29,7 @@ $level = $arr->get_level();
                             <form>
                                 <div class="form-group">
                                     <label> Silakan gunakan template ini sebelum melakukan import </label>
-                                    <button class="btn btn-success text-light" onclick="window.location.href='nilaitest.xlsx'" target="_blank">Download Templete</button>
+                                    <button type="button" class="btn btn-success text-light" onclick="window.location.href='../PHPExcel/nilaitest.xlsx'" target="_blank">Download Templete</button>
                                 </div>
 
                                 <div class="form-group">
@@ -46,8 +46,8 @@ $level = $arr->get_level();
 
                                 <div class="form-group">
                                     <label for="">dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label>
-                                    <input type="button" data-toggle="modal" data-target="#modallevelada" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
-                                    <input type="button" data-toggle="modal" data-target="#modallevelnone" onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
+                                    <input type="button" data-toggle="modal" data-target="#modallevelada" href="#example" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
+                                    <input type="button" data-toggle="modal" data-target="#modallevelnone" href="#example"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
                                     <small id="helpId" class="text-muted">Help text</small>
                                 </div>
 
@@ -97,7 +97,7 @@ $level = $arr->get_level();
                                                     <input type="text" class="form-control" id="level4" aria-describedby="emailHelp" placeholder="Masukan Level 4">
                                                 </div>
 
-                                                <button type="button" class="btn btn-primary" onclick="tetapkan()">Tetapkan</button>
+                                            
 
                                             </form>
                                         </div>
@@ -106,8 +106,8 @@ $level = $arr->get_level();
                             </div>
                         </div>
                         <div class="modal-footer">
-
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" onclick="tetapkan()" data-dismiss="modal"> Tetapkan</button>
+                            
                         </div>
                     </div>
                 </div>
@@ -297,6 +297,11 @@ $level = $arr->get_level();
                 function(data) {
                     $('#example').DataTable().ajax.reload(); //reload ajax datatable 
                     $("#import").css("display", "none");
+
+                    $("#file1").val("");
+                    $("#btnimportnone").css("display", "none");
+                    $("#btnimpotada").css("display", "block");
+
                 });
         }
     }
@@ -338,6 +343,14 @@ $level = $arr->get_level();
                         if (response.includes("success")) {
                             $("#btnimport").css("display", "none");
                             $("#import").css("display", "block");
+
+                            $("#btnimportnone").css("display", "none");
+                           $("#btnimportada").css("display", "block");
+
+                           alert("Berhasil Import data !");
+                            $("#lbl_file1").html("Pilih File ...");
+                            window.location.href="#example";
+
                         } else {
                             console.log(response);
                         }
@@ -365,8 +378,9 @@ $level = $arr->get_level();
                     processData: false,
                     success: function(response) {
                         if (response.includes("success")) {
-                            $("#btnimport").css("display", "none");
-                            $("#import").css("display", "block");
+                            alert("Berhasil import data !");
+                            $("#lbl_file1").html("Pilih File ...");
+                            window.location.href="#example";
                         } else {
                             console.log(response);
                             alert(response);
@@ -396,6 +410,7 @@ $level = $arr->get_level();
                     processData: false,
                     success: function(response) {
                         if (response.includes("success")) {
+                            alert(response);
                             $("#btnimport").css("display", "none");
                             $("#import").css("display", "block");
                         } else {

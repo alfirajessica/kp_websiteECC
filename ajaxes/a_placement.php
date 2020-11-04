@@ -99,16 +99,22 @@ if ($_POST["jenis"] == "setstandard") {
         $level = $row["level"];
         $nilai = $row["nilai_placement"];
 
-        $sql1 = "INSERT INTO `mahasiswa`(`id_periode`,`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$periode','$nrp','$nama','$level','$nilai','1')";
-        $result1 = $conn->query($sql1);
+        if ($level!="belum ada level") {
+            $sql1 = "INSERT INTO `mahasiswa`(`id_periode`,`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$periode','$nrp','$nama','$level','$nilai','1')";
+            $result1 = $conn->query($sql1);
+    
+            $sql2 = "update mahasiswa set nilai_placement='$nilai',current_level='$level',status_mhs='$placement' where nrp=$nrp";
+            $result2 = $conn->query($sql2);
 
-        $sql2 = "update mahasiswa set nilai_placement='$nilai',current_level='$level',status_mhs='$placement' where nrp=$nrp";
-        $result2 = $conn->query($sql2);
+
+            $sql3="delete from temp_mahasiswa where nrp='$nrp'";
+            $result3 = $conn->query($sql3);
+
+        }
+
+       
     }
 
-
-    $turncateqry = "TRUNCATE temp_mahasiswa";
-    $turnres = mysqli_query($conn, $turncateqry);
     echo "Berhasil";
 } else if ($_POST["jenis"] == "getperiode") {
     $kal = "";
