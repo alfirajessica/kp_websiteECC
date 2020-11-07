@@ -90,8 +90,10 @@ $level = $arr->get_level();
                 $("#periode").html(data);
             });
     }
-    datatable_lihatsemuamahasiswa();
     periode();
+    isikelas();
+    datatable_lihatsemuamahasiswa();
+    
 
 
 
@@ -145,6 +147,19 @@ $level = $arr->get_level();
             ],
         });
     }
+
+
+    function isikelas(){
+        $.post("../ajaxes/a_dos_nilai.php", {
+                jenis: "get_allkelas",
+            },
+            function(data) {
+                console.log(data);
+                $("#kelas").html(data);
+            });
+    }
+
+   
 </script>
 
 </html>

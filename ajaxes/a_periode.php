@@ -20,7 +20,6 @@ if($_POST["jenis"]=="get_allperiode"){
     }
     echo $kal;
     $conn->close();
-    set_periodedb();
 }
 
 
