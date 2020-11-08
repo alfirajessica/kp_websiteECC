@@ -8,7 +8,7 @@ $arr = unserialize($_SESSION["user"]);
 $level = $arr->get_level();
 
 ?>
-
+<?php include_once('scripts.php') ?>
 <body>
 
     <?php require_once("sidenav.php"); ?>
@@ -80,7 +80,7 @@ $level = $arr->get_level();
 
 
 </body>
-<?php include_once('scripts.php') ?>
+
 <script>
     function periode() {
         $.post("../ajaxes/a_periode.php", {
@@ -91,73 +91,7 @@ $level = $arr->get_level();
             });
     }
     periode();
-    isikelas();
-    datatable_lihatsemuamahasiswa();
-    
 
-
-
-
-    function datatable_lihatsemuamahasiswa() {
-        //datatable list barang
-        var idperiode=$("#periode").val();
-        var idkelas=$("#kelas").val();
-        var table = "";
-        table = $('#example').DataTable({
-            dom: 'Bfrtip',
-            "processing": true,
-            "serverSide": true,
-            "bInfo": false,
-            dom: "<'myfilter'f><'mylength'l>t",
-            "pagingType": "numbers",
-            "ordering": true, //set true agar bisa di sorting
-            "order": [
-                [0, 'asc']
-            ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
-            "ajax": {
-                "url": "../datatables/dosen-datatable/kelas_aktifdt.php",
-                "type": "POST",
-                "idperiode":idperiode,
-                "idkelas":idkelas,
-            },
-            "deferRender": true,
-            "aLengthMenu": [
-                [10, 20, 50],
-                [10, 20, 50]
-            ], //combobox limit
-            "columns": [{
-                    "data": "id_kelas"
-                }
-                // {
-                //     "data": "nrp"
-                // },
-                // {
-                //     "data": "nama"
-                // },
-                // {
-                //     "data": "uts",
-                // },
-                // {
-                //     "data": "uas",
-                // }, 
-                // {
-                //     "data": "na",
-                // }
-
-            ],
-        });
-    }
-
-
-    function isikelas(){
-        $.post("../ajaxes/a_dos_nilai.php", {
-                jenis: "get_allkelas",
-            },
-            function(data) {
-                console.log(data);
-                $("#kelas").html(data);
-            });
-    }
 
    
 </script>
