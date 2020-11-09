@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label for="">Pilih Level - Kelas</label>
-                <select class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                <select class="form-control" id="kelas" aria-describedby="helpId" placeholder="">
                     <option>ECC Level 1 - Kelas A</option>
                     <option>ECC Level 1 - Kelas B</option>
                 </select>

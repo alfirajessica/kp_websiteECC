@@ -5,19 +5,11 @@ $connect=getConn();
 $search = $_POST['search']['value']; // Ambil data yang di ketik user pada textbox pencarian
 $limit = $_POST['length']; // Ambil data limit per page
 $start = $_POST['start']; // Ambil data start
-$idperiode = $_POST["idperiode"];
-$username = $_POST["username"];
 
-$sql = mysqli_query($connect, "SELECT id_kelas FROM kelas where status_kelas=''"); // Query untuk menghitung seluruh data kelas
+$sql = mysqli_query($connect, "SELECT nrp FROM temp_mahasiswa"); // Query untuk menghitung seluruh data siswa
 $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
-$query = "SELECT * FROM kelas k
-LEFT JOIN user u
-ON k.dosen = u.username
-LEFT JOIN ruang_kelas rk
-ON k.id_ruangkelas=rk.id_ruangkelas
-WHERE (k.level_ecc LIKE '%".$search."%' OR k.nama_kelas LIKE '%".$search."%' OR k.hari LIKE '%".$search."%' OR k.jam_awal LIKE '%".$search."%' OR k.dosen LIKE '%".$search."%' OR k.kuota LIKE '%".$search."%' OR k.status_kelas LIKE '%".$search."%' OR u.nama LIKE '%".$search."%' OR rk.nama_ruang LIKE '%".$search."%') and k.id_periode='$idperiode' and k.status_kelas='1' and k.dosen='$username'";
-
+$query = "SELECT * FROM temp_mahasiswa where 1 and (nama_mahasiswa like '%$search%' or nrp like '%$search%')";
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 $order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
 $order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;

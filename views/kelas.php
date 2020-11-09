@@ -71,7 +71,7 @@ $level = $arr->get_level();
             
           </div>
           <div class="modal-footer">
-            <button id="btn_updatekelas" type="button" class="btn btn-primary" onclick="()" >Save changes</button>
+            <button id="btn_updatekelas" type="button" class="btn btn-primary" >Save changes</button>
           </div>
         </div>
       </div>
