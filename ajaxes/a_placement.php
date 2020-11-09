@@ -1,67 +1,49 @@
 <?php
 session_start();
 include '../config/conn.php';
+$conn = getConn();
+
+//save ke standard_nilaipt
 if ($_POST["jenis"] == "setstandard") {
     $conn = getConn();
 
+    $periode =intval($_POST["periode"]);
     $lev1 = intval($_POST["lev1"]);
     $lev2 = intval($_POST["lev2"]);
     $lev3 = intval($_POST["lev3"]);
     $lev4 = intval($_POST["lev4"]);
 
-    $turncateqry = "TRUNCATE temp_nilaiplacement";
+    $turncateqry = "TRUNCATE standard_nilaipt";
     $turnres = mysqli_query($conn, $turncateqry);
-    $insertqry = "INSERT INTO `temp_nilaiplacement`(`level1`,`level2`,`level3`,`level4`) VALUES ('$lev1','$lev2','$lev3','$lev4')";
+    $insertqry = "INSERT INTO standard_nilaipt(id_periode,level1,level2,level3,level4) VALUES ($periode,$lev1,$lev2,$lev3,$lev4)";
     $insertres = mysqli_query($conn, $insertqry);
 
-    $sql = "select * from temp_mahasiswa";
+    $sql = "select * from mahasiswa where id_periode='$periode'";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
         $nilai = intval($row["nilai_placement"]);
         $nrp = intval($row["nrp"]);
 
-        $placement = "belum ada level";
+        $placement = "";
         if ($nilai == 0) {
-            $placement = "belum ada level";
+            $placement = 0;
         } else if ($nilai <= $lev1) {
-            $placement = "I";
+            $placement = 1;
         } else if ($nilai <= $lev2) {
-            $placement = "II";
+            $placement = 2;
         } else if ($nilai <= $lev3) {
-            $placement = "III";
+            $placement = 3;
         } else {
-            $placement = "IV";
+            $placement = 4;
         }
 
 
-        $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";
+        $sql1 = "update mahasiswa set placement_level=$placement where nrp='$nrp'";
         $result1 = $conn->query($sql1);
     }
-} else if ($_POST["jenis"] == "getdata") {
-    $kal = "";
-    $conn = getConn();
-    $sql = "select * from temp_mahasiswa";
-    $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-        $nrp = $row["nrp"];
-        $nama = $row["nama_mahasiswa"];
-        $nilai = $row["nilai_placement"];
-        $level = $row["level"];
-        $kal .= " <tr>
-        <td>$nrp</td>
-        <td>$nama</td>
-        <td>$nilai</td>
-        <td>$level</td>
-        <td>
-            <button class='btn btn-icon btn-primary btn-sm' type='button' data-toggle='modal' onclick=\"editnilai('$nrp')\" data-target='#exampleModal'>
-                <span class='btn-inner--icon'><i class='ni ni-fat-add'></i></span>
-                <span class='btn-inner--text'>Input nilai</span>
-            </button>
-        </td>
-    </tr>";
-    }
-    echo $kal;
-} else if ($_POST["jenis"] == "selectednrp") {
+} 
+
+else if ($_POST["jenis"] == "selectednrp") {
     $nrp = $_POST["id"];
     $conn = getConn();
     $sql = "select * from temp_mahasiswa where nrp='$nrp'";
@@ -82,33 +64,32 @@ if ($_POST["jenis"] == "setstandard") {
     $nilai = $_POST["nilai"];
     $conn = getConn();
 
-    $sql0 = "update temp_mahasiswa set nilai_placement='$nilai' where nrp='$nrp'";
+    $sql0 = "update mahasiswa set nilai_placement='$nilai' where nrp='$nrp'";
     $result0 = $conn->query($sql0);
     if ($result0) {
         echo "Berhasil update !";
     }
-    updatelevel();
+    // updatelevel();
 } else if ($_POST["jenis"] == "insertmhs") {
     $periode = $_POST["periode"];
     $conn = getConn();
-    $sql = "select * from temp_mahasiswa";
+    $sql = "select * from mahasiswa";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
         $nrp = $row["nrp"];
         $nama = $row["nama_mahasiswa"];
-        $level = $row["level"];
+        $level = $row["placement_level"];
         $nilai = $row["nilai_placement"];
 
-        if ($level!="belum ada level") {
-            $sql1 = "INSERT INTO `mahasiswa`(`id_periode`,`nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES ('$periode','$nrp','$nama','$level','$nilai','1')";
-            $result1 = $conn->query($sql1);
+        if ($level!="0") {
+            //$sql1 = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,start_level,now_level,status_mhs) VALUES ('$periode','$nrp','$nama','$nilai','0','0','0','1')";
+            //$result1 = $conn->query($sql1);
     
-            $sql2 = "update mahasiswa set nilai_placement='$nilai',current_level='$level',status_mhs='$placement' where nrp=$nrp";
+            $sql2 = "update mahasiswa set status_mhs='1' where nrp=$nrp";
             $result2 = $conn->query($sql2);
 
-
-            $sql3="delete from temp_mahasiswa where nrp='$nrp'";
-            $result3 = $conn->query($sql3);
+            // $sql3="delete from temp_mahasiswa where nrp='$nrp'";
+            // $result3 = $conn->query($sql3);
 
         }
 
@@ -116,45 +97,32 @@ if ($_POST["jenis"] == "setstandard") {
     }
 
     echo "Berhasil";
-} else if ($_POST["jenis"] == "getperiode") {
-    $kal = "";
-    $periode = $_POST["periode"];
-    $conn = getConn();
-    $sql = "select * from periode";
-    $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-        $idperiode = $row["id_periode"];
-        $sem = $row["semester"];
-        $awal = $row["thn_akademik_awal"];
-        $akhir = $row["thn_akademik_akhir"];
-        $kal .= "<option value='$idperiode'>$sem $awal-$akhir</option>";
-    }
-    echo $kal;
-} else if ($_POST["jenis"] == "loadsel") {
+}
+else if ($_POST["jenis"] == "loadsel") {
     $kal = "";
     $nrp = $_POST["nrp"];
     $conn = getConn();
-    $stmt = $conn->prepare("select * from temp_mahasiswa where nrp=? ");
+    $stmt = $conn->prepare("select * from mahasiswa where nrp=? ");
     $stmt->bind_param("s", $nrp);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     echo json_encode($row);
 } else if ($_POST["jenis"] == "addtempmhs") {
+    $periode = $_POST["periode"];
     $nrp = $_POST["nrp"];
-    $nama = $_POST["nama"];
+    $nama = ucwords($_POST["nama"]);
     $nilai = $_POST["nilai"];
     $conn = getConn();
-    $stmt = $conn->prepare("INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`) VALUES (?,?,?)");
-    $stmt->bind_param("isi", $nrp, $nama, $nilai);
-    $res=$stmt->execute();
-    $conn->close();
-    if ($res=='1') {
-      echo "Berhasil insert !";
-    }else{
+    $sql = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,start_level,now_level,status_mhs) VALUES ('$periode','$nrp','$nama','$nilai','0','0','0','0')";
+
+    if ($conn->query($sql)) {
+        echo "Berhasil insert !";
+    }else {
         echo "Gagal insert !";
     }
-    updatelevel();
+    
+    //updatelevel();
 }else if($_POST["jenis"]=="cekdata"){
     $conn = getConn();
     $stmt = $conn->prepare("select count(nrp) as jum from temp_mahasiswa");
@@ -165,15 +133,14 @@ if ($_POST["jenis"] == "setstandard") {
     if ($row["jum"]>0) {
       echo "ada";
     }
-}else if($_POST["jenis"]=="updatelevel"){
-    updatelevel();
 }
 
+if($_POST["jenis"]=="updatelevel"){
+    $periode=$_POST["periode"];
+    //updatelevel();
 
-function updatelevel()
-{
     $conn = getConn();
-    $sqla = "select * from temp_nilaiplacement";
+    $sqla = "select * from standard_nilaipt where id_periode='$periode'";
     $resulta = $conn->query($sqla);
     while ($rowa = $resulta->fetch_assoc()) {
         $lev1 = intval($rowa["level1"]);
@@ -185,31 +152,104 @@ function updatelevel()
         echo "nilai gagal";
     }
 
-    $sql = "select * from temp_mahasiswa";
+    $sql = "select * from mahasiswa where id_periode='$periode'";
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
         $nilai = intval($row["nilai_placement"]);
         $nrp = intval($row["nrp"]);
 
-        $placement = "belum ada level";
+        $placement = "-";
         if ($nilai == 0) {
-            $placement = "belum ada level";
+            $placement = 0;
         } else if ($nilai <= $lev1) {
-            $placement = "I";
+            $placement = 1;
         } else if ($nilai <= $lev2) {
-            $placement = "II";
+            $placement = 2;
         } else if ($nilai <= $lev3) {
-            $placement = "III";
+            $placement = 3;
         } else {
-            $placement = "IV";
+            $placement = 4;
         }
 
-        $sql1 = "update temp_mahasiswa set level='$placement' where nrp='$nrp'";
-        $result1 = $conn->query($sql1);
+        $sql1 = "update mahasiswa set placement_level='$placement' where nrp='$nrp'";
+        //$result1 = $conn->query($sql1);
+    
+        if ($conn->query($sql1)) {
+            echo "1 update level"; //berhasil
+        }else {
+            echo "0"; //gagal
+        }    
+    }
+    $conn->close();
+}
 
-        
+if($_POST["jenis"]=="hapus_mhs"){
+    $nrp = $_POST["nrp"];
+    $ket="";
+
+    //delete kelas dengan idkelas tsb
+    $sql = "delete from mahasiswa where nrp='$nrp'";
+    if ($conn->query($sql)) {
+        $ket= "berhasil hapus";
+    }else {
+        $ket= "gagal hapus";
     }
 
-    
+    echo $ket;
+    $conn->close();
 }
+
+if($_POST["jenis"]=="cek_periode"){
+    $idperiode = $_POST["idperiode"];
+
+    $sql = "select * from standard_nilaipt where id_periode=$idperiode";
+    $query = mysqli_query($conn,$sql); // get the data from the db
+    $result = array();
+    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
+
+        $result ["id_periode"] = $row['id_periode'];
+        $result ["level1"] = $row['level1'];
+        $result ["level2"] = $row['level2'];
+        $result ["level3"] = $row['level3'];
+        $result ["level4"] = $row['level4'];   
+    }
+    
+    $conn->close();
+    header('Content-Type: application/json');
+    echo json_encode($result); // return value of $result
+}
+
+if($_POST["jenis"]=="cek_dataterisi"){
+    
+    $idperiode = $_POST["idperiode"];
+
+    //cek dulu apakah semua kelas sudah terisi datanya
+    $sqlcek = "select * from mahasiswa where id_periode='$idperiode' and nilai_placement='0'";
+    $query = mysqli_query($conn,$sqlcek); // get the data from the db
+    $result = array();
+    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
+
+        $result ["nrp"] = $row['nrp'];
+        
+    }
+    
+    $conn->close();
+    header('Content-Type: application/json');
+    echo json_encode($result); // return value of $result
+
+}
+
+if($_POST["jenis"]=="aktifkan_allmhs"){
+    $idperiode = $_POST["idperiode"];
+    $sql = "update mahasiswa set status_mhs='1' where id_periode='$idperiode'";
+    
+    if ($conn->query($sql)) {
+        echo "1"; //berhasil
+    }else {
+        echo "0"; //gagal
+    }
+    $conn->close();
+}
+
+?>

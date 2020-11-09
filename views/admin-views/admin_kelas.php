@@ -33,7 +33,7 @@
                             <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Simpan</button>
                         </div>
                         </div>
-                        <small id="helpId" class="form-text text-muted">Help text</small>
+                        <small id="help_pilihperiode" class="form-text text-muted"></small>
                     </div>
                     
                     
@@ -47,7 +47,7 @@
                         <option>Level 3</option>
                         <option>Level 4</option>
                         </select>
-                        <small id="help_level" class="form-text text-muted">Help text</small>
+                        <small id="help_level" class="form-text text-muted"></small>
                     </div>
 
                     <div class="form-group">
@@ -65,7 +65,7 @@
                             <button disabled class="btn btn-outline-primary" type="button" id="btn_generate" onclick="generate()" >Generate kelas</button>
                         </div>
                         </div>
-                        <small id="help_bykkelas" class="form-text text-muted">Help text</small>
+                        <small id="help_bykkelas" class="form-text text-muted"></small>
                     </div>
 
                 </form>
@@ -108,9 +108,11 @@
                         </div>
                     </div>
                     <small id="helpId" class="form-text text-muted">Help text</small>
-
-                    
                 </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+                    </div>
 
                 
                 <div class="table-responsive">
@@ -215,6 +217,11 @@
       </div>
     </div>
     <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
+<style>
+  .warning{
+    color:red;
+  }
+</style>
 
 <script>
 function get_dosen() 
@@ -241,17 +248,27 @@ function get_ruang()
 
 //saat menekan tombol simpan periode
 function  simpan_periode() {
-    //cek kelas yang belum diaktifkan pada periode tsb
-    datatable_kelasnonaktif();
+    var periode = $("#periode").val();
+    console.log(periode);
+    if (periode == "-1") {
+        $("#help_pilihperiode").text("Pilih periode terlebih dahulu");
+        $("#help_pilihperiode").css("style","color:red");
+    }
+    else{
+        $("#help_pilihperiode").text("");
+        //cek kelas yang belum diaktifkan pada periode tsb
+        datatable_kelasnonaktif();
 
-    //disabled button simpan dan select periode
-    $("#btn_simpanperiode").prop('disabled', true);
-    $("#periode").prop('disabled', true);
+        //disabled button simpan dan select periode
+        $("#btn_simpanperiode").prop('disabled', true);
+        $("#periode").prop('disabled', true);
+
+        //enabled level dan generate
+        $("#leveldipilih").prop('disabled', false);
+        $("#banyakkelas").prop('disabled', false);
+        $("#btn_generate").prop('disabled', false);
+    }
     
-    //enabled level dan generate
-    $("#leveldipilih").prop('disabled', false);
-    $("#banyakkelas").prop('disabled', false);
-    $("#btn_generate").prop('disabled', false);
 }
 
 function generate() {
@@ -269,6 +286,7 @@ function generate() {
     }
     else if(level_sel != "-1" && bykkelas != "0")
     {
+        $("#help_bykkelas, #help_level").text("");
         $.post("../ajaxes/a_kelas.php",
         {
             idperiode:periode,
@@ -497,8 +515,6 @@ function datatable_kelasnonaktif() {
     table = $('#table1').DataTable( 
     {
         destroy:true,
-        dom: 'Bfrtip',
-            "buttons": [ 'copy', 'excel', 'pdf' ],
             "processing":true,
             "language": {
             "lengthMenu": "Tampilkan _MENU_ data per Halaman",
@@ -621,16 +637,20 @@ function  btn_cari() {
     datatable_kelasaktif();
 }
 
+function exportfile() {
+    var periode = $("#periode_lihatkelas").val();
+    window.location.href = "../custom_export/admin_export/lihat_kelas.php?periode="+periode+"";
+}
+
 
 function datatable_kelasaktif() {
     var periode = $("#periode_lihatkelas").val();
     //datatable list barang
     var table= "";
+    var groupColumn = 0;
     table = $('#table_kelasaktif').DataTable( 
     {
         destroy:true,
-        dom: 'Bfrtip',
-            "buttons": [ 'copy', 'excel', 'pdf' ],
             "processing":true,
             "language": {
             "lengthMenu": "Tampilkan _MENU_ data per Halaman",
@@ -655,6 +675,10 @@ function datatable_kelasaktif() {
             },
             "deferRender":true,
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
+            "order": [[0, 'asc']],
+            "columnDefs": [
+                { "visible": false, "targets": groupColumn }
+            ],
             "columns":[
             
             {"data":"level_ecc"},
@@ -720,8 +744,24 @@ function datatable_kelasaktif() {
             },
             
             ],
+            "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        }
     }) 
     //end of datatble list barang
 }
 
 </script>
+

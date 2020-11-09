@@ -8,7 +8,6 @@ $arr=unserialize($_SESSION["user"]);
 $level = $arr->get_level();
 
 ?>
-
 <body>
   
 <?php require_once("sidenav.php"); ?>

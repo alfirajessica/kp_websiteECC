@@ -33,6 +33,9 @@
                 <li>
                     <a href="mahasiswa.php"> <i class="menu-icon fa fa-laptop"></i>Mahasiswa</a>
                 </li>
+                <li>
+                    <a href="Splacement.php"> <i class="menu-icon fa fa-laptop"></i>Splacement</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

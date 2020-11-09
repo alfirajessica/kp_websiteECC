@@ -28,7 +28,7 @@
                         <tr>
                             <td scope="row">Username : </td>
                             <td class="text-left">
-                            <input type="text" name="" id="userdosen" class="form-control" placeholder="" aria-describedby="help_username">
+                            <input type="text" name="" id="userdosen" class="form-control" placeholder="" aria-describedby="help_username" oninput="userdosen()">
                               <small id="help_username" class="form-text text-muted"></small>
                             </td>
                             <td></td>
@@ -97,6 +97,23 @@
 </div>
 
 <script>
+function userdosen() {
+    $("#userdosen").on({
+	keydown: function(e) {
+  	if (e.which === 32)
+    	return false;
+  },
+  keyup: function(){
+  	this.value = this.value.toUpperCase();
+  },
+  change: function() {
+    this.value = this.value.replace(/\s/g, "");
+    
+  }
+});
+    
+}
+
 //simpan dosen -- menambah dosen baru
 function simpandosen(){
     var namadosen = $("#namadosen").val();
