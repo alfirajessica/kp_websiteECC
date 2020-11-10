@@ -20,8 +20,6 @@
         <div class="tab-content" id="myTabContent">
             <!-- atur kelas -->
             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-    
-                
                     <div class="form-group">
                         <label for="">Periode</label>
                         <div class="input-group mb-3">
@@ -34,13 +32,10 @@
                         <small id="help_pilihperiode" class="form-text text-muted"></small>
                     </div>
                     
-
-
                     <div class="form-group">
-                        <a data-toggle="modal" data-target="#modallevelnone" > + Atur Standar nilai Periode ini </a>
+                        <a style="color:blue; display:none;" data-toggle="modal" data-target="#modallevelnone" id="formaturstandard"> + Atur Standar nilai Periode ini </a>
                     </div>
                     
-            
                     <div class="form-group">
                         <label> Silakan gunakan template ini sebelum melakukan import </label>
                         <button type="button" class="btn btn-success text-light" onclick="window.location.href='../custom_export/nilaitest.xlsx'" target="_blank">Download Templete</button>
@@ -87,7 +82,7 @@
                                         </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-primary" onclick="addtempmahasiswa()">Masukan</button>
+                                    <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukan</button>
                                 </div>
                             </form>
                         </div>
@@ -108,6 +103,7 @@
                                 <th>Nilai</th>
                                 <th>Level</th>
                                 <th>Aksi</th>
+                                <th>Aksi khusus</th>
                             </tr>
                             </thead>
                             <tbody id="datanya">
@@ -116,13 +112,7 @@
                             </div>
 
                         </div>
-                    </div>
-
-                
-
-                
-        
-                
+                    </div>                
             </div>
             <!-- end of atur placement -->
 
@@ -134,7 +124,7 @@
                         <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" onclick="btn_cari()">Cari</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()">Cari</button>
                         </div>
                     </div>
                     <small id="helpId" class="form-text text-muted">Help text</small>
@@ -145,23 +135,23 @@
                     </div>
 
                 
-                <div class="table-responsive">
-                    <table id="table_kelasaktif" class="table table-striped table-bordered" width="100%">
-                        <thead>
+                    <div class="table-responsive">
+                        <table id="table_mhspt" class="table table-striped table-bordered">
+                            <thead>
                             <tr>
+                                <th>#NRP</th>
+                                <th>Nama</th>
+                                <th>Nilai</th>
                                 <th>Level</th>
-                                <th>Kelas</th>
-                                <th>Jadwal</th>
-                                <th>Dosen</th>
                                 <th>Aksi</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody id="datanya">
+                            </tbody>
+                        </table>
+                    </div>
                 <!-- end of tabel kelas yang tergenerate -->
-            </div> <!-- end of lihat kelas -->
+            </div> <!-- end of hasil placement -->
         </div> <!-- end of tab content -->
     </div> <!--end of card body -->
 </div> <!--end of card shadow -->
@@ -268,6 +258,44 @@
 </div>
 <!-- end of Modal input/ubah nilai  -->
 
+<!-- Modal ubah nilai  -->
+<div class="modal fade" id="modalpindahlevel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">    
+                <form role="form">
+                    <div class="form-group">
+                        <label id="cnrp"> </label>
+                    </div>
+                    <div class="form-group">
+                        <label id="clevelsblmny"> Level sebelumnya :  </label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-right">Pindah level </label>
+                        <div class="col-sm-9">
+                            <select name="select" id="pindahlevel" class="form-control">
+                                <option value="1">Level 1</option>
+                                <option value="2">Level 2</option>
+                                <option value="3">Level 3</option>
+                                <option value="4">Level 4</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_update" type="button" class="btn btn-primary" data-dismiss="modal" onclick="pindahlevel()">Pindahkan</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Modal input/ubah nilai  -->
+
 <script>
 
 function simpan_periode() {
@@ -281,7 +309,7 @@ function simpan_periode() {
     else
     {
         $("#help_pilihperiode").text("");
-        $('#cardform1, #cardform2').show();
+        $('#cardform1, #cardform2, #formaturstandard').show();
         datatable_lihatsemuamahasiswa();
 
         //cek apakah pada periode tersebut sudah ada standar nilai placementnya dan masukkan ke dalam modal
@@ -471,16 +499,24 @@ function datatable_lihatsemuamahasiswa() {
     var table = "";
     table = $('#table_tempmhs').DataTable({
         destroy:true,
-        dom: 'Bfrtip',
-        "processing": true,
-        "serverSide": true,
-        "bInfo": false,
-        dom: "<'myfilter'f><'mylength'l>t",
-        "pagingType": "numbers",
-        "ordering": true, //set true agar bisa di sorting
-        "order": [
-            [0, 'asc']
-        ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+        "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
+            },
+        "serverSide":true,
+        "ordering":true, //set true agar bisa di sorting
+        "order": [[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
         "ajax": {
             "url": "../datatables/admin-datatable/temp-mahasiswa_dt.php",
             "type": "POST",
@@ -493,33 +529,60 @@ function datatable_lihatsemuamahasiswa() {
         ], //combobox limit
         "columns": [
 
-            {
-                "data": "nrp"
+            { "data": "nrp" },
+            { "data": "nama_mhs" },
+            { "data": "nilai_placement" },
+            { "data":"placement_level",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    if (row.placement_level == '0') //kelas aktif
+                    {
+                        return "<label class='text-danger'> Belum Ada level </label>";
+                    }
+                    else if (row.placement_level != 0 && row.start_level == 0) {
+                        return "<label> Level " + row.placement_level + " </label>";
+                    }
+                    else if (row.placement_level != 0 && row.start_level != 0) {
+                        return "<label> Level " + row.start_level + " </label>";
+                    }
+                    
+                }
             },
             {
-                "data": "nama_mhs"
-            },
-            {
-                "data": "nilai_placement",
-            },
-            {
-                "data": "placement_level",
-            }, {
-                "data": "placement_level",
+                "data": "status_mhs",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
                     if (parseInt(row.nilai_placement) == 0) //nilai masih 0
                     {
-                        return "<button class='btn btn-primary rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     } else if (parseInt(row.nilai_placement) > 0) //ubah nilai lebih dari 0
                     {
-                        return "<button class='btn btn-warning rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\"  >Ubah Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";;
+                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\"  >Ubah Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     }
 
                 }
-            }
-
+            },
+            { "data":"placement_level",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    if (row.placement_level == '0') //kelas aktif
+                    {
+                        return "<button class='btn btn-primary rounded btn-sm' disabled>Pindah level</button>";
+                    }
+                    else
+                    {
+                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#modalpindahlevel' onclick=\"pindah('" + row.nrp + "')\" >Pindah level</button>";
+                       
+                    }
+                    
+                }
+            },
+            
         ],
+        
+        
     });
 }
 
@@ -531,10 +594,11 @@ function loadmhs(nrp) {
         },
         function(data) {
             var arr = JSON.parse(data);
-            $("#crnrp").html(arr.nrp);
+            $("#crnrp, #cnrp").html(arr.nrp);
             $("#crnama").html(arr.nama_mhs);
             $("#crnilaiplacement").val(arr.nilai_placement);
             $("#cperingkat").html(arr.placement_level);
+            $("#clevelsblmny").html("Level Hasil Placement : " + arr.placement_level);
         }
     );
 }
@@ -569,6 +633,27 @@ $.post("../ajaxes/a_placement.php", {
         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
     });
     updatelevel();
+}
+
+function pindah(nrp) {
+    loadmhs(nrp);
+}
+
+function pindahlevel() {
+    var nrp = $("#cnrp").html();
+    var levelbaru = $("#pindahlevel").val();
+    console.log(nrp);
+    $.post(
+        "../ajaxes/a_placement.php", {
+            jenis: "mshpindah_level",
+            nrp: nrp,
+            levelbaru:levelbaru,
+        },
+        function(data) {
+            alert(data);
+            $('#table_tempmhs, #table_mhspt').DataTable().ajax.reload(); //reload ajax datatab
+        }
+    );
 }
 
 
@@ -627,6 +712,80 @@ function tempatkanmhs() {
         }
     });
 }
+
+
+//lihat hasil placement keseluruhan
+
+function  btn_cariperiode() {
+    console.log("button cari");
+    
+    datatable_ptmhs_periodeini();
+}
+
+function exportfile() {
+        window.location.href = "../custom_export/lihat_placement.xlsx";
+    }
+
+
+function datatable_ptmhs_periodeini() {
+    //datatable list barang
+    var periode = $("#periode_lihatkelas").val();
+    var table = "";
+    table = $('#table_mhspt').DataTable({
+        destroy:true,
+        dom: 'Bfrtip',
+        "processing": true,
+        "serverSide": true,
+        "bInfo": false,
+        dom: "<'myfilter'f><'mylength'l>t",
+        "pagingType": "numbers",
+        "ordering": true, //set true agar bisa di sorting
+        "order": [
+            [0, 'asc']
+        ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+        "ajax": {
+            "url": "../datatables/admin-datatable/placement_mhsaktif.php",
+            "type": "POST",
+            "data":{"periode":periode},
+        },
+        "deferRender": true,
+        "aLengthMenu": [
+            [10, 20, 50],
+            [10, 20, 50]
+        ], //combobox limit
+        "columns": [
+
+            {
+                "data": "nrp"
+            },
+            {
+                "data": "nama_mhs"
+            },
+            {
+                "data": "nilai_placement",
+            },
+            { "data":"start_level",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    return "<label> Level " + row.start_level + " </label>";
+                }
+            },
+            {
+                "data": "placement_level",
+                "render": function(data, type, row) {
+                    var nrp = row.nrp;
+
+                    return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#modalpindahlevel' onclick=\"pindah('" + nrp + "')\" >Pindah level</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+
+                }
+            }
+
+        ],
+        
+    });
+}
+
 
 
 

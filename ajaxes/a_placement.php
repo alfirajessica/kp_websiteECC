@@ -200,6 +200,23 @@ if($_POST["jenis"]=="hapus_mhs"){
     $conn->close();
 }
 
+if($_POST["jenis"]=="mshpindah_level"){
+    $nrp = $_POST["nrp"];
+    $levelbaru = $_POST["levelbaru"];
+    $ket="";
+
+    //delete kelas dengan idkelas tsb
+    $sql = "update mahasiswa set start_level='$levelbaru' where nrp='$nrp'";
+    if ($conn->query($sql)) {
+        $ket= "berhasil pindah".$levelbaru;
+    }else {
+        $ket= "gagal pindah";
+    }
+
+    echo $ket;
+    $conn->close();
+}
+
 if($_POST["jenis"]=="cek_periode"){
     $idperiode = $_POST["idperiode"];
 
@@ -242,13 +259,33 @@ if($_POST["jenis"]=="cek_dataterisi"){
 
 if($_POST["jenis"]=="aktifkan_allmhs"){
     $idperiode = $_POST["idperiode"];
-    $sql = "update mahasiswa set status_mhs='1' where id_periode='$idperiode'";
+
+    //cek dulu apakah mahasiswa pernah dipindahkan levelnya
+    //kalau start_level 0 berarti gkpernah dilakukan pindah level, jadi start_level sama dgn placement_level
+    $sql = "select * from mahasiswa where id_periode='$idperiode' and start_level='0'";
+    $result = $conn->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+        $ket="";
+        $nrp = intval($row["nrp"]);
+        $ptlevel = intval($row["placement_level"]);
+
+        $sql1 = "update mahasiswa set start_level='$ptlevel' where nrp='$nrp'";
     
-    if ($conn->query($sql)) {
-        echo "1"; //berhasil
-    }else {
-        echo "0"; //gagal
+        if ($conn->query($sql1)) {
+            $sql = "update mahasiswa set status_mhs='1' where id_periode='$idperiode'";
+            if ($conn->query($sql)) {
+                $ket = "berhasil menempatkan semua daftar mahasiswa placement semester "+$idperiode+" ";
+            }else {
+                $ket = "Gagal menempatkan mahasiswa";
+            }
+
+        }else {
+            $ket = "Gagal menempatkan mahasiswa";
+        }    
     }
+
+    
     $conn->close();
 }
 
