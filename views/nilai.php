@@ -9,6 +9,7 @@ $level = $arr->get_level();
 
 ?>
 <?php include_once('scripts.php') ?>
+
 <body>
 
     <?php require_once("sidenav.php"); ?>
@@ -50,7 +51,7 @@ $level = $arr->get_level();
                     </div>
                     <div class="modal-body">
                         <form role="form">
-                            <table class="table table-borderless table-md text-right" id="example">
+                            <table class="table table-borderless table-md text-right">
                                 <thead>
                                     <th>#NRP</th>
                                     <th>Nama Mahasiswa</th>
@@ -82,18 +83,11 @@ $level = $arr->get_level();
 </body>
 
 <script>
-    function periode() {
-        $.post("../ajaxes/a_periode.php", {
-                jenis: "get_allperiode",
-            },
-            function(data) {
-                $("#periode").html(data);
-            });
-    }
-    periode();
-
-
-   
+    $(document).ready(function() {
+        isikelas();
+        periode();
+        datatable_lihatsemuamahasiswa();
+    });
 </script>
 
 </html>

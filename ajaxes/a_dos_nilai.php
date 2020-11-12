@@ -1,10 +1,15 @@
 <?php
+session_start();
 require_once "../config/conn.php";
+require_once "../classes/user.php";
 $conn=getConn();
 
-if($_POST["jenis"]=="get_allkelas"){
+if($_POST["jenis"]=="get_kelasdos"){
     $kal="";
-    $stmt=$conn->prepare("select * from kelas");
+
+    $arr=unserialize($_SESSION["user"]);
+    $dosen= $arr->get_u();
+    $stmt=$conn->prepare("select * from kelas where dosen='$dosen'");
     $stmt->execute();
     $res=$stmt->get_result();
     while($row=$res->fetch_assoc()){
