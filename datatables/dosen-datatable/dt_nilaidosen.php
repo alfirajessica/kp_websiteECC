@@ -11,7 +11,7 @@ $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
 $query = "SELECT n.nilai_uts as uts,n.nilai_uas as uas,n.nilai_akhir as na,m.nama_mhs as nama,m.nrp as nrp
 FROM mahasiswa m, nilai n
-WHERE m.nrp=n.nrp";
+WHERE m.nrp=n.nrp and m.nama_mhs like '%$search%'";
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 $order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
 $order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;
