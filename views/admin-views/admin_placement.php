@@ -14,105 +14,131 @@
         </div>
     </div>
 
-
     <div class="card-body"> <!-- card body -->
         <!-- tab content -->
         <div class="tab-content" id="myTabContent">
             <!-- atur kelas -->
             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                    <div class="form-group">
-                        <label for="">Periode</label>
-                        <div class="input-group mb-3">
-                        <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
-                        </select>
+                <div class="form-group">
+                    <label for="">Periode</label>
+                    <div class="input-group mb-3">
+                        <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode"></select>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Simpan</button>
                         </div>
-                        </div>
-                        <small id="help_pilihperiode" class="form-text text-muted"></small>
                     </div>
+                    <label id="help_pilihperiode" style="color:red;"></label>
+                </div>
                     
-                    <div class="form-group">
-                        <a style="color:blue; display:none;" data-toggle="modal" data-target="#modallevelnone" id="formaturstandard"> + Atur Standar nilai Periode ini </a>
-                    </div>
+                <div class="form-group">
+                    <a style="color:blue; display:none;" data-toggle="modal" data-target="#modallevelnone" id="formaturstandard"> + Atur Standar nilai Periode ini </a>
+                </div>
                     
-                    <div class="form-group">
-                        <label> Silakan gunakan template ini sebelum melakukan import </label>
-                        <button type="button" class="btn btn-success text-light" onclick="window.location.href='../custom_export/nilaitest.xlsx'" target="_blank">Download Templete</button>
-                    </div>
+                <div class="form-group">
+                    <label> Silakan gunakan template ini sebelum melakukan import </label>
+                    <button type="button" class="btn btn-success text-light" onclick="window.location.href='../custom_export/nilaitest.xlsx'" target="_blank">Download Templete</button>
+                </div>
 
-                    <div class="card" id="cardform1" style="display:none">
-                        <div class="card-header">
-                            <form>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">Pilih file</label>
-                                    <div class="custom-file col-sm-10"> 
-                                        <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
-                                        <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
+                <div class="card" id="cardform1" style="display:none">
+                    <div class="card-header">
+                        <form>
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Pilih file</label>
+                                <div class="custom-file col-sm-10"> 
+                                    <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
+                                    <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
+                                </div>
+                            </div>
+                                
+                            <div class="form-group">
+                                <!-- <label for="">dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label> -->
+                                <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
+                                <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
+                                <small id="help_file" class="text-muted"></small>
+                            </div>
+                            <hr>
+                                
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">NRP</label>
+                                    <div class="col-sm-10">
+                                    <input type="number" id="addnrp" class="form-control" placeholder="Masukan Nrp" aria-describedby="help_nrp">
+                                    <small id="help_nrp" class="form-text text-muted"></small>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <!-- <label for="">dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label> -->
-                                    <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
-                                    <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
-                                    <small id="help_file" class="text-muted"></small>
-                                </div>
-                                <hr>
-                                
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">NRP</label>
-                                        <div class="col-sm-10">
-                                        <input type="number" id="addnrp" class="form-control" placeholder="Masukan Nrp" aria-describedby="help_nrp">
-                                        <small id="help_nrp" class="form-text text-muted"></small>
-                                        </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nama</label>
-                                        <div class="col-sm-10">
-                                        <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama" aria-describedby="help_nama">
-                                        <small id="help_nama" class="form-text text-muted"></small>
-                                        </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nilai</label>
-                                        <div class="col-sm-10">
-                                        <input type="number" id="addnilai" class="form-control" placeholder="Masukan Nilai placement" aria-describedby="help_nilai">
-                                        <small id="help_nilai" class="form-text text-muted"></small>
-                                        </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukan</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="card" id="cardform2" style="display:none">
-                        <div class="card-body">
-                            <div class="form-group text-right">
-                            <button type="button" class="btn btn-primary text-light" onclick="tempatkanmhs()">*Tempatkan  Mahasiswa</button>
                             </div>
 
-                            <div class="table-responsive">
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nama</label>
+                                    <div class="col-sm-10">
+                                    <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama" aria-describedby="help_nama">
+                                    <small id="help_nama" class="form-text text-muted"></small>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nilai</label>
+                                    <div class="col-sm-10">
+                                    <input type="number" id="addnilai" class="form-control" placeholder="Masukan Nilai placement" aria-describedby="help_nilai">
+                                    <small id="help_nilai" class="form-text text-muted"></small>
+                                    </div>
+                            </div>
+                            <div class="form-group row"> <!-- form group row radio -->
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right"></label>
+                                
+                                <div class="col-sm-10" id="radio1">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_level1" value="1" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_level1">Level 1</label>
+                                    </div>
+                                        
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_level2" value="2" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_level2">Level 2</label>
+                                    </div>
+
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_level3" value="3" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_level3">Level 3</label>
+                                    </div>
+                                        
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_level4" value="4" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_level4">Level 4</label>
+                                    </div>
+
+                                    <label style="color:red;" id="labelwarning1"></label>
+                                </div>
+                                    
+                            </div> <!-- end of form group row radio -->
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card" id="cardform2" style="display:none">
+                    <div class="card-body">
+                        <div class="form-group text-right">
+                            <button type="button" class="btn btn-primary text-light" onclick="tempatkanmhs()">*Tempatkan  Mahasiswa</button>
+                        </div>
+
+                        <div class="table-responsive">
                             <table id="table_tempmhs" class="table table-striped table-bordered">
                             <thead>
-                            <tr>
-                                <th>#NRP</th>
-                                <th>Nama</th>
-                                <th>Nilai</th>
-                                <th>Level</th>
-                                <th>Aksi</th>
-                                <th>Aksi khusus</th>
-                            </tr>
+                                <tr>
+                                    <th>#NRP</th>
+                                    <th>Nama</th>
+                                    <th>Nilai</th>
+                                    <th>Level</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
-                            <tbody id="datanya">
-                            </tbody>
+                            <tbody id="datanya"> </tbody>
                             </table>
-                            </div>
-
                         </div>
-                    </div>                
+
+                    </div>
+                </div>                
             </div>
             <!-- end of atur placement -->
 
@@ -121,35 +147,33 @@
                 <div class="form-group">
                     <label for="">Pilih Periode</label>
                     <div class="input-group mb-3">
-                        <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
-                        </select>
+                        <select name="select" id="periode_lihatkelas"  class="form-control" > </select>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()">Cari</button>
                         </div>
                     </div>
-                    <small id="helpId" class="form-text text-muted">Help text</small>
+                    <label id="help_pilihperiode2" style="color:red;"></label>
+                    
                 </div>
 
                 <div class="form-group">
                     <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
-                    </div>
-
-                
-                    <div class="table-responsive">
-                        <table id="table_mhspt" class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th>#NRP</th>
-                                <th>Nama</th>
-                                <th>Nilai</th>
-                                <th>Level</th>
-                                <th>Aksi</th>
-                            </tr>
-                            </thead>
-                            <tbody id="datanya">
-                            </tbody>
-                        </table>
-                    </div>
+                </div>
+     
+                <div class="table-responsive">
+                    <table id="table_mhspt" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#NRP</th>
+                            <th>Nama</th>
+                            <th>Nilai</th>
+                            <th>Level</th>
+                            <th>Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody id="datanya"> </tbody>
+                    </table>
+                </div>
                 <!-- end of tabel kelas yang tergenerate -->
             </div> <!-- end of hasil placement -->
         </div> <!-- end of tab content -->
@@ -242,16 +266,33 @@
                             </tr>
                             <tr>
                                 <td scope="row">Level : </td>
-                                <td class="text-left" id="cperingkat"></td>
-                            </tr>
+                                <td class="text-left" id="modalnilai">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="modalradio_level1" value="1" name="modalRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="modalradio_level1">Level 1</label>
+                                    </div>
 
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="modalradio_level2" value="2" name="modalRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="modalradio_level2">Level 2</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="modalradio_level3" value="3" name="modalRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="modalradio_level3">Level 3</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="modalradio_level4" value="4" name="modalRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="modalradio_level4">Level 4</label>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button id="btn_update" type="button" class="btn btn-primary" data-dismiss="modal" onclick="update()">Simpan Perubahan</button>
+                <label id="update_warning" style="color:red"> </label>
+                <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Simpan Perubahan</button>
             </div>
         </div>
     </div>
@@ -259,7 +300,7 @@
 <!-- end of Modal input/ubah nilai  -->
 
 <!-- Modal ubah nilai  -->
-<div class="modal fade" id="modalpindahlevel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalpindahlevel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -294,7 +335,7 @@
         </div>
     </div>
 </div>
-<!-- end of Modal input/ubah nilai  -->
+end of Modal input/ubah nilai  -->
 
 <script>
 
@@ -302,9 +343,10 @@ function simpan_periode() {
     //cek apa periode terpilih atau belum
     var periode = $("#periode").val();
     console.log(periode);
+    
     if (periode == "-1") {
         $("#help_pilihperiode").text("Pilih periode terlebih dahulu");
-        $("#help_pilihperiode").css("style","color:red");
+       // $("#help_pilihperiode").css("style","color:red");
     }
     else
     {
@@ -325,7 +367,7 @@ function simpan_periode() {
                 $("#level4").val(data["level4"]);
             });
     }
-    updatelevel();
+    //updatelevel();
 }
 
 //standar nilai pada modal
@@ -365,7 +407,7 @@ function tetapkan_standarnilai() {
 
             });
         }
-        updatelevel();
+       // updatelevel();
 }
 
 function importfileada() {
@@ -399,7 +441,7 @@ function importfileada() {
     } else {
         $("#help_file").text("Pilih file excel dahulu !");
     }
-    updatelevel();
+    //updatelevel();
 }
 
 function importfilenone() {
@@ -436,7 +478,7 @@ function importfilenone() {
             },
         }); 
     } else { $("#help_file").text("Pilih file excel dahulu !"); }
-    updatelevel();
+    //updatelevel();
 }
 
 
@@ -465,35 +507,56 @@ function addtempmahasiswa() {
     var nrp = $("#addnrp").val();
     var nama = $("#addnama").val();
     var nilai = $("#addnilai").val();
+    var radio_val="";
 
-    $.post(
-        "../ajaxes/a_placement.php", {
-            jenis: "addtempmhs",
-            periode:periode,
-            nrp: nrp,
-            nama: nama,
-            nilai: nilai
-        },
-        function(data) {
-            if (data.includes("Berhasil")) {
-                reset();
-                $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+    var result = $("#radio1 input:radio:checked").get();
+    var columns = $.map(result, function(element) {
+        radio_val = $(element).attr("value");
+    });
+    console.log(radio_val);
+
+    if (nrp == "" || nama == "" || nilai == "" || radio_val == null) {
+        $("#labelwarning1").text("Pastikan semua data terisi");
+        
+    }
+    else{
+            $.post(
+            "../ajaxes/a_placement.php", {
+                jenis: "addtempmhs",
+                periode:periode,
+                nrp: nrp,
+                nama: nama,
+                nilai: nilai,
+                level:radio_val,
+            },
+            function(data) {
+                if (data.includes("Berhasil")) {
+                    reset();
+                    $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+                // $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+                //     $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+                }
+                alert(data);
             }
-            alert(data);
-        }
 
-    );
-    reset();
-    updatelevel();
+        );
+        reset();
+    }
+    
+   
+   // updatelevel();
 }
 
 function reset() {
     $("#addnrp").val("");
     $("#addnama").val("");
     $("#addnilai").val("");
+    $("#labelwarning1").text("");
+   
 }
     
 function datatable_lihatsemuamahasiswa() {
+    
     //datatable list barang
     var periode = $("#periode").val();
     var table = "";
@@ -548,38 +611,23 @@ function datatable_lihatsemuamahasiswa() {
                     }
                     
                 }
-            },
+            },          
             {
-                "data": "status_mhs",
+                "data": "nilai_placement",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
-                    if (parseInt(row.nilai_placement) == 0) //nilai masih 0
-                    {
-                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
-                    } else if (parseInt(row.nilai_placement) > 0) //ubah nilai lebih dari 0
-                    {
-                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\"  >Ubah Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+
+                    if (row.nilai_placement == '0') {
+                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                    }
+                    else{
+                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\" >Ubah</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     }
 
-                }
-            },
-            { "data":"placement_level",
-                "searchable": true,
-                "orderable":true,
-                "render": function (data, type, row) {  
-                    if (row.placement_level == '0') //kelas aktif
-                    {
-                        return "<button class='btn btn-primary rounded btn-sm' disabled>Pindah level</button>";
-                    }
-                    else
-                    {
-                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#modalpindahlevel' onclick=\"pindah('" + row.nrp + "')\" >Pindah level</button>";
-                       
-                    }
                     
+
                 }
-            },
-            
+            } 
         ],
         
         
@@ -599,6 +647,9 @@ function loadmhs(nrp) {
             $("#crnilaiplacement").val(arr.nilai_placement);
             $("#cperingkat").html(arr.placement_level);
             $("#clevelsblmny").html("Level Hasil Placement : " + arr.placement_level);
+
+            var level_radio = arr.placement_level;
+            $("input[name=modalRadioInline1][value='"+level_radio+"']").prop("checked",true);
         }
     );
 }
@@ -607,18 +658,33 @@ function loadmhs(nrp) {
 function update() {
 var nrp = $("#crnrp").html();
 var nilai = $("#crnilaiplacement").val();
-$.post("../ajaxes/a_placement.php", {
+var radio_val="";
+
+var result = $("#modalnilai input:radio:checked").get();
+var columns = $.map(result, function(element) {
+    radio_val = $(element).attr("value");
+});
+console.log(nilai);
+console.log(radio_val);
+if (nilai == 0 || radio_val == "") {
+    console.log("kosong");
+    $("#update_warning").text("Pastikan semua data terisi");
+}
+else{
+    $.post("../ajaxes/a_placement.php", {
         jenis: "update",
         id: nrp,
         nilai: nilai,
-        
+        level:radio_val,
     },
     function(data) {
         alert(data);
         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
         $("#btn_update").attr("data-dismiss", "modal"); 
+        //$('#btn_update').modal('hide');
     });
-    updatelevel();
+
+}
 }
 
 
@@ -632,7 +698,7 @@ $.post("../ajaxes/a_placement.php", {
         alert(data);
         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
     });
-    updatelevel();
+   // updatelevel();
 }
 
 function pindah(nrp) {
@@ -657,7 +723,7 @@ function pindahlevel() {
 }
 
 
-function updatelevel() {
+/*function updatelevel() {
     var periode = $("#periode").val();
     $.post(
         "../ajaxes/a_placement.php", {
@@ -669,19 +735,10 @@ function updatelevel() {
             $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
         }
     );
-}
+}*/
 
 
 function tempatkanmhs() {
-    // $.post("../ajaxes/a_placement.php", {
-    //         jenis: "insertmhs",
-    //         periode: $("#periode").val()
-    //     },
-    //     function(data) {
-    //         alert("Berhasil memasukan mahasiswa !");
-    //         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-    //     });
-
     var periode = $("#periode").val();
     $.post("../ajaxes/a_placement.php",
     {
@@ -706,7 +763,7 @@ function tempatkanmhs() {
                 jenis:"aktifkan_allmhs",
             },
             function(data){
-                console.log(data);
+                alert(data);
                 $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
             });
         }
@@ -718,13 +775,32 @@ function tempatkanmhs() {
 
 function  btn_cariperiode() {
     console.log("button cari");
-    
-    datatable_ptmhs_periodeini();
+    var periode = $("#periode_lihatkelas").val();
+    console.log(periode);
+    if (periode == "-1") {
+        $("#help_pilihperiode2").text("pilih periode terlebih dahulu");
+    }
+    else{
+        $("#help_pilihperiode2").text("");
+        datatable_ptmhs_periodeini();
+    }
 }
 
 function exportfile() {
         window.location.href = "../custom_export/lihat_placement.xlsx";
     }
+
+function nonaktikfkan_mhs(nrp) {
+    $.post("../ajaxes/a_placement.php",
+    {
+        nrp:nrp,
+        jenis:"nonaktifkan_mhs",
+    },
+    function(data){
+        console.log(data);
+        $('#table_mhspt').DataTable().ajax.reload(); //reload ajax datatable
+    });
+}
 
 
 function datatable_ptmhs_periodeini() {
@@ -776,7 +852,7 @@ function datatable_ptmhs_periodeini() {
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
 
-                    return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#modalpindahlevel' onclick=\"pindah('" + nrp + "')\" >Pindah level</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\" >Input Nilai</button>" + " <button onclick=\"nonaktikfkan_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
 
                 }
             }
