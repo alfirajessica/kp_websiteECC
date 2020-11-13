@@ -47,6 +47,7 @@ function periode() {
         },
         function(data){
             $("#periode").html(data);
+            $("#periode_lihatkelas").html(data); //dilihat kelas
             });
     }
 
