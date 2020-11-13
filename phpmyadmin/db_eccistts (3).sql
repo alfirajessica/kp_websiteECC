@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2020 at 06:31 AM
+-- Generation Time: Nov 13, 2020 at 03:30 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -46,19 +46,14 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id_periode`, `id_kelas`, `level_ecc`, `nama_kelas`, `hari`, `jam_awal`, `jam_akhir`, `kuota`, `dosen`, `status_kelas`, `id_ruangkelas`) VALUES
-(1, 553, 'Level 1', 'A', 'Selasa', '06:30', '08:00', 20, '217180345', '0', 15),
-(1, 554, 'Level 1', 'B', 'Selasa', '06:30', '08:00', 10, '217180345', '0', 17),
-(1, 555, 'Level 1', 'C', 'Rabu', '06:30', '08:00', -1, 'alfira1', '0', 18),
-(1, 557, 'Level 1', 'D', 'Kamis', '06:30', '08:00', -1, 'alfira1', '0', 15),
-(1, 558, 'Level 1', 'E', 'Selasa', '06:30', '08:00', 10, '217180345', '0', 15),
-(1, 559, 'Level 2', 'A', '', '06:30', '08:00', 0, '-', '0', 0),
-(1, 560, 'Level 2', 'B', '', '06:30', '08:00', 0, '-', '0', 0),
-(1, 561, 'Level 3', 'A', '', '06:30', '08:00', 0, '-', '0', 0),
-(1, 562, 'Level 3', 'B', '', '06:30', '08:00', 0, '-', '0', 0),
-(1, 563, 'Level 2', 'C', 'Kamis', '06:30', '08:00', -1, 'alfira1', '0', 18),
-(1, 564, 'Level 3', 'C', '', '06:30', '08:00', 0, '-', '0', 0),
-(1, 565, 'Level 3', 'D', '', '06:30', '08:00', 0, '-', '0', 0),
-(1, 566, 'Level 3', 'E', '', '06:30', '08:00', 0, '-', '0', 0);
+(1, 554, 'Level 1', 'A', 'Senin', '06:30', '08:00', 20, 'jeni', '1', 18),
+(1, 555, 'Level 1', 'B', 'Rabu', '06:30', '08:00', 25, 'kevin', '1', 18),
+(1, 557, 'Level 1', 'C', 'Kamis', '06:30', '08:00', 10, 'kevin', '1', 15),
+(1, 558, 'Level 1', 'D', 'Selasa', '06:30', '08:00', 10, 'jeni', '1', 15),
+(1, 560, 'Level 2', 'A', 'Senin', '06:30', '08:00', 25, 'jeni', '1', 17),
+(1, 563, 'Level 2', 'B', 'Kamis', '06:30', '08:00', 20, 'kevin', '1', 18),
+(1, 571, 'Level 2', 'C', '', '06:30', '08:00', 0, '-', '0', 0),
+(1, 577, 'Level 3', 'A', '', '06:30', '08:00', 0, '-', '0', 0);
 
 -- --------------------------------------------------------
 
@@ -69,8 +64,7 @@ INSERT INTO `kelas` (`id_periode`, `id_kelas`, `level_ecc`, `nama_kelas`, `hari`
 CREATE TABLE `kelas_mhs` (
   `id_kelas` varchar(10) NOT NULL,
   `nrp` varchar(10) NOT NULL,
-  `id_nilai` varchar(10) NOT NULL,
-  `level` varchar(10) NOT NULL
+  `id_nilai` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -83,8 +77,10 @@ CREATE TABLE `mahasiswa` (
   `id_periode` int(11) NOT NULL,
   `nrp` varchar(10) NOT NULL,
   `nama_mhs` varchar(30) NOT NULL,
-  `current_level` varchar(10) NOT NULL,
   `nilai_placement` int(10) NOT NULL,
+  `placement_level` int(11) NOT NULL,
+  `start_level` int(11) NOT NULL,
+  `now_level` int(11) NOT NULL,
   `status_mhs` varchar(2) NOT NULL COMMENT '0 - Mhs nonaktif, 1 - mhs aktif ECC'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -92,9 +88,12 @@ CREATE TABLE `mahasiswa` (
 -- Dumping data for table `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`id_periode`, `nrp`, `nama_mhs`, `current_level`, `nilai_placement`, `status_mhs`) VALUES
-(0, '217180382', 'Alfira', 'I', -1, '1'),
-(0, '217180384', 'Arnold', 'I', 0, '1');
+INSERT INTO `mahasiswa` (`id_periode`, `nrp`, `nama_mhs`, `nilai_placement`, `placement_level`, `start_level`, `now_level`, `status_mhs`) VALUES
+(1, '217180381', 'Albert Wijaya', 450, 4, 4, 0, '1'),
+(1, '217180382', 'Alfira Jessica', 345, 3, 3, 0, '1'),
+(1, '217180383', 'Edward Gid', 200, 1, 1, 0, '1'),
+(1, '217180384', 'Arnold Pramudita', 322, 4, 4, 0, '1'),
+(1, '217180385', 'Excell', 450, 4, 4, 0, '1');
 
 -- --------------------------------------------------------
 
@@ -110,6 +109,13 @@ CREATE TABLE `nilai` (
   `nilai_akhir` int(10) NOT NULL,
   `grade` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES
+('', '217180381', 20, 30, 40, 'a');
 
 -- --------------------------------------------------------
 
@@ -151,9 +157,30 @@ CREATE TABLE `ruang_kelas` (
 
 INSERT INTO `ruang_kelas` (`id_ruangkelas`, `nama_ruang`, `status_ruang`) VALUES
 (15, 'B-301', '1'),
-(16, 'B-302', '0'),
+(16, 'B-302', '1'),
 (17, 'U-401', '1'),
 (18, 'U-402', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `standard_nilaipt`
+--
+
+CREATE TABLE `standard_nilaipt` (
+  `id_periode` int(11) NOT NULL,
+  `level1` int(11) NOT NULL,
+  `level2` int(11) NOT NULL,
+  `level3` int(11) NOT NULL,
+  `level4` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `standard_nilaipt`
+--
+
+INSERT INTO `standard_nilaipt` (`id_periode`, `level1`, `level2`, `level3`, `level4`) VALUES
+(1, 200, 300, 400, 500);
 
 -- --------------------------------------------------------
 
@@ -167,14 +194,6 @@ CREATE TABLE `temp_mahasiswa` (
   `nilai_placement` int(11) NOT NULL,
   `level` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `temp_mahasiswa`
---
-
-INSERT INTO `temp_mahasiswa` (`nrp`, `nama_mahasiswa`, `nilai_placement`, `level`) VALUES
-(217180382, 'Alfira', 250, '2'),
-(217180384, 'Arnold', 0, '1');
 
 -- --------------------------------------------------------
 
@@ -194,7 +213,7 @@ CREATE TABLE `temp_nilaiplacement` (
 --
 
 INSERT INTO `temp_nilaiplacement` (`level1`, `level2`, `level3`, `level4`) VALUES
-(200, 300, 500, 600);
+(200, 300, 400, 500);
 
 -- --------------------------------------------------------
 
@@ -215,9 +234,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `nama`, `level`, `status`) VALUES
-('217180345', 'kevin', 'kevin', 'dosen', 1),
-('217180382', '64ec997f263a63e35d3737e47799ebc53f406bcb', 'alfira', 'admin', 1),
-('alfira1', 'ce3eaa938d09504bae9458dffb805f2de7c9da4e', 'Fira', 'dosen', 1);
+('adminbaa', '8a4dffdc024fa2d9d75ffd04b3b2455c94faee8a', 'Admin BAA', 'admin', 1),
+('adminecc', 'd794f4282f47ac184454539e111b7c8cf4e5b11e', 'Admin ECC', 'admin', 1),
+('jeni', 'ce297fa69e21223be2d1b6892ddc7c8167956fd4', 'jeni', 'dosen', 1),
+('kevin', 'ffb4761cba839470133bee36aeb139f58d7dbaa9', 'Kevin', 'dosen', 1);
 
 --
 -- Indexes for dumped tables
@@ -267,7 +287,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=567;
+  MODIFY `id_kelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=578;
 
 --
 -- AUTO_INCREMENT for table `periode`
