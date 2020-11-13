@@ -58,6 +58,7 @@
                             </div>
                             <hr>
                                 
+<<<<<<< Updated upstream
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label text-right">NRP</label>
                                     <div class="col-sm-10">
@@ -106,6 +107,51 @@
                                     </div>
 
                                     <label style="color:red;" id="labelwarning1"></label>
+=======
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">NRP</label>
+                                        <div class="col-sm-10">
+                                        <input type="number" id="addnrp" class="form-control" placeholder="Masukan Nrp" aria-describedby="help_nrp">
+                                        <small id="help_nrp" class="form-text text-muted"></small>
+                                        </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nama</label>
+                                        <div class="col-sm-10">
+                                        <input type="text" id="addnama" class="form-control" placeholder="Masukan Nama" aria-describedby="help_nama">
+                                        <small id="help_nama" class="form-text text-muted"></small>
+                                        </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nilai</label>
+                                        <div class="col-sm-10">
+                                        <input type="number" id="addnilai" class="form-control" placeholder="Masukan Nilai placement" aria-describedby="help_nilai">
+                                        <small id="help_nilai" class="form-text text-muted"></small>
+                                        </div>
+                                </div>
+                                <div class="form-group row" id="checklisttr1">
+                                    <label class="col-sm-2 col-form-label text-right"> </label>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_lv1" value="1" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_lv1">Level 1</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_lv2" value="2" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_lv2">Level 2</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_lv3" value="3" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_lv3">Level 3</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radio_lv4" value="4" name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label" for="radio_lv4">Level 4</label>
+                                    </div>
+                                    <label class="col-sm-6 col-form-label text-right" id="warning1" ></label>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukan</button>
+>>>>>>> Stashed changes
                                 </div>
                                     
                             </div> <!-- end of form group row radio -->
@@ -259,12 +305,13 @@
                                 <td class="text-left" id="crnama"></td>
                             </tr>
                             <tr>
-                                <td scope="row">Nilai Placement : </td>
+                                <td scope="row">Nilai : </td>
                                 <td class="text-left">
                                     <input min=0 type="number" class="form-control-sm" name="" id="crnilaiplacement" aria-describedby="helpId" placeholder="">
                                 </td>
                             </tr>
                             <tr>
+<<<<<<< Updated upstream
                                 <td scope="row">Level : </td>
                                 <td class="text-left" id="modalnilai">
                                     <div class="custom-control custom-radio custom-control-inline">
@@ -283,16 +330,43 @@
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" id="modalradio_level4" value="4" name="modalRadioInline1" class="custom-control-input">
                                         <label class="custom-control-label" for="modalradio_level4">Level 4</label>
+=======
+                                <td></td>
+                                <td>
+                                    <div class="form-group row" id="checklisttr2">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="modal_radio_lv1" value="1" name="customRadioInline1" class="custom-control-input">
+                                            <label class="custom-control-label" for="modal_radio_lv1">Level 1</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="modal_radio_lv2" value="2" name="customRadioInline1" class="custom-control-input">
+                                            <label class="custom-control-label" for="modal_radio_lv2">Level 2</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="modal_radio_lv3" value="3" name="customRadioInline1" class="custom-control-input">
+                                            <label class="custom-control-label" for="modal_radio_lv3">Level 3</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control">
+                                            <input type="radio" id="modal_radio_lv4" value="4" name="customRadioInline1" class="custom-control-input">
+                                            <label class="custom-control-label" for="modal_radio_lv4">Level 4</label>
+                                        </div>
+                                        <label class="col-sm-6 col-form-label text-right" id="warning2" ></label>
+>>>>>>> Stashed changes
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    
                 </form>
             </div>
             <div class="modal-footer">
+<<<<<<< Updated upstream
                 <label id="update_warning" style="color:red"> </label>
                 <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Simpan Perubahan</button>
+=======
+                <button id="btn_update" type="button" class="btn btn-primary" data-dismiss="modal" onclick="update()">Simpan Perubahan</button>
+>>>>>>> Stashed changes
             </div>
         </div>
     </div>
@@ -407,7 +481,11 @@ function tetapkan_standarnilai() {
 
             });
         }
+<<<<<<< Updated upstream
        // updatelevel();
+=======
+        //updatelevel();
+>>>>>>> Stashed changes
 }
 
 function importfileada() {
@@ -509,6 +587,7 @@ function addtempmahasiswa() {
     var nilai = $("#addnilai").val();
     var radio_val="";
 
+<<<<<<< Updated upstream
     var result = $("#radio1 input:radio:checked").get();
     var columns = $.map(result, function(element) {
         radio_val = $(element).attr("value");
@@ -537,22 +616,69 @@ function addtempmahasiswa() {
                 //     $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
                 }
                 alert(data);
+=======
+    var result = $("#checklisttr1 input:radio:checked").get();
+    var choose_radio="";
+    var columns = $.map(result, function(element) {
+        choose_radio = $(element).attr("value");
+    });
+
+    if (nrp == "" || nama == "" || nilai == "") {
+        $("#warning1").text("Data yang dimasukkan belum lengkap!");
+        $("#warning1").attr("style","color:red");
+    }
+    
+    
+    else if (nrp != "" && nama != "" && nilai != "") {
+        $("#warning1").text("");
+        
+        $.post(
+        "../ajaxes/a_placement.php", {
+            jenis: "addtempmhs",
+            periode:periode,
+            nrp: nrp,
+            nama: nama,
+            nilai: nilai,
+            level:choose_radio,
+        },
+        function(data) {
+            if (data.includes("Berhasil")) {
+                reset();
+                $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+>>>>>>> Stashed changes
             }
 
         );
         reset();
     }
     
+<<<<<<< Updated upstream
    
    // updatelevel();
+=======
+
+    
+    //updatelevel();
+>>>>>>> Stashed changes
 }
 
 function reset() {
     $("#addnrp").val("");
     $("#addnama").val("");
     $("#addnilai").val("");
+<<<<<<< Updated upstream
     $("#labelwarning1").text("");
    
+=======
+    $("#warning1").empty();
+
+    var result = $("#checklisttr1 > input:radio:checked").get();
+    var choose_radio="";
+    var columns = $.map(result, function(element) {
+        $(element).attr('checked',"false");
+    });
+    
+>>>>>>> Stashed changes
 }
     
 function datatable_lihatsemuamahasiswa() {
@@ -658,6 +784,7 @@ function loadmhs(nrp) {
 function update() {
 var nrp = $("#crnrp").html();
 var nilai = $("#crnilaiplacement").val();
+<<<<<<< Updated upstream
 var radio_val="";
 
 var result = $("#modalnilai input:radio:checked").get();
@@ -676,15 +803,34 @@ else{
         id: nrp,
         nilai: nilai,
         level:radio_val,
+=======
+var result = $("#checklisttr2 input:radio:checked").get();
+    var choose_radio="";
+    var columns = $.map(result, function(element) {
+        choose_radio = $(element).attr("value");
+    });
+
+$.post("../ajaxes/a_placement.php", {
+        jenis: "update",
+        id: nrp,
+        nilai: nilai,
+        level:choose_radio,
+        
+>>>>>>> Stashed changes
     },
     function(data) {
+        console.log(choose_radio);
         alert(data);
         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
         $("#btn_update").attr("data-dismiss", "modal"); 
         //$('#btn_update').modal('hide');
     });
+<<<<<<< Updated upstream
 
 }
+=======
+    //updatelevel();
+>>>>>>> Stashed changes
 }
 
 
@@ -698,7 +844,11 @@ $.post("../ajaxes/a_placement.php", {
         alert(data);
         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
     });
+<<<<<<< Updated upstream
    // updatelevel();
+=======
+    //updatelevel();
+>>>>>>> Stashed changes
 }
 
 function pindah(nrp) {
@@ -752,11 +902,11 @@ function tempatkanmhs() {
 
         if (cek != null) //ada yg belum terisi
         {
-            alert("Anda belum dapat menempatkan semua mahasiswa! Pastikan semua data terisi")
+           // console.log("-+-");
+           alert("Anda belum dapat menempatkan semua mahasiswa! Pastikan semua data terisi");
         }
         else if (cek == null) //terisi semua
         {
-            console.log("-+-");
             $.post("../ajaxes/a_placement.php",
             {
                 idperiode:periode,
@@ -766,6 +916,8 @@ function tempatkanmhs() {
                 alert(data);
                 $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
             });
+            
+            
         }
     });
 }

@@ -65,6 +65,8 @@
     }
     
 
+    
+
     function isikelas() {
         $.post("../ajaxes/a_dos_nilai.php", {
                 jenis: "get_kelasdos",
@@ -80,6 +82,7 @@
         //datatable list barang
     var periode = $("#periode").val();
     var table = "";
+<<<<<<< Updated upstream
     table = $('#example').DataTable({
         destroy:true,
         "processing":true,
@@ -89,6 +92,17 @@
             "info": "Tampilkan data PAGE dari _PAGES_",
             "infoEmpty": "Tidak ada data",
             "infoFiltered": "(filtered from MAX total records)",
+=======
+    table = $('#table_tempmhs').DataTable({
+        destroy:true,
+        "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+>>>>>>> Stashed changes
             "search":"Cari",
             "paginate": {
                 "first":      "Pertama",
@@ -101,7 +115,11 @@
         "ordering":true, //set true agar bisa di sorting
         "order": [[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
         "ajax": {
+<<<<<<< Updated upstream
             "url": "../datatables/dosen-datatable/dt_nilaidosen.php",
+=======
+            "url": "../datatables/dosen-datatable/dosen_nilaidt.php",
+>>>>>>> Stashed changes
             "type": "POST",
             "data":{"periode":periode},
         },
@@ -113,11 +131,23 @@
         "columns": [
 
             { "data": "nrp" },
+<<<<<<< Updated upstream
             { "data": "nama" },
             { "data": "uts" },
             { "data": "uas" },
             { "data": "na" }
             
+=======
+            { "data": "nilai_uts" },
+            { "data": "nilai_uas" },
+            { "data":"nilai_akhir",
+                
+            },
+            {
+                "data": "grade",
+                
+            },
+>>>>>>> Stashed changes
             
         ],
         
