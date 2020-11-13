@@ -25,7 +25,7 @@ if($_POST["jenis"]=="get_allperiode"){
 
 //set periode per semester dimulai dari Genap 2021/2022
 //diset per 6 bulan 
-if($_POST["jenis"]=="set_periodedb"){
+else if($_POST["jenis"]=="set_periodedb"){
     $val="";
     $month = $_POST["getmonth"]; //index dimulai dari 0-january
     $sql1 = "select * from periode order by id_periode DESC LIMIT 1";

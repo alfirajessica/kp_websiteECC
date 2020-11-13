@@ -83,11 +83,7 @@ $level = $arr->get_level();
 </body>
 
 <script>
-    $(document).ready(function() {
-        isikelas();
-        periode();
-        datatable_lihatsemuamahasiswa();
-    });
+   
 </script>
 
 </html>
