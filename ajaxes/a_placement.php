@@ -117,7 +117,7 @@ else if ($_POST["jenis"] == "loadsel") {
     $level = $_POST["level"];
     $conn = getConn();
 
-    $snama= ucwords($nama);
+    $snama = ucwords($nama);
     $sql = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,start_level,now_level,status_mhs) VALUES ('$periode','$nrp','$snama','$nilai','$level','0','0','0')";
 
     if ($conn->query($sql)) {
@@ -270,21 +270,14 @@ if($_POST["jenis"]=="aktifkan_allmhs"){
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
-        $ket="";
+        
         $nrp = $row["nrp"];
         $ptlevel = $row["placement_level"];
 
         $sql1 = "update mahasiswa set start_level='$ptlevel', status_mhs='1' where nrp='$nrp'";
     
         if ($conn->query($sql1)) {
-            // $sql2 = "update mahasiswa set status_mhs='1' where id_periode='$idperiode'";
-            // if ($conn->query($sql2)) {
-            //     $ket = "berhasil menempatkan semua daftar mahasiswa placement semester ".$idperiode." ";
-            // }else {
-            //     $ket = "Gagal menempatkan mahasiswa";
-            // }
-            $ket = "berhasil menempatkan semua daftar mahasiswa placement ";
-
+            $ket = "berhasil menempatkan semua daftar mahasiswa placement semester";
         }else {
             $ket = "Gagal menempatkan mahasiswa";
         }    
