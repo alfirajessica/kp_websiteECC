@@ -29,7 +29,7 @@
 
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="example">
             <thead>
                 <tr>
                     <th scope="col" class="sort" data-sort="name">NRP</th>
@@ -37,27 +37,11 @@
                     <th scope="col" class="sort" data-sort="budget">UTS</th>
                     <th scope="col" class="sort" data-sort="budget">UAS</th>
                     <th scope="col" class="sort" data-sort="budget">NA</th>
-                    <th scope="col" class="sort" data-sort="budget">Ket</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td scope="col" class="sort" data-sort="name">217180382</td>
-                    <td scope="col" class="sort" data-sort="budget">
-                        Alfira Jessica
-                    </td>
-                    <td scope="col" class="sort" data-sort="budget">
-                        <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">
-                            <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                            <span class="btn-inner--text">Input nilai</span>
-                        </button>
-                    </td>
-                    <td scope="col" class="sort" data-sort="budget">
-                        <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">
-                            <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                            <span class="btn-inner--text">Input nilai UAS + Nilai Akhir</span>
-                        </button>
-                    </td>
+
                 </tr>
 
             <tbody>
@@ -68,73 +52,76 @@
 
 
 <script>
-    isikelas();
+
+    function periode() {
+        $.post("../ajaxes/a_periode.php", {
+                jenis: "get_allperiode",
+            },
+            function(data) {
+                console.log(data);
+                $("#periode").html(data);
+
+            });
+    }
+    
 
     function isikelas() {
         $.post("../ajaxes/a_dos_nilai.php", {
-                jenis: "get_allkelas",
+                jenis: "get_kelasdos",
             },
             function(data) {
                 console.log(data);
                 $("#kelas").html(data);
-                datatable_lihatsemuamahasiswa();
+
             });
     }
 
-
-
-
     function datatable_lihatsemuamahasiswa() {
         //datatable list barang
-        var table = "";
-        table = $('#example').DataTable({
-            dom: 'Bfrtip',
-            "processing": true,
-            "serverSide": true,
-            "bInfo": false,
-            dom: "<'myfilter'f><'mylength'l>t",
-            "pagingType": "numbers",
-            "ordering": true, //set true agar bisa di sorting
-            "order": [
-                [0, 'asc']
-            ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
-            "ajax": {
-                "url": "../datatables/admin-datatable/temp-mahasiswa_dt.php",
-                "type": "POST"
+    var periode = $("#periode").val();
+    var table = "";
+    table = $('#example').DataTable({
+        destroy:true,
+        "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan MENU data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data PAGE dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from MAX total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
             },
-            "deferRender": true,
-            "aLengthMenu": [
-                [10, 20, 50],
-                [10, 20, 50]
-            ], //combobox limit
-            "columns": [
+        "serverSide":true,
+        "ordering":true, //set true agar bisa di sorting
+        "order": [[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+        "ajax": {
+            "url": "../datatables/dosen-datatable/dt_nilaidosen.php",
+            "type": "POST",
+            "data":{"periode":periode},
+        },
+        "deferRender": true,
+        "aLengthMenu": [
+            [10, 20, 50],
+            [10, 20, 50]
+        ], //combobox limit
+        "columns": [
 
-                {
-                    "data": "nrp"
-                },
-                {
-                    "data": "nama_mahasiswa"
-                },
-                {
-                    "data": "nilai_placement",
-                },
-                {
-                    "data": "level",
-                }, {
-                    "data": "status",
-                    "render": function(data, type, row) {
-                        if (parseInt(row.nilai_placement) == 0) //nilai masih 0
-                        {
-                            return "<button class='btn btn-primary rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\"  >Input Nilai</button>";
-                        } else if (parseInt(row.nilai_placement) > 0) //ubah nilai lebih dari 0
-                        {
-                            return "<button class='btn btn-warning rounded' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\"  >Ubah Nilai</button>";
-                        }
-
-                    }
-                }
-
-            ],
-        });
+            { "data": "nrp" },
+            { "data": "nama" },
+            { "data": "uts" },
+            { "data": "uas" },
+            { "data": "na" }
+            
+            
+        ],
+        
+        
+    });
     }
 </script>
