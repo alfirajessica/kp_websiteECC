@@ -21,7 +21,7 @@
     
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="example">
             <thead>
                 <tr>
                 <th scope="col" class="sort" data-sort="name">NRP</th>
@@ -33,17 +33,105 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <td scope="col" class="sort" data-sort="name">217180382</td>
-                <td scope="col" class="sort" data-sort="budget"> Alfira Jessica </td>
-                <td scope="col" class="sort" data-sort="name">60</td>
-                <td scope="col" class="sort" data-sort="name">60</td>
-                <td scope="col" class="sort" data-sort="name">60</td>
-                <td scope="col" class="sort" data-sort="name">C</td>
-                </tr>
+             
                 
             <tbody>
         </table>
     </div>
     <!-- end of tabel kelas yang tergenerate -->
 </div>
+<script>
+ $(document).ready(function() {
+        isikelas();
+        periode();
+        datatable_lihatsemuamahasiswa();
+    });
+
+    function periode() {
+        $.post("../ajaxes/a_periode.php", {
+                jenis: "get_allperiode",
+            },
+            function(data) {
+                console.log(data);
+                $("#periode").html(data);
+
+            });
+    }
+
+
+    function isikelas() {
+        $.post("../ajaxes/a_kelas.php", {
+                jenis: "get_kelas",
+            },
+            function(data) {
+                console.log(data);
+                $("#kelas").html(data);
+
+            });
+    }
+
+    function datatable_lihatsemuamahasiswa() {
+        //datatable list barang
+        var periode = $("#periode").val();
+        var kelas = $("#kelas").val();
+        var table = "";
+        table = $('#example').DataTable({
+            destroy: true,
+            "processing": true,
+            "language": {
+                "lengthMenu": "Tampilkan MENU data per Halaman",
+                "zeroRecords": "Maaf Data yang dicari tidak ada",
+                "info": "Tampilkan data PAGE dari _PAGES_",
+                "infoEmpty": "Tidak ada data",
+                "infoFiltered": "(filtered from MAX total records)",
+                "search": "Cari",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                },
+            },
+            "serverSide": true,
+            "ordering": true, //set true agar bisa di sorting
+            "order": [
+                [0, 'asc']
+            ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+            "ajax": {
+                "url": "../datatables/admin-datatable/dt_nilaiadmin.php",
+                "type": "POST",
+                "data": {
+                    "periode": periode,
+                    "kelas": kelas
+                },
+            },
+            "deferRender": true,
+            "aLengthMenu": [
+                [10, 20, 50],
+                [10, 20, 50]
+            ], //combobox limit
+            "columns": [
+
+                {
+                    "data": "nrp"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "uts"
+                },
+                {
+                    "data": "uas"
+                },
+                {
+                    "data": "na"
+                }
+
+
+            ],
+
+
+        });
+    }
+</script>

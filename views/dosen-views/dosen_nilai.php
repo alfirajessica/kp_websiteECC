@@ -37,7 +37,7 @@
                     <th scope="col" class="sort" data-sort="budget">UTS</th>
                     <th scope="col" class="sort" data-sort="budget">UAS</th>
                     <th scope="col" class="sort" data-sort="budget">NA</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +52,11 @@
 
 
 <script>
+    $(document).ready(function() {
+        isikelas();
+        periode();
+        datatable_lihatsemuamahasiswa();
+    });
 
     function periode() {
         $.post("../ajaxes/a_periode.php", {
@@ -63,7 +68,7 @@
 
             });
     }
-    
+
 
     
 
@@ -80,6 +85,7 @@
 
     function datatable_lihatsemuamahasiswa() {
         //datatable list barang
+<<<<<<< HEAD
     var periode = $("#periode").val();
     var table = "";
 <<<<<<< Updated upstream
@@ -153,5 +159,68 @@
         
         
     });
+=======
+        var periode = $("#periode").val();
+        var kelas = $("#kelas").val();
+        var table = "";
+        table = $('#example').DataTable({
+            destroy: true,
+            "processing": true,
+            "language": {
+                "lengthMenu": "Tampilkan MENU data per Halaman",
+                "zeroRecords": "Maaf Data yang dicari tidak ada",
+                "info": "Tampilkan data PAGE dari _PAGES_",
+                "infoEmpty": "Tidak ada data",
+                "infoFiltered": "(filtered from MAX total records)",
+                "search": "Cari",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                },
+            },
+            "serverSide": true,
+            "ordering": true, //set true agar bisa di sorting
+            "order": [
+                [0, 'asc']
+            ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+            "ajax": {
+                "url": "../datatables/dosen-datatable/dt_nilaidosen.php",
+                "type": "POST",
+                "data": {
+                    "periode": periode,
+                    "kelas": kelas
+                },
+            },
+            "deferRender": true,
+            "aLengthMenu": [
+                [10, 20, 50],
+                [10, 20, 50]
+            ], //combobox limit
+            "columns": [
+
+                {
+                    "data": "nrp"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "uts"
+                },
+                {
+                    "data": "uas"
+                },
+                {
+                    "data": "na"
+                }
+
+
+            ],
+
+
+        });
+>>>>>>> 44d1c80555fd0bcf5238f1c639c4e73e2594f061
     }
 </script>

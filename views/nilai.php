@@ -83,6 +83,7 @@ $level = $arr->get_level();
 </body>
 
 <script>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     $(document).ready(function() {
         isikelas();
@@ -103,10 +104,6 @@ $level = $arr->get_level();
         periode();
         //datatable_lihatsemuamahasiswa();
     });
-
-
-   
->>>>>>> Stashed changes
 </script>
 
 </html>
