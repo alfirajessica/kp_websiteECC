@@ -287,4 +287,20 @@ if($_POST["jenis"]=="aktifkan_allkelas"){
     }
     $conn->close();
 }
+
+if($_POST["jenis"]=="get_kelas"){
+    $kal="";
+    $conn=getConn();
+    $stmt=$conn->prepare("select * from kelas ");
+    $stmt->execute();
+    $res=$stmt->get_result();
+    while($row=$res->fetch_assoc()){
+        $level=$row["level_ecc"];
+        $idkelas=$row["id_kelas"];
+        $namakelas=$row["nama_kelas"];
+        $kal.="<option val='$idkelas' >"."ECC $level - Kelas $namakelas </option>";
+    }
+    echo $kal;
+}
+
 ?>
