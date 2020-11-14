@@ -152,5 +152,6 @@
 		echo $collevel1.$kal1.$collevel2.$kal2.$collevel3.$kal3.$collevel4.$kal4;
 		?>
 	</table>
+    
 </body>
 </html>

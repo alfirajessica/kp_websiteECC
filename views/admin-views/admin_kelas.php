@@ -642,6 +642,20 @@ function exportfile() {
     window.location.href = "../custom_export/admin_export/lihat_kelas.php?periode="+periode+"";
 }
 
+function nonaktikfkan_kls(idkelas, table) {
+    $.post("../ajaxes/a_kelas.php",
+    {
+        idkelas:idkelas,
+        jenis:"nonaktifkan_kls",
+    },
+    function(data){
+        alert(data);
+        $(table).DataTable().ajax.reload(); //reload ajax datatable
+        
+    });
+   // $('#table1').DataTable().ajax.reload(); //reload ajax datatable
+}
+
 
 function datatable_kelasaktif() {
     var periode = $("#periode_lihatkelas").val();
@@ -737,7 +751,7 @@ function datatable_kelasaktif() {
                     var idkelas = row.id_kelas;
                     var table = "#table_kelasaktif";
 
-                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#exampleModal'>Lihat Mahasiswa</button>";
+                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#exampleModal'>Lihat Mahasiswa</button>" + " <button onclick=\"nonaktikfkan_kls(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
                     
                     
                 }

@@ -34,7 +34,7 @@
 	<?php
 	header("Content-type: application/vnd-ms-excel");
 	$tgl = date("Ymd_his");
-	header("Content-Disposition: attachment; filename=" . $tgl . "_daftarkelas.xls");
+	header("Content-Disposition: attachment; filename=" . $tgl . "_hasilplacement.xls");
 	require_once "../../config/conn.php";
 		
     $conn = getConn();
@@ -49,108 +49,142 @@
 
     ?>
 
-        <table border="1" >
-        <tr>
-            <th colspan="7"> Daftar Kelas ECC </th>      
+        <table>
+        <thead>
+        <tr> 
+            <?php 
+                for ($i=1; $i <= 4; $i++) { 
+                    ?> 
+                        <th colspan="5"> Hasil ECC Level <?php echo $i;?></th> 
+                        <th colspan="2"></th>
+                    
+                <?php } ?>
         </tr>
-        <tr>
-            <th colspan="7"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
+        <tr> 
+            <?php 
+                for ($i=1; $i <= 4; $i++) { 
+                    ?> 
+                        <th colspan="5"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> <th colspan="2"></th>
+                    
+                <?php } ?>
         </tr>
+            
 		<tr>
-			<th>#</th>
-			<th>Nama Kelas</th>
-			<th>Hari</th>
-            <th>Jam</th>
-            <th>Ruang</th>
-            <th>Kuota</th>
-            <th>Dosen</th>
+            <th>#</th>
+            <th>Nrp</th>
+            <th>Nama Mahasiswa</th>
+            <th>Nilai Placement</th>
+            <th>Level Placement</th>
+            <th colspan="2"></th>
+
+            <th>#</th>
+            <th>Nrp</th>
+            <th>Nama Mahasiswa</th>
+            <th>Nilai Placement</th>
+            <th>Level Placement</th>
+            <th colspan="2"></th>
+
+            <th>#</th>
+            <th>Nrp</th>
+            <th>Nama Mahasiswa</th>
+            <th>Nilai Placement</th>
+            <th>Level Placement</th>
+            <th colspan="2"></th>
+
+            <th>#</th>
+            <th>Nrp</th>
+            <th>Nama Mahasiswa</th>
+            <th>Nilai Placement</th>
+            <th>Level Placement</th>
+           
 		</tr>
+        </thead>
+        <tbody>
+        
+        
         
     <?php
     }
-        $sql1 = "SELECT * FROM kelas k
-        LEFT JOIN user u
-        ON k.dosen = u.username
-        LEFT JOIN ruang_kelas rk
-        ON k.id_ruangkelas=rk.id_ruangkelas
-        WHERE k.id_periode=$periode and k.status_kelas='1'";
+        $sql1 = "SELECT * FROM mahasiswa WHERE id_periode='$periode' and status_mhs='1' ORDER by nrp asc, placement_level asc";
 
         $result = $conn->query($sql1);
         $stat="";
-        
 
 		if ($result->num_rows > 0) {
 			// output data of each row
 			while ($row = $result->fetch_assoc()) {
-				$level = $row["level_ecc"];
-				$nama_kelas = $row["nama_kelas"];
-				$hari = $row["hari"];
-                $jam_awal = $row["jam_awal"];
-                $jam_akhir = $row["jam_akhir"];
-                $ruang = $row["nama_ruang"];
-                $kuota = $row["kuota"];
-                $dosen = $row["nama"];
-
-                if ($level == "Level 1") {
-                    $collevel1="<tr><td colspan='7'>Level 1</td></tr>";
-                    $kal1 .= "
-                <tr>
+				$nrp = $row["nrp"];
+				$nama_mhs = $row["nama_mhs"];
+				$nilai_placement = $row["nilai_placement"];
+                $placement_level = $row["placement_level"];
+                $now_level = $row["now_level"];
+            
+                if ($placement_level == "1") {
+                    $collevel1="<tr><td colspan='6'>Level 1</td></tr>";
+                    $kal1 .= "<tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
-                </tr>"; 
+                    <td>$nrp</td>
+                    <td>$nama_mhs</td>
+                    <td>$nilai_placement</td>
+                    <td>$placement_level</td>
+                    <td colspan='2'></td></tr>";
                     
                 }
-                elseif ($level == "Level 2") {
-                    $collevel2="<tr><td colspan='7'>Level 2</td></tr>";
-                    $kal2 .= "
-                <tr>
+
+                else if ($placement_level == "2") {
+                    $collevel2="<tr><td colspan='6'>Level 2</td></tr>";
+                    $kal2 .="<tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
-                </tr>";      
+                    <td>$nrp</td>
+                    <td>$nama_mhs</td>
+                    <td>$nilai_placement</td>
+                    <td>$placement_level</td>
+                    <td colspan='2'></td></tr>";
+                    
                 }
-                elseif ($level == "Level 3") {
-                    $collevel3="<tr><td colspan='7'>Level 3</td></tr>";
-                    $kal3 .= "
-                <tr>
+
+                else if ($placement_level == "3") {
+                    $collevel3="<tr><td colspan='6'>Level 3</td></tr>";
+                    $kal3 .=
+                    "<tr><td>-</td>
+                    <td>$nrp</td>
+                    <td>$nama_mhs</td>
+                    <td>$nilai_placement</td>
+                    <td>$placement_level</td>
+                    <td colspan='2'></td></tr>";
+            
+                }
+
+                else if ($placement_level == "4") { 
+                    $collevel4="<tr><td colspan='6'>Level 4</td></tr>";
+                    $kal4 .="</tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
-                </tr>";      
-                }
-                elseif ($level == "Level 4") {
-                    $collevel4="<tr><td colspan='7'>Level 4</td></tr>";
-                    $kal4 .= "
-                <tr>
-                    <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
-                </tr>";      
-                }
+                    <td>$nrp</td>
+                    <td>$nama_mhs</td>
+                    <td>$nilai_placement</td>
+                    <td>$placement_level</td></tr>
+                ";
                 
-			}
-		} else {
-			$kal1 = "";
+                }
+                ?>
+                
+                
+            
+            <?php }
+        }
+
+                    
+			
+        else 
+        {
+			$kal1 = "----";
         }
 		echo $collevel1.$kal1.$collevel2.$kal2.$collevel3.$kal3.$collevel4.$kal4;
 		?>
+        
+    </tbody>
 	</table>
+
+    
 </body>
 </html>

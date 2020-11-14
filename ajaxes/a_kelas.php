@@ -288,6 +288,20 @@ if($_POST["jenis"]=="aktifkan_allkelas"){
     $conn->close();
 }
 
+if($_POST["jenis"]=="nonaktifkan_kls"){
+    $idkelas = $_POST["idkelas"];
+    $ket="";
+    $sql = "update kelas set status_kelas='0' where id_kelas='$idkelas'";
+    
+    if ($conn->query($sql)) {
+        $ket= "1"; //berhasil
+    }else {
+        $ket= "0"; //gagal
+    }
+    echo $ket;
+    $conn->close();
+}
+
 if($_POST["jenis"]=="get_kelas"){
     $kal="";
     $conn=getConn();
@@ -302,5 +316,7 @@ if($_POST["jenis"]=="get_kelas"){
     }
     echo $kal;
 }
+
+
 
 ?>

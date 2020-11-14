@@ -792,8 +792,9 @@ function  btn_cariperiode() {
 }
 
 function exportfile() {
-        window.location.href = "../custom_export/lihat_placement.xlsx";
-    }
+    var periode = $("#periode_lihatkelas").val();
+    window.location.href = "../custom_export/admin_export/lihat_placement.php?periode="+periode+"";
+}
 
 function nonaktikfkan_mhs(nrp) {
     $.post("../ajaxes/a_placement.php",
@@ -806,7 +807,7 @@ function nonaktikfkan_mhs(nrp) {
         $('#table_mhspt').DataTable().ajax.reload(); //reload ajax datatable
         
     });
-    $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable
+    
 }
 
 

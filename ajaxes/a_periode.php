@@ -72,8 +72,6 @@ else if($_POST["jenis"]=="set_periodedb"){
                 echo $thn_awal;
             }
         }
-        
-
     }
     updatestatus_periode();
     echo $month;
