@@ -118,7 +118,7 @@ else if ($_POST["jenis"] == "loadsel") {
     $conn = getConn();
 
     $snama = ucwords($nama);
-    $sql = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,start_level,now_level,status_mhs) VALUES ('$periode','$nrp','$snama','$nilai','$level','0','0','0')";
+    $sql = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('$periode','$nrp','$snama','$nilai','$level','0','0')";
 
     if ($conn->query($sql)) {
         echo "Berhasil insert !";
@@ -204,7 +204,7 @@ if($_POST["jenis"]=="hapus_mhs"){
     $conn->close();
 }
 
-if($_POST["jenis"]=="mshpindah_level"){
+/*if($_POST["jenis"]=="mshpindah_level"){
     $nrp = $_POST["nrp"];
     $levelbaru = $_POST["levelbaru"];
     $ket="";
@@ -219,7 +219,7 @@ if($_POST["jenis"]=="mshpindah_level"){
 
     echo $ket;
     $conn->close();
-}
+}*/
 
 if($_POST["jenis"]=="cek_periode"){
     $idperiode = $_POST["idperiode"];
@@ -274,7 +274,7 @@ if($_POST["jenis"]=="aktifkan_allmhs"){
         $nrp = $row["nrp"];
         $ptlevel = $row["placement_level"];
 
-        $sql1 = "update mahasiswa set start_level='$ptlevel', status_mhs='1' where nrp='$nrp'";
+        $sql1 = "update mahasiswa set placement_level='$ptlevel', status_mhs='1' where nrp='$nrp'";
     
         if ($conn->query($sql1)) {
             $ket = "berhasil menempatkan semua daftar mahasiswa placement semester";

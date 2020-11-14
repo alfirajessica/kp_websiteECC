@@ -26,7 +26,7 @@ session_start();
                 if ($nrp != '') {
                     //$insertqry = "INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`,`level`) VALUES ('$nrp','$nama','$nilai','-')";
 
-                    $insertqry = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,start_level,now_level,status_mhs) VALUES ('$periode','$nrp','$nama','$nilai','$level','0','0','0')";
+                    $insertqry = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('$periode','$nrp','$nama','$nilai','$level','0','0')";
                     $insertres = mysqli_query($conn, $insertqry);
 
                     // $updateqry = "update mahasiswa set nama_mhs='$nama', nilai_placement='$nilai', placement_level='0' where nrp='$nrp' ";

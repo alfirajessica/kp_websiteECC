@@ -248,6 +248,7 @@
             </div>
             <div class="modal-body">
                 <form role="form">
+                    <label id="statustable"></label>
                     <table class="table table-borderless table-md text-right">
                         <tbody>
                             <tr>
@@ -603,11 +604,8 @@ function datatable_lihatsemuamahasiswa() {
                     {
                         return "<label class='text-danger'> Belum Ada level </label>";
                     }
-                    else if (row.placement_level != 0 && row.start_level == 0) {
+                    else if (row.placement_level != 0) {
                         return "<label> Level " + row.placement_level + " </label>";
-                    }
-                    else if (row.placement_level != 0 && row.start_level != 0) {
-                        return "<label> Level " + row.start_level + " </label>";
                     }
                     
                 }
@@ -616,12 +614,13 @@ function datatable_lihatsemuamahasiswa() {
                 "data": "nilai_placement",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
+                    var table = "table_tempmhs";
 
                     if (row.nilai_placement == '0') {
-                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     }
                     else{
-                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + nrp + "')\" >Ubah</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Ubah</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
                     }
 
                     
@@ -634,7 +633,7 @@ function datatable_lihatsemuamahasiswa() {
     });
 }
 
-function loadmhs(nrp) {
+function loadmhs(nrp, table) {
     $.post(
         "../ajaxes/a_placement.php", {
             jenis: "loadsel",
@@ -647,7 +646,7 @@ function loadmhs(nrp) {
             $("#crnilaiplacement").val(arr.nilai_placement);
             $("#cperingkat").html(arr.placement_level);
             $("#clevelsblmny").html("Level Hasil Placement : " + arr.placement_level);
-
+            $("#statustable").text(table);
             var level_radio = arr.placement_level;
             $("input[name=modalRadioInline1][value='"+level_radio+"']").prop("checked",true);
         }
@@ -658,6 +657,7 @@ function loadmhs(nrp) {
 function update() {
 var nrp = $("#crnrp").html();
 var nilai = $("#crnilaiplacement").val();
+var table = $("#statustable").val();
 var radio_val="";
 
 var result = $("#modalnilai input:radio:checked").get();
@@ -672,18 +672,22 @@ if (nilai == 0 || radio_val == "") {
 }
 else{
     $.post("../ajaxes/a_placement.php", {
-        jenis: "update",
-        id: nrp,
-        nilai: nilai,
-        level:radio_val,
-    },
-    function(data) {
-        alert(data);
-        $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
-        $("#btn_update").attr("data-dismiss", "modal"); 
-        //$('#btn_update').modal('hide');
-    });
-
+            jenis: "update",
+            id: nrp,
+            nilai: nilai,
+            level:radio_val,
+        },
+        function(data) {
+            alert(data);
+            if (table == "table_tempmhs") {
+                $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
+            }
+            else if (table == "") {
+                $('#table_mhspt').DataTable().ajax.reload(); //reload ajax datatab
+            }    
+            $("#btn_update").attr("data-dismiss", "modal"); 
+        });
+    
 }
 }
 
@@ -702,10 +706,10 @@ $.post("../ajaxes/a_placement.php", {
 }
 
 function pindah(nrp) {
-    loadmhs(nrp);
+    loadmhs(nrp,table);
 }
 
-function pindahlevel() {
+/*function pindahlevel() {
     var nrp = $("#cnrp").html();
     var levelbaru = $("#pindahlevel").val();
     console.log(nrp);
@@ -720,7 +724,7 @@ function pindahlevel() {
             $('#table_tempmhs, #table_mhspt').DataTable().ajax.reload(); //reload ajax datatab
         }
     );
-}
+}*/
 
 
 /*function updatelevel() {
@@ -766,6 +770,7 @@ function tempatkanmhs() {
                 alert(data);
                 $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
             });
+            
         }
     });
 }
@@ -797,9 +802,11 @@ function nonaktikfkan_mhs(nrp) {
         jenis:"nonaktifkan_mhs",
     },
     function(data){
-        console.log(data);
+        alert(data);
         $('#table_mhspt').DataTable().ajax.reload(); //reload ajax datatable
+        
     });
+    $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable
 }
 
 
@@ -840,19 +847,20 @@ function datatable_ptmhs_periodeini() {
             {
                 "data": "nilai_placement",
             },
-            { "data":"start_level",
+            { "data":"placement_level",
                 "searchable": true,
                 "orderable":true,
                 "render": function (data, type, row) {  
-                    return "<label> Level " + row.start_level + " </label>";
+                    return "<label> Level " + row.placement_level + " </label>";
                 }
             },
             {
                 "data": "placement_level",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
+                    var table = "table_mhspt";
 
-                    return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs('" + row.nrp + "')\" >Input Nilai</button>" + " <button onclick=\"nonaktikfkan_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Ubah Nilai</button>" + " <button onclick=\"nonaktikfkan_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
 
                 }
             }

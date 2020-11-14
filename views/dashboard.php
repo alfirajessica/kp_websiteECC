@@ -23,9 +23,9 @@ $level = $arr->get_level();
           <div class="card">
             <?php 
               if($level == "admin")
-                { require("admin-views/admin_nilai.php"); }
+                { require("admin-views/admin_dashboard.php"); }
               else if ($level == "dosen") {
-                require("dosen-views/dosen_nilai.php");
+                require("dosen-views/dosen_dashboard.php");
               }
             ?>
           </div>

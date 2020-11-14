@@ -7,13 +7,21 @@ if($_POST["jenis"]=="get_allperiode"){
     $sql1="select * from periode";
     $result1 = $conn->query($sql1);
     if ($result1->num_rows > 0) {
-        $kal="<option value='-1' selected>pilih periode ..</option>";
+        
         while ($row1 = $result1->fetch_assoc()) {
             $idperiode=$row1["id_periode"];
             $semester=$row1["semester"];
             $thn_akademik_awal=$row1["thn_akademik_awal"];
             $thn_akademik_akhir=$row1["thn_akademik_akhir"];
-            $kal.="<option value='$idperiode'>$semester - $thn_akademik_awal/$thn_akademik_akhir</option>";
+            $status = $row1["status_periode"];
+
+            if ($status == "1") {
+                $kal.="<option value='$idperiode' selected>$semester - $thn_akademik_awal/$thn_akademik_akhir</option>";
+            }
+            else{
+                $kal.="<option value='$idperiode'>$semester - $thn_akademik_awal/$thn_akademik_akhir</option>";
+            }
+            
         }
     }else{
         $kal="<option value='-1'>..</option>";
@@ -43,7 +51,7 @@ else if($_POST["jenis"]=="set_periodedb"){
             $thn_awal = $thn_akademik_awal;
             $thn_akhir = $thn_akademik_akhir;
             $semester = "Gasal";
-            $sql2 = "insert into periode (id_periode,semester,thn_akademik_awal,thn_akademik_akhir) values (null,'$semester',$thn_awal,$thn_akhir)";
+            $sql2 = "insert into periode (id_periode,semester,thn_akademik_awal,thn_akademik_akhir,status_periode) values (null,'$semester',$thn_awal,$thn_akhir,'1')";
 
             if ($conn->query($sql2)) {
                 echo "berhasil tambah semester gasal";
@@ -56,7 +64,7 @@ else if($_POST["jenis"]=="set_periodedb"){
             $thn_awal = $thn_akademik_awal+1;
             $thn_akhir = $thn_akademik_akhir+1;
             $semester = "Genap";
-            $sql3 = "insert into periode (id_periode,semester,thn_akademik_awal,thn_akademik_akhir) values (null,'$semester',$thn_awal,$thn_akhir)";
+            $sql3 = "insert into periode (id_periode,semester,thn_akademik_awal,thn_akademik_akhir,status_periode) values (null,'$semester',$thn_awal,$thn_akhir,'1')";
 
             if ($conn->query($sql3)) {
                 echo "berhasil tambah semester genap";
@@ -64,12 +72,33 @@ else if($_POST["jenis"]=="set_periodedb"){
                 echo $thn_awal;
             }
         }
-        //echo $val.'-'.$semester;
+        
 
     }
+    updatestatus_periode();
+    echo $month;
     $conn->close();
 }
 
+function updatestatus_periode(){
+    $ket="";
+    $conn=getConn();
+    $sql1 = "select * from periode order by id_periode DESC LIMIT 1";
+    $result1 = $conn->query($sql1);
+    if ($result1->num_rows > 0) {
+        while ($row1 = $result1->fetch_assoc()) {
+            $idperiode=$row1["id_periode"];
 
+            $sqlup = "update periode set status_periode='0' where id_periode!='$idperiode'";
+            if ($conn->query($sqlup)) {
+             $ket = "berhasil";
+            }else {
+            $ket = "Gagal ";
+            }    
+        }
+    }
+    echo $ket;
+    
+}
 
 ?>
