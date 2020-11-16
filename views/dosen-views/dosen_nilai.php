@@ -195,4 +195,16 @@
 
         });
     }
+
+    $("#uts").change(function() {
+        var uts=$("#uts")[0].files[0];
+        $("#file_uts").html(uts.name);
+    });
+
+    $("#uas").change(function() {
+        var uas=$("#uas")[0].files[0];
+        $("#file_uas").html(uas.name);
+    });
+
+
 </script>
