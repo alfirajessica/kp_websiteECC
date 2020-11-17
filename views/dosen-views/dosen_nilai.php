@@ -17,7 +17,9 @@
         </div>
 
         <div class="form-group">
-            <button type="button" class="btn btn-secondary">Import Excel</button>
+            <!-- <button type="button" class="btn btn-secondary">Import Excel</button> -->
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuts">Import UTS</button>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button>
         </div>
 
         <div class="form-group">
@@ -26,6 +28,54 @@
 
 
     </form>
+
+    <div class="modal fade" id="importuts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    UTS
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="uts">
+                        <label class="custom-file-label" for="uts" id='file_uts'>Pilih file uts ...</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">IMPORT UTS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="importuas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    UAS
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="uas">
+                        <label class="custom-file-label" for="uas" id='file_uas'>Pilih file uas ...</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">IMPORT UAS</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
@@ -145,4 +195,16 @@
 
         });
     }
+
+    $("#uts").change(function() {
+        var uts=$("#uts")[0].files[0];
+        $("#file_uts").html(uts.name);
+    });
+
+    $("#uas").change(function() {
+        var uas=$("#uas")[0].files[0];
+        $("#file_uas").html(uas.name);
+    });
+
+
 </script>
