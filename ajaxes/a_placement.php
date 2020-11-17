@@ -43,33 +43,21 @@ if ($_POST["jenis"] == "setstandard") {
     }
 } 
 
-else if ($_POST["jenis"] == "selectednrp") {
-    $nrp = $_POST["id"];
-    $conn = getConn();
-    $sql = "select * from temp_mahasiswa where nrp='$nrp'";
-    $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-        $nrp = $row["nrp"];
-        $nama = $row["nama_mahasiswa"];
-        $nilai = $row["nilai_placement"];
-        $level = $row["level"];
-        $arr = array(
-            "nama" => $nama,
-            "nilaiplacement" => $nilai
-        );
-    }
-    echo json_encode($arr);
-} else if ($_POST["jenis"] == "update") {
+ else if ($_POST["jenis"] == "update") {
     $nrp = $_POST["id"];
     $nilai = $_POST["nilai"];
     $level = $_POST["level"];
     $conn = getConn();
+    $ket="";
 
-    $sql0 = "update mahasiswa set nilai_placement='$nilai', placement_level='$level' where nrp='$nrp'";
-    $result0 = $conn->query($sql0);
-    if ($result0) {
-        echo "Berhasil update !";
+    $sql = "update mahasiswa set nilai_placement='$nilai', placement_level='$level' where nrp='$nrp'";
+    if ($conn->query($sql)) {
+        $ket= "1"; //berhasil
+    }else {
+        $ket= "0"; //gagal
     }
+
+    echo $ket;
     // updatelevel();
 } else if ($_POST["jenis"] == "insertmhs") {
     $periode = $_POST["periode"];
@@ -139,6 +127,26 @@ else if ($_POST["jenis"] == "loadsel") {
     }
 }
 
+if($_POST["jenis"]=="selectednrp"){
+    $nrp = $_POST["nrp"];
+    
+    $sql="select * from mahasiswa where nrp='$nrp'";
+    $query = mysqli_query($conn,$sql); // get the data from the db
+    $result = array();
+    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
+
+        $result ["nrp"] = $row['nrp'];
+        
+    }
+    
+    $conn->close();
+    header('Content-Type: application/json');
+    echo json_encode($result); // return value of $result
+
+    
+}
+
+
 if($_POST["jenis"]=="updatelevel"){
     $periode=$_POST["periode"];
     //updatelevel();
@@ -195,9 +203,9 @@ if($_POST["jenis"]=="hapus_mhs"){
     //delete kelas dengan idkelas tsb
     $sql = "delete from mahasiswa where nrp='$nrp'";
     if ($conn->query($sql)) {
-        $ket= "berhasil hapus";
+        $ket= "berhasil menghapus mahasiswa dengan nrp ".$nrp;
     }else {
-        $ket= "gagal hapus";
+        $ket= "gagal menghapus mahasiswa dengan nrp ".$nrp;
     }
 
     echo $ket;

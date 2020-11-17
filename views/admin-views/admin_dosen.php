@@ -28,7 +28,7 @@
                         <tr>
                             <td scope="row">Username : </td>
                             <td class="text-left">
-                            <input type="text" name="" id="userdosen" class="form-control" placeholder="" aria-describedby="help_username" oninput="userdosen()">
+                            <input type="text" name="" id="userdosen" class="form-control" placeholder="" aria-describedby="help_username">
                               <small id="help_username" class="form-text text-muted"></small>
                             </td>
                             <td></td>

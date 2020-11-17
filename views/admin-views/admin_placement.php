@@ -239,10 +239,10 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <h3>Periode/</h3>
-                <p for="">Kelas</p>
+                <!-- <h3>Periode/</h3>
+                <p for="">Kelas</p> -->
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -260,7 +260,7 @@
                                 <td class="text-left" id="crnama"></td>
                             </tr>
                             <tr>
-                                <td scope="row">Nilai Placement : </td>
+                                <td scope="row">Nilai PT : </td>
                                 <td class="text-left">
                                     <input min=0 type="number" class="form-control-sm" name="" id="crnilaiplacement" aria-describedby="helpId" placeholder="">
                                 </td>
@@ -273,11 +273,11 @@
                                         <label class="custom-control-label" for="modalradio_level1">Level 1</label>
                                     </div>
 
-                                    <div class="custom-control custom-radio custom-control-inline">
+                                    <div class="custom-control custom-radio custom-control">
                                         <input type="radio" id="modalradio_level2" value="2" name="modalRadioInline1" class="custom-control-input">
                                         <label class="custom-control-label" for="modalradio_level2">Level 2</label>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
+                                    <div class="custom-control custom-radio custom-control">
                                         <input type="radio" id="modalradio_level3" value="3" name="modalRadioInline1" class="custom-control-input">
                                         <label class="custom-control-label" for="modalradio_level3">Level 3</label>
                                     </div>
@@ -292,7 +292,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <label id="update_warning" style="color:red"> </label>
+                <label id="update_warning"> </label>
                 <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Simpan Perubahan</button>
             </div>
         </div>
@@ -521,31 +521,44 @@ function addtempmahasiswa() {
         
     }
     else{
-            $.post(
-            "../ajaxes/a_placement.php", {
-                jenis: "addtempmhs",
-                periode:periode,
-                nrp: nrp,
-                nama: nama,
-                nilai: nilai,
-                level:radio_val,
-            },
-            function(data) {
-                if (data.includes("Berhasil")) {
-                    reset();
-                    $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-                // $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-                //     $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-                }
-                alert(data);
+        $.post("../ajaxes/a_placement.php",
+        {
+            jenis:"selectednrp",
+            nrp: nrp,
+        },
+        function(data){
+            console.log(data["nrp"]);
+            var ceknrp = data["nrp"];
+            if (ceknrp == null) {
+                console.log("blm ada");
+                $.post( "../ajaxes/a_placement.php", {
+                    jenis: "addtempmhs",
+                    periode:periode,
+                    nrp: nrp,
+                    nama: nama,
+                    nilai: nilai,
+                    level:radio_val,
+                },
+                function(data) {
+                    if (data.includes("Berhasil")) {
+                        $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+                        reset();
+                        alert("Berhasil menambahkan mahasiswa " + nrp);
+                    }
+                    
+                });
             }
-
-        );
+            else{
+                alert("Mahasiswa dengan nrp " + nrp + " telah terdaftar sebelumnya");
+            }
         reset();
+        });
     }
     
-   
-   // updatelevel();
+}
+
+function resetmodal() {
+    $("#update_warning").text("");
 }
 
 function reset() {
@@ -614,7 +627,7 @@ function datatable_lihatsemuamahasiswa() {
                 "data": "nilai_placement",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
-                    var table = "table_tempmhs";
+                    var table = "#table_tempmhs";
 
                     if (row.nilai_placement == '0') {
                         return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
@@ -657,7 +670,7 @@ function loadmhs(nrp, table) {
 function update() {
 var nrp = $("#crnrp").html();
 var nilai = $("#crnilaiplacement").val();
-var table = $("#statustable").val();
+var table = $("#statustable").text();
 var radio_val="";
 
 var result = $("#modalnilai input:radio:checked").get();
@@ -668,7 +681,9 @@ console.log(nilai);
 console.log(radio_val);
 if (nilai == 0 || radio_val == "") {
     console.log("kosong");
-    $("#update_warning").text("Pastikan semua data terisi");
+    $("#update_warning").text("Pastikan semua data terisi").css("color","red");
+    //$("#update_warning").css("color","red");
+    //style="color:red"
 }
 else{
     $.post("../ajaxes/a_placement.php", {
@@ -678,17 +693,22 @@ else{
             level:radio_val,
         },
         function(data) {
-            alert(data);
-            if (table == "table_tempmhs") {
-                $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
+            console.log(data);
+            if (data == 1) {
+                $(table).DataTable().ajax.reload(); //reload ajax datata
+                $("#update_warning").text("Berhasil mengubah").css("color","blue");
             }
-            else if (table == "") {
-                $('#table_mhspt').DataTable().ajax.reload(); //reload ajax datatab
-            }    
-            $("#btn_update").attr("data-dismiss", "modal"); 
+            else{
+                $("#update_warning").text("Pastikan semua data terisi").css("color","red");
+            }
+            
         });
     
+    }
 }
+
+function close_btn() {
+    resetmodal();
 }
 
 
@@ -817,16 +837,24 @@ function datatable_ptmhs_periodeini() {
     var table = "";
     table = $('#table_mhspt').DataTable({
         destroy:true,
-        dom: 'Bfrtip',
-        "processing": true,
-        "serverSide": true,
-        "bInfo": false,
-        dom: "<'myfilter'f><'mylength'l>t",
-        "pagingType": "numbers",
-        "ordering": true, //set true agar bisa di sorting
-        "order": [
-            [0, 'asc']
-        ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+        "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
+            },
+        "serverSide":true,
+        "ordering":true, //set true agar bisa di sorting
+        "order": [[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
         "ajax": {
             "url": "../datatables/admin-datatable/placement_mhsaktif.php",
             "type": "POST",
@@ -859,7 +887,7 @@ function datatable_ptmhs_periodeini() {
                 "data": "placement_level",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
-                    var table = "table_mhspt";
+                    var table = "#table_mhspt";
 
                     return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Ubah Nilai</button>" + " <button onclick=\"nonaktikfkan_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
 

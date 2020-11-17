@@ -3,13 +3,14 @@ require_once "../config/conn.php";
 $conn=getConn();
 
 if($_POST["jenis"]=="simpandosen_baru"){
-    $namadosen = $_POST["getnamadosen"];
+    $namadosen = strtolower($_POST["getnamadosen"]);
     $userdosen = $_POST["getuserdosen"];
     $passdosen = $_POST["getuserdosen"];
     $level = "dosen";
 
     $passdosen=sha1($passdosen);
-    $sql = "insert into user (username,password,nama,level,status) values ('$userdosen','$passdosen','$namadosen','$level',1)";
+    $snamadosen = ucwords($namadosen);
+    $sql = "insert into user (username,password,nama,level,status) values ('$userdosen','$passdosen','$snamadosen','$level',1)";
     if ($conn->query($sql)) {
         echo "berhasil tambah dosen baru";
     }else {
