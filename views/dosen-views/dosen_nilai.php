@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            *<a href="#"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
+            *<a onclick="window.location.href='../custom_export/nilaiuts.xlsx'" target="_blank"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
         </div>
 
 
@@ -47,7 +47,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">IMPORT UTS</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuts()">IMPORT UTS</button>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">IMPORT UAS</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuas()" >IMPORT UAS</button>
                 </div>
             </div>
         </div>
@@ -206,5 +206,14 @@
         $("#file_uas").html(uas.name);
     });
 
+    function imuts(){
+        var uts=$("#uts")[0].files[0];
+
+    }
+
+    function imuas(){
+        var uas=$("#uas")[0].files[0];
+
+    }
 
 </script>
