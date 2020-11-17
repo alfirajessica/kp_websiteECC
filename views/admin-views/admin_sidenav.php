@@ -22,6 +22,9 @@
                     <a href="kelas.php"> <i class="menu-icon fa fa-laptop"></i>Kelas</a>
                 </li>
                 <li>
+                    <a href="mahasiswa.php"> <i class="menu-icon fa fa-laptop"></i>Mahasiswa</a>
+                </li>
+                <li>
                     <a href="nilai.php"> <i class="menu-icon fa fa-laptop"></i>Nilai</a>
                 </li>
                 <li>
@@ -30,12 +33,10 @@
                 <li>
                     <a href="ruangan.php"> <i class="menu-icon fa fa-laptop"></i>Ruang ECC</a>
                 </li>
-                <li>
-                    <a href="mahasiswa.php"> <i class="menu-icon fa fa-laptop"></i>Mahasiswa</a>
-                </li>
-                <li>
+                
+                <!-- <li>
                     <a href="Splacement.php"> <i class="menu-icon fa fa-laptop"></i>Splacement</a>
-                </li>
+                </li> -->
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

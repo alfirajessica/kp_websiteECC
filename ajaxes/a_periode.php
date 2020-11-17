@@ -4,7 +4,7 @@ $conn=getConn();
 
 if($_POST["jenis"]=="get_allperiode"){
     $conn=getConn();
-    $sql1="select * from periode";
+    $sql1="select * from periode order by id_periode desc";
     $result1 = $conn->query($sql1);
     if ($result1->num_rows > 0) {
         
@@ -48,8 +48,8 @@ else if($_POST["jenis"]=="set_periodedb"){
         }
         if ($month == 5 && $semester == "Genap") //jika bulan sekarang = juni dan semester genap
         {
-            $thn_awal = $thn_akademik_awal;
-            $thn_akhir = $thn_akademik_akhir;
+            $thn_awal = $thn_akademik_awal+1;
+            $thn_akhir = $thn_akademik_akhir+1;
             $semester = "Gasal";
             $sql2 = "insert into periode (id_periode,semester,thn_akademik_awal,thn_akademik_akhir,status_periode) values (null,'$semester',$thn_awal,$thn_akhir,'1')";
 
@@ -61,8 +61,8 @@ else if($_POST["jenis"]=="set_periodedb"){
         }
         else if ($month == 9 && $semester == "Gasal") //jika bulan sekarang desember dan semester ganjil
         {
-            $thn_awal = $thn_akademik_awal+1;
-            $thn_akhir = $thn_akademik_akhir+1;
+            $thn_awal = $thn_akademik_awal;
+            $thn_akhir = $thn_akademik_akhir;
             $semester = "Genap";
             $sql3 = "insert into periode (id_periode,semester,thn_akademik_awal,thn_akademik_akhir,status_periode) values (null,'$semester',$thn_awal,$thn_akhir,'1')";
 
