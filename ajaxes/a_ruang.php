@@ -3,7 +3,7 @@ require_once "../config/conn.php";
 $conn=getConn();
 
 if ($_POST["jenis"]=="get_allruang") {
-    $sql1="select * from ruang_kelas where status_ruang=1";
+    $sql1="select * from ruang_kelas where status_ruang=1 order by nama_ruang asc";
     $result1 = $conn->query($sql1);
     $kal="<option value='-1' >pilih ruang</option>";
     if ($result1->num_rows > 0) {

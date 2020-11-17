@@ -127,15 +127,15 @@ if($_POST["jenis"]=="insert_kelasdb"){
 
         $sql = "insert into kelas(id_periode,id_kelas,level_ecc,nama_kelas,hari,jam_awal,jam_akhir,kuota,dosen,status_kelas,id_ruangkelas) values ($idperiode,null,'$level','$kar','','$jam_awal','$jam_akhir',0,'-','$statuskelas',0)";
         if ($conn->query($sql)) {
-            $ket = "berhasil tambah kelas";
+            $ket = "Berhasil mengenerate kelas ".$level."";
         }else {
-            $ket = "gagal";
+            $ket = "Gagal mengenerate kelas ".$level."";
         }
 
 
     }
 
-    echo $ket.$bykkelas;
+    echo $ket;
     $conn->close();
 
     
@@ -240,14 +240,17 @@ if($_POST["jenis"]=="update_kelas"){
     $jamawal = $_POST["jam_awal"];
     $jamakhir = $_POST["jam_akhir"];
     $kuota = $_POST["kuota"];
+    $ket="";
 
     $sql = "update kelas set hari='$hari', jam_awal='$jamawal', jam_akhir='$jamakhir', kuota='$kuota', dosen='$dosen', id_ruangkelas='$ruang' where id_kelas='$idkelas'";
     
     if ($conn->query($sql)) {
-        echo "1"; //berhasil
+        $ket= "1"; //berhasil
     }else {
-        echo "0"; //gagal
+        $ket= "0"; //gagal
     }
+
+    echo $ket;
     $conn->close();
 }
 
@@ -278,13 +281,15 @@ if($_POST["jenis"]=="cek_dataterisi"){
 }
 if($_POST["jenis"]=="aktifkan_allkelas"){
     $idperiode = $_POST["idperiode"];
+    $ket="";
     $sql = "update kelas set status_kelas='1' where id_periode='$idperiode'";
     
     if ($conn->query($sql)) {
-        echo "1"; //berhasil
+        $ket = "Berhasil mengaktifkan semua kelas"; //berhasil
     }else {
-        echo "0"; //gagal
+        $ket = "Gagl mengaktifkan semua kelas! Pastikan data semua kelas terisi"; //gagal
     }
+    echo $ket;
     $conn->close();
 }
 
