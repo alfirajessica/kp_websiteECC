@@ -9,7 +9,6 @@ if ($_POST["jenis"] == "uts") {
     $uploadfile = $_FILES['file']['tmp_name'];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
 
-    $turncateres = mysqli_query($conn, $turncateqry);
 
     //get data from excel
     foreach ($objExcel->getWorksheetIterator() as $worksheet) {
@@ -22,13 +21,15 @@ if ($_POST["jenis"] == "uts") {
                 $nilai = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
 
                 if ($nrp != '') {
-
-                    $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES ('0','$nrp','$nilai','','','') ";
-                    $insertres = mysqli_query($conn, $insert);
-                    if ($insertres == "0") {
+                    $sql1="select * from nilai where nrp='$nrp'";
+                    $res=$conn->query($sql1);
+                    $row=$res->num_rows;
+                    if ($row>0) {
                         $update = "update nilai set nilai_uts='$nilai' where nrp='$nrp'";
-
-                        $updateres = mysqli_query($conn, $updateret);
+                        $updateres = mysqli_query($conn, $update);
+                    }else {
+                        $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES ('0','$nrp','$nilai','','','') ";
+                        $insertres = mysqli_query($conn, $insert);
                     }
                 }
             } else {
@@ -42,7 +43,6 @@ if ($_POST["jenis"] == "uts") {
     $uploadfile = $_FILES['file']['tmp_name'];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
 
-    $turncateres = mysqli_query($conn, $turncateqry);
 
     //get data from excel
     foreach ($objExcel->getWorksheetIterator() as $worksheet) {
@@ -54,14 +54,17 @@ if ($_POST["jenis"] == "uts") {
                 $nama = ucwords($worksheet->getCellByColumnAndRow(1, $row)->getValue());
                 $nilai = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
 
-                $update = "update nilai set nilai_uas='$nilai' where nrp='$nrp'";
-
-                $updateres = mysqli_query($conn, $updateret);
-                if (!$updateres) {
-
+                $sql1="select * from nilai where nrp='$nrp'";
+                $res=$conn->query($sql1);
+                $row=$res->num_rows;
+                if ($row>0) {
+                    $update = "update nilai set nilai_uas='$nilai' where nrp='$nrp'";
+                    $updateres = mysqli_query($conn, $update);
+                }else {
                     $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES ('0','$nrp','','$nilai','','') ";
                     $insertres = mysqli_query($conn, $insert);
                 }
+                
             } else {
                 // ini berati headernya di $row=1 
             }

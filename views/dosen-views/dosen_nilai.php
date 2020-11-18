@@ -220,6 +220,7 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+                        console.log(response);
                         if (response.includes("success")) {
                             alert("Berhasil importfileada data !");
                         } else {
