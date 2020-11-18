@@ -83,3 +83,40 @@ $level = $arr->get_level();
   
 </body>
 <?php include_once('scripts.php')?>
+<script>
+    
+$(document).ready(function(){
+    set_periode();
+    periode();
+      
+      
+   });    
+
+  
+  function periode() {
+        $.post("../ajaxes/a_periode.php",
+        {
+            jenis:"get_allperiode",
+        },
+        function(data){
+            $("#periode").html(data); //di atur kelas
+            $("#periode_lihatkelas").html(data); //dilihat kelas
+        });
+    }
+
+    function set_periode() {
+      var date = new Date();
+      var month = date.getMonth();
+        $.post("../ajaxes/a_periode.php",
+        {
+            jenis:"set_periodedb",
+            getmonth:month,
+        },
+        function(data){
+            console.log(data);
+        });
+    }
+
+    
+</script>
+
