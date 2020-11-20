@@ -14,8 +14,14 @@ if($_POST["jenis"]=="update_akun_nama"){
     }
     $conn->close();
 }
+if ($_POST["jenis"]=="ganti_password") {
+    $password=$_POST["password"];
+    $username=$_POST["username"];
 
-
-
-
-?>
+    $sql = "update user set password='$password' where username='$username'";
+    if ($conn->query($sql)) {
+    echo "berhasil";
+    }else{
+    echo "gagal";
+    }
+}

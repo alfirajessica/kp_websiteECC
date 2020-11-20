@@ -39,6 +39,9 @@
 
         
 
+    }else if ($_POST["kind"]=="ganti_password") {
+       $password=$_POST["password"];
+       echo $password;
     }
 
     
