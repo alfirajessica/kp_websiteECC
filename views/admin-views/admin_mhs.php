@@ -25,7 +25,7 @@
                 <form role="form">
 
                     <div class="form-group">
-                        <label for="">Periode</label>
+                        <label for="">Periode Perwalian</label>
                         <div class="input-group mb-3">
                         <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
                         </select>
@@ -58,8 +58,6 @@
                                 <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
                                 <small id="help_file" class="text-muted"></small>
                             </div>
-                            <hr>
-                                
                             
                         </form>
                     </div>
@@ -68,27 +66,30 @@
                 </form>
                 <!-- end of form atur mahasiswa -->
 
-                <div class="form-group text-right">
-                    <button class="btn btn-outline-primary" type="button" onclick="aktifkan_allkelas()">Simpan kelas mahasiswa</button>
-                </div>
+                <div class="card" id="cardform2" style="display:none">
+                    <br>
+                    <div class="form-group text-right">
+                        <button class="btn btn-outline-primary" type="button" onclick="simpan_importmhs()">Simpan kelas mahasiswa</button>
+                    </div>
         
-                <div class="table-responsive">
-                    <table id="table_pwecc" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Nrp</th>
-                                <th>Nama</th>
-                                <th>Level</th>
-                                <th>Jadwal</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="table_pwecc" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nrp</th>
+                                    <th>Nama</th>
+                                    <th>Level</th>
+                                    <th>Hari</th>
+                                    <th>Jam</th>
+                                    <th>Ruang</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end of tabel kelas yang tergenerate -->
                 </div>
-                <!-- end of tabel kelas yang tergenerate -->
 
             </div>
             <!-- end of atur kelas -->
@@ -96,7 +97,7 @@
             <!-- lihat kelas -->
             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                 <div class="form-group">
-                    <label for="">Pilih Periode</label>
+                    <label for="">Pilih Periode Perwalian</label>
                     <div class="input-group mb-3">
                         <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
                         </select>
@@ -223,9 +224,29 @@ function  simpan_periode() {
     else{
         $("#help_pilihperiode").text("");
         $('#cardform1, #cardform2, #formaturstandard').show();
+        datatable_tempkelas_mhs();
     }
     
 }
+
+function cekfileimport() {
+        $.post(
+            "../ajaxes/a_placement.php", {
+                jenis: "cekdata"
+            },
+            function(data) {
+                // alert(data);
+                if (data == "ada") {
+                    $("#btnimportnone").css("display", "none");
+                    $("#btnimpotada").css("display", "block");
+                } else {
+                    $("#btnimportnone").css("display", "block");
+                    $("#btnimportada").css("display", "none");
+                }
+            }
+        );
+    }
+
 
 function importfileada() {
     var periode = $("#periode").val();
@@ -236,7 +257,7 @@ function importfileada() {
     if (files != undefined) {
         var arr =
             $.ajax({
-                url: '../ajaxes/pwecc-upload.php',
+                url: '../ajaxes/pwecc_upload.php',
                 type: 'post',
                 data: fd,
                 contentType: false,
@@ -245,12 +266,13 @@ function importfileada() {
                     if (response.includes("success")) {
                         alert("Berhasil importfileada data !");
                         $("#lbl_file1").html("Pilih File ...");
-                        $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+                        $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
                         window.location.href="#table_pwecc";
+                        console.log(response);
 
                     } else {
                         console.log(response);
-                        alert(response);
+                        //alert(response);
                     }
                 },
             });
@@ -270,7 +292,7 @@ function importfilenone() {
     if (files != undefined) {
     var arr =
         $.ajax({
-            url: '../ajaxes/pwecc-upload.php',
+            url: '../ajaxes/pwecc_upload.php',
             type: 'post',
             data:fd,
             contentType: false,
@@ -287,7 +309,7 @@ function importfilenone() {
                     $("#lbl_file1").html("Pilih File ...");
                     $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
                     window.location.href="#table_pwecc";
-                    
+                    console.log(response);
 
                 } else {
                     console.log(response);
@@ -296,6 +318,94 @@ function importfilenone() {
         }); 
     } else { $("#help_file").text("Pilih file excel dahulu !"); }
     //updatelevel();
+}
+
+function datatable_tempkelas_mhs() {
+    var periode = $("#periode").val();
+    //datatable list barang
+    var table= "";
+    table = $('#table_pwecc').DataTable( 
+    {
+        destroy:true,
+            "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
+            },
+            "serverSide":true,
+            "ordering":true, //set true agar bisa di sorting
+            "ajax":{
+                "url":"../datatables/admin-datatable/temp_mhskls.php",
+                "type":"POST",
+                "data":{"periode":periode},
+            },
+            "deferRender":true,
+            "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
+            "columns":[
+            
+            {"data":"nrp"},
+            {"data":"nama_mhs"},
+            {"data":"level_ecc",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    return "Level "+row.level_ecc;
+                }
+            },
+            {"data":"hari"},
+            {"data":"jam_mulai",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    if (row.jam_mulai == '06:30' || row.jam_mulai == '06.30') //kelas aktif
+                    {
+                        return "06:30 - 08:00";
+                    }
+                }
+            },
+            {"data":"ruang_kode"},
+            ],
+            
+    }) 
+    //end of datatble list barang
+}
+
+function simpan_importmhs() {
+    var periode = $("#periode").val();
+    $.post("../ajaxes/a_klsmhs.php",
+    {
+        idperiode:periode,
+        jenis:"cek_dataditable_mahasiswa",
+
+    },
+    function(data){
+        // var nrp = data["nrp"];
+            
+        // console.log(nrp + " - ");
+
+        console.log(data);
+        // var cek=data["id_kelas"];
+
+        // if (cek != null) //ada yg belum terisi
+        // {
+        //     alert("Anda belum dapat mengaktifkan semua kelas! Pastikan semua data terisi")
+        // }
+        // else if (cek == null) //terisi semua
+        // {
+        //     console.log("-+-");
+            
+        // }
+    });
 }
 
 

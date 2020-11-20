@@ -484,7 +484,7 @@ function importfilenone() {
 
 
 
-function standarnilaicek() {
+function cekfileimport() {
         $.post(
             "../ajaxes/a_placement.php", {
                 jenis: "cekdata"
