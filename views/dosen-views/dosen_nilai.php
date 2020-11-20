@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuas()" >IMPORT UAS</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuas()">IMPORT UAS</button>
                 </div>
             </div>
         </div>
@@ -197,23 +197,65 @@
     }
 
     $("#uts").change(function() {
-        var uts=$("#uts")[0].files[0];
+        var uts = $("#uts")[0].files[0];
         $("#file_uts").html(uts.name);
     });
 
     $("#uas").change(function() {
-        var uas=$("#uas")[0].files[0];
+        var uas = $("#uas")[0].files[0];
         $("#file_uas").html(uas.name);
     });
 
-    function imuts(){
-        var uts=$("#uts")[0].files[0];
+    function imuts() {
+        var fd = new FormData();
+        var files = $('#uts')[0].files[0];
+        fd.append('file', files);
+        fd.append("jenis","uts");
+        if (files != undefined) {
+            var arr =
+                $.ajax({
+                    url: '../ajaxes/a_nilai.php',
+                    type: 'post',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        if (response.includes("success")) {
+                            alert("Berhasil importfileada data !");
+                        } else {
+                            console.log(response);
+                            alert(response);
+                        }
+                    },
+                });
 
+        }
     }
 
-    function imuas(){
-        var uas=$("#uas")[0].files[0];
+    function imuas() {
+        var fd = new FormData();
+        var files = $('#uas')[0].files[0];
+        fd.append('file', files);
+        fd.append("jenis","uas");
+        if (files != undefined) {
+            var arr =
+                $.ajax({
+                    url: '../ajaxes/a_nilai.php',
+                    type: 'post',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.includes("success")) {
+                            alert("Berhasil importfileada data !");
+                        } else {
+                            console.log(response);
+                            alert(response);
+                        }
+                    },
+                });
 
+        }
     }
-
 </script>
