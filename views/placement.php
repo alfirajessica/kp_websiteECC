@@ -54,7 +54,7 @@ function periode() {
     $(document).ready(function(){
 
       periode();
-      standarnilaicek();
+      cekfileimport();
       
    });    
 

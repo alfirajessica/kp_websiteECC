@@ -5,6 +5,7 @@ require_once '../PHPExcel/Classes/PHPExcel/IOFactory.php';
 session_start();
 
     $conn = getConn();
+    $ket="";
     $periode = $_POST["idperiode"];
     $uploadfile = $_FILES['file']['tmp_name'];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
@@ -19,22 +20,27 @@ session_start();
         for ($row = 0; $row <= $highestrow; $row++) {
             if ($row >1) {
                 $nrp = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                $nama = ucwords($worksheet->getCellByColumnAndRow(1, $row)->getValue());
-                $level = ucwords($worksheet->getCellByColumnAndRow(2, $row)->getValue());
+                $nama = strtolower($worksheet->getCellByColumnAndRow(1, $row)->getValue());
+                $level = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
                 $hari = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
                 $jam_mulai = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                $ruang = ucwords($worksheet->getCellByColumnAndRow(5, $row)->getValue());
+                $ruang = strtolower($worksheet->getCellByColumnAndRow(5, $row)->getValue());
+
+                $snama = ucwords($nama);
+                $sruang = ucwords($ruang);
 
                 if ($nrp != '') {
-                    //$insertqry = "INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`,`level`) VALUES ('$nrp','$nama','$nilai','-')";
 
-                    $insertqry = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('$periode','$nrp','$nama','$nilai','$level','0','0')";
+                    $insertqry = "INSERT INTO tempkelas_mhs(id_periode,nrp,nama_mhs,level_ecc,hari,jam_mulai,ruang_kode) VALUES ('$periode','$nrp','$snama','$level','$hari','$jam_mulai','$sruang')";
                     $insertres = mysqli_query($conn, $insertqry);
 
-                    //$updateqry = "update mahasiswa set nama_mhs='$nama', nilai_placement='$nilai', placement_level='0' where nrp='$nrp' ";
-                    // $updateres = mysqli_query($conn, $updateqry);
+                    $insertqry2 = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('1','$nrp','$snama','0','0','0','1')";
+                    $insertres2 = mysqli_query($conn, $insertqry2);
+
+
                 }
             } else {
+                echo "gagal import";
                 // ini berati headernya di $row=1 
             }
         }

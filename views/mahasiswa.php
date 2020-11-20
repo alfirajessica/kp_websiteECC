@@ -88,7 +88,7 @@ $level = $arr->get_level();
 $(document).ready(function(){
     set_periode();
     periode();
-      
+    cekfileimport();
       
    });    
 
@@ -116,6 +116,11 @@ $(document).ready(function(){
             console.log(data);
         });
     }
+
+    $("#file1").change(function() {
+        var files = $('#file1')[0].files[0];
+        $("#lbl_file1").html(files.name);
+    });
 
     
 </script>
