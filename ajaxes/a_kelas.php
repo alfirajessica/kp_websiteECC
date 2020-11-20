@@ -317,7 +317,7 @@ if($_POST["jenis"]=="get_kelas"){
         $level=$row["level_ecc"];
         $idkelas=$row["id_kelas"];
         $namakelas=$row["nama_kelas"];
-        $kal.="<option val='$idkelas' >"."ECC $level - Kelas $namakelas </option>";
+        $kal.="<option value='$idkelas' >"."ECC $level - Kelas $namakelas </option>";
     }
     echo $kal;
 }

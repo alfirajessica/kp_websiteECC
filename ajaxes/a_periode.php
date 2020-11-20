@@ -6,6 +6,7 @@ if($_POST["jenis"]=="get_allperiode"){
     $conn=getConn();
     $sql1="select * from periode order by id_periode desc";
     $result1 = $conn->query($sql1);
+    $kal="";
     if ($result1->num_rows > 0) {
         
         while ($row1 = $result1->fetch_assoc()) {

@@ -113,7 +113,6 @@
                 jenis: "get_allperiode",
             },
             function(data) {
-                console.log(data);
                 $("#periode").html(data);
 
             });
@@ -125,7 +124,7 @@
                 jenis: "get_kelasdos",
             },
             function(data) {
-                console.log(data);
+                console.log("kelas:"+data);
                 $("#kelas").html(data);
 
             });
@@ -211,6 +210,10 @@
         var files = $('#uts')[0].files[0];
         fd.append('file', files);
         fd.append("jenis","uts");
+        var periode=$("#periode").val();
+        var kelas=$("#kelas").val();
+        fd.append("periode",periode);
+        fd.append("kelas",kelas);
         if (files != undefined) {
             var arr =
                 $.ajax({
@@ -238,6 +241,10 @@
         var files = $('#uas')[0].files[0];
         fd.append('file', files);
         fd.append("jenis","uas");
+        var periode=$("#periode").val();
+        var kelas=$("#kelas").val();
+        fd.append("periode",periode);
+        fd.append("kelas",kelas);
         if (files != undefined) {
             var arr =
                 $.ajax({

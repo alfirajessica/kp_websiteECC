@@ -83,27 +83,8 @@ $level = $arr->get_level();
 </body>
 
 <script>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-    $(document).ready(function() {
-        isikelas();
-        periode();
-        datatable_lihatsemuamahasiswa();
-    });
-=======
-    function periode() {
-        $.post("../ajaxes/a_periode.php", {
-                jenis: "get_allperiode",
-            },
-            function(data) {
-                $("#periode").html(data);
-            });
-    }
     
-    $(document).ready(function() {
-        periode();
-        //datatable_lihatsemuamahasiswa();
-    });
+    
 </script>
 
 </html>

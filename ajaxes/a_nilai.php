@@ -7,6 +7,8 @@ session_start();
 if ($_POST["jenis"] == "uts") {
     $conn = getConn();
     $uploadfile = $_FILES['file']['tmp_name'];
+    $periode = $_POST["periode"];
+    $kelas = $_POST["kelas"];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
 
 
@@ -22,16 +24,16 @@ if ($_POST["jenis"] == "uts") {
 
                 if ($nrp != '') {
 
-                    $sql = "select * from nilai where nrp='$nrp'";
+                    $sql = "select * from nilai where nrp='$nrp' and id_periode='$periode' and id_kelas='$kelas' ";
                     $res = $conn->query($sql);
-                    $jum = $res->num_rows;
-                    if ($jum > 0) {
-                        $update = "update nilai set nilai_uts='$nilai' where nrp='$nrp' ";
+                    $rom = $res->fetch_assoc();
+                    $idnilai = $rom["id_nilai"];
+                    if ($idnilai != "") {
+                        $update = "update nilai set nilai_uts='$nilai' where id_nilai='$idnilai' ";
                         $updateres = mysqli_query($conn, $update);
                     } else {
-                        $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES ('0','$nrp','$nilai','','','') ";
+                        $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`, `id_periode`, `id_kelas`) VALUES ('0','$nrp','$nilai','','','','$periode','$kelas') ";
                         $insertres = mysqli_query($conn, $insert);
-                        $conn->close();
                     }
                 }
             } else {
@@ -39,12 +41,14 @@ if ($_POST["jenis"] == "uts") {
             }
         }
     }
-    echo "success";
+    echo "success-hasil:$idnilai";
 } else if ($_POST["jenis"] == "uas") {
     $conn = getConn();
     $uploadfile = $_FILES['file']['tmp_name'];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
 
+    $periode = $_POST["periode"];
+    $kelas = $_POST["kelas"];
 
     //get data from excel
     foreach ($objExcel->getWorksheetIterator() as $worksheet) {
@@ -56,16 +60,20 @@ if ($_POST["jenis"] == "uts") {
                 $nama = ucwords($worksheet->getCellByColumnAndRow(1, $row)->getValue());
                 $nilai = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
 
-                $sql = "select * from nilai where nrp='$nrp'";
+                $sql = "select * from nilai where nrp='$nrp' and id_periode='$periode' and id_kelas='$kelas' ";
                 $res = $conn->query($sql);
-                $jum = $res->num_rows;
-                if ($jum > 0) {
-                    $update = "update nilai set nilai_uas='$nilai' where nrp='$nrp' ";
+                $rom = $res->fetch_assoc();
+                $idnilai = $rom["id_nilai"];
+                
+                if ($idnilai!="") {
+                    $update = "update nilai set nilai_uas='$nilai' where id_nilai='$idnilai' ";
                     $updateres = mysqli_query($conn, $update);
-                } else {
-                    $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES ('0','$nrp','','$nilai','','') ";
+                }else{
+                    $insert = "INSERT INTO `nilai`(`id_nilai`, `nrp`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`, `id_periode`, `id_kelas`) VALUES ('0','$nrp','','$nilai','','','$periode','$kelas') ";
                     $insertres = mysqli_query($conn, $insert);
                 }
+
+               
             } else {
                 // ini berati headernya di $row=1 
             }
