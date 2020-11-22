@@ -51,5 +51,35 @@ if($_POST["jenis"]=="cek_dataditable_mahasiswa"){
 
 }
 
+if($_POST["jenis"]=="nonaktifkan_klsmhs"){
+    $idklsmhs = $_POST['idklsmhs'];
+    $ket="";
+    $sql = "update kelas_mhs set status_klsmhs='0' where id_klsmhs='$idklsmhs'";
+    
+    if ($conn->query($sql)) {
+        $ket= "1"; //berhasil
+    }else {
+        $ket= "0"; //gagal
+    }
+    echo $ket;
+    $conn->close();
+
+}
+
+if($_POST["jenis"]=="aktifkan_klsmhs"){
+    $idklsmhs = $_POST['idklsmhs'];
+    $ket="";
+    $sql = "update kelas_mhs set status_klsmhs='1' where id_klsmhs='$idklsmhs'";
+    
+    if ($conn->query($sql)) {
+        $ket= "1"; //berhasil
+    }else {
+        $ket= "0"; //gagal
+    }
+    echo $ket;
+    $conn->close();
+
+}
+
 
 ?>

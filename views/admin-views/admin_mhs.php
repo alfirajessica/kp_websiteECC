@@ -108,16 +108,15 @@
                     <small id="helpId" class="form-text text-muted">Help text</small>
                 </div>
 
-                
                 <div class="table-responsive">
                     <table id="table_klsmhs" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
-                            <th></th>
-                                <th>Id</th>
+                                <th></th>
+                                <th style="display:none">Id</th>
                                 <th>Nrp</th>
                                 <th>Nama</th>
-                                <th>Level</th>
+                                <th style="display:none">Level</th>
                                 <th>Kelas</th>
                                 <th>Detail</th>
                             </tr>
@@ -126,6 +125,7 @@
                         </tbody>
                     </table>
                 </div>
+                
                 <!-- end of tabel kelas yang tergenerate -->
 
                 
@@ -226,6 +226,7 @@ function  simpan_periode() {
     else{
         $("#help_pilihperiode").text("");
         $('#cardform1, #cardform2, #formaturstandard').show();
+        //$("#cardform3").show();
         datatable_tempkelas_mhs();
     }
     
@@ -447,13 +448,6 @@ function datatable_table_klsmhs() {
                 { "visible": false, "targets": groupColumn }
             ],
             "columns":[
-            // {"data": null, 
-            //     "render": function (data, type, row) {
-            //         var idklsmhs = row.id_kelas;
-            //         var table = "#table_klsmhs";
-            //             return "<button id=\"GetDetail\"> + </button>";
-            //         }
-            // },
             {
                 "class":          "details-control",
                 "orderable":      false,
@@ -475,8 +469,18 @@ function datatable_table_klsmhs() {
                 "render": function (data, type, row) { 
                     var idklsmhs = row.id_klsmhs; 
                     var table = "#table_klsmhs";
+                    var status = row.status_klsmhs;
                     
-                    return "<button onclick=\"ubah_kelas(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>" + " <button onclick=\"nonaktikfkan_kls(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    var btn="";
+                    var btnubah = "<button onclick=\"ubah_kelas(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>";
+                    if (status == 1) {
+                        btn = "<button onclick=\"nonaktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    }
+                    else{
+                        btn = "<button onclick=\"aktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Aktifkan</button>";
+                    }
+                    return btnubah + btn;
+                    
                 }
             },
             
@@ -533,34 +537,7 @@ function datatable_table_klsmhs() {
         } );
     } );
 
-    // $('#table_klsmhs tbody').on( 'click', 'button', function () {
-    //     var action = this.id;
-    //     var table = $('#table_klsmhs').DataTable();
-    //     var data = table.row($(this).closest('tr')).data();
-    //     //action button Detail
-    //     if(action == 'GetDetail')
-    //         {
-    //             getId = data[Object.keys(data)[0]];
-    //             console.log(getId); //alert(getId);  utk dapatkan id customer
-
-    //             var tr = $(this).closest('tr');
-    //             var row = table.row( tr );
-                
-    //             if ( row.child.isShown() ) 
-    //             {   // This row is already open - close it
-    //                 row.child.hide();
-    //                 tr.removeClass('shown');
-    //             }       
-    //             else 
-    //             {
-    //                 // Open this row
-    //                 row.child( format(row.data()) ).show();
-    //                 tr.addClass('shown');
-    //             }
-    //         }
-
-    // });
-
+    
     //end of datatble list barang
 }
 
@@ -595,5 +572,30 @@ function format ( d ) {
     }
     //end of function detail di list customer
 
+    function nonaktikfkan_klsmhs(idklsmhs,table) {
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            idklsmhs:idklsmhs,
+            jenis:"nonaktifkan_klsmhs",
+        },
+        function(data){
+            alert(data);
+            $(table).DataTable().ajax.reload(); //reload ajax datatable
+            
+        });
+    }
+
+    function aktikfkan_klsmhs(idklsmhs,table) {
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            idklsmhs:idklsmhs,
+            jenis:"aktifkan_klsmhs",
+        },
+        function(data){
+            alert(data);
+            $(table).DataTable().ajax.reload(); //reload ajax datatable
+            
+        });
+    }
 
 </script>
