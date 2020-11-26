@@ -8,7 +8,15 @@ $arr=unserialize($_SESSION["user"]);
 $level = $arr->get_level();
 
 ?>
-
+<style>
+td.details-control {
+    background: url('../images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.details td.details-control {
+    background: url('../images/details_close.png') no-repeat center center;
+}
+</style>
 <body>
   
 <?php require_once("sidenav.php"); ?>

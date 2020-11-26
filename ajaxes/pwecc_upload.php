@@ -22,16 +22,17 @@ session_start();
                 $nrp = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                 $nama = strtolower($worksheet->getCellByColumnAndRow(1, $row)->getValue());
                 $level = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                $hari = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                $hari = strtolower($worksheet->getCellByColumnAndRow(3, $row)->getValue());
                 $jam_mulai = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
                 $ruang = strtolower($worksheet->getCellByColumnAndRow(5, $row)->getValue());
 
                 $snama = ucwords($nama);
                 $sruang = ucwords($ruang);
+                $shari = ucwords($hari);
 
                 if ($nrp != '') {
 
-                    $insertqry = "INSERT INTO tempkelas_mhs(id_periode,nrp,nama_mhs,level_ecc,hari,jam_mulai,ruang_kode) VALUES ('$periode','$nrp','$snama','$level','$hari','$jam_mulai','$sruang')";
+                    $insertqry = "INSERT INTO tempkelas_mhs(id_periode,nrp,nama_mhs,level_ecc,hari,jam_mulai,ruang_kode) VALUES ('$periode','$nrp','$snama','$level','$shari','$jam_mulai','$sruang')";
                     $insertres = mysqli_query($conn, $insertqry);
 
                     $insertqry2 = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('1','$nrp','$snama','0','0','0','1')";

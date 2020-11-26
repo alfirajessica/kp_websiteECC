@@ -102,28 +102,30 @@
                         <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" onclick="btn_cari()">Cari</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()">Cari</button>
                         </div>
                     </div>
                     <small id="helpId" class="form-text text-muted">Help text</small>
                 </div>
 
-                
                 <div class="table-responsive">
-                    <table id="table_kelasaktif" class="table table-striped table-bordered" width="100%">
+                    <table id="table_klsmhs" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
-                                <th>Level</th>
+                                <th></th>
+                                <th style="display:none">Id</th>
+                                <th>Nrp</th>
+                                <th>Nama</th>
+                                <th style="display:none">Level</th>
                                 <th>Kelas</th>
-                                <th>Jadwal</th>
-                                <th>Dosen</th>
-                                <th>Aksi</th>
+                                <th>Detail</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
                 </div>
+                
                 <!-- end of tabel kelas yang tergenerate -->
 
                 
@@ -224,6 +226,7 @@ function  simpan_periode() {
     else{
         $("#help_pilihperiode").text("");
         $('#cardform1, #cardform2, #formaturstandard').show();
+        //$("#cardform3").show();
         datatable_tempkelas_mhs();
     }
     
@@ -389,24 +392,210 @@ function simpan_importmhs() {
 
     },
     function(data){
-        // var nrp = data["nrp"];
-            
-        // console.log(nrp + " - ");
-
-        console.log(data);
-        // var cek=data["id_kelas"];
-
-        // if (cek != null) //ada yg belum terisi
-        // {
-        //     alert("Anda belum dapat mengaktifkan semua kelas! Pastikan semua data terisi")
-        // }
-        // else if (cek == null) //terisi semua
-        // {
-        //     console.log("-+-");
-            
-        // }
+        alert(data);
+        $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
     });
 }
 
+//lihat mahasiswa dan kelasnya
+function  btn_cariperiode() {
+    console.log("button cari");
+    var periode = $("#periode_lihatkelas").val();
+    console.log(periode);
+    if (periode == "-1") {
+        $("#help_pilihperiode2").text("pilih periode terlebih dahulu");
+    }
+    else{
+        $("#help_pilihperiode2").text("");
+        datatable_table_klsmhs();
+    }
+}
+
+function datatable_table_klsmhs() {
+    var periode = $("#periode_lihatkelas").val();
+    //datatable list barang
+    var table= "";
+    var groupColumn = 4;
+    table = $('#table_klsmhs').DataTable( 
+    {
+        destroy:true,
+            "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
+            },
+            "serverSide":true,
+            "ordering":true, //set true agar bisa di sorting
+            "deferRender":true,
+            "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
+            "order": [[1, 'asc']],
+            "ajax":{
+                "url":"../datatables/admin-datatable/table_klsmhs.php",
+                "type":"POST",
+                "data":{"periode":periode},
+            },
+            "columnDefs": [
+                { "visible": false, "targets": groupColumn }
+            ],
+            "columns":[
+            {
+                "class":          "details-control",
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ""
+            },
+            {"data":"id_klsmhs",
+                "visible": false,
+                "render": function (data, type, row) {  
+                    return "#"+row.id_klsmhs;
+                }
+            },
+            {"data":"nrp"},
+            {"data":"nama_mhs"
+            },
+            {"data":"level_ecc"},
+            {"data":"nama_kelas"},
+            {"data":"status_klsmhs",
+                "render": function (data, type, row) { 
+                    var idklsmhs = row.id_klsmhs; 
+                    var table = "#table_klsmhs";
+                    var status = row.status_klsmhs;
+                    
+                    var btn="";
+                    var btnubah = "<button onclick=\"ubah_kelas(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>";
+                    if (status == 1) {
+                        btn = "<button onclick=\"nonaktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    }
+                    else{
+                        btn = "<button onclick=\"aktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Aktifkan</button>";
+                    }
+                    return btnubah + btn;
+                    
+                }
+            },
+            
+            ],
+            "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        }
+            
+    });
+
+    // Array to track the ids of the details displayed rows
+    var detailRows = [];
+    var dt = $('#table_klsmhs').DataTable();
+    $('#table_klsmhs tbody').on( 'click', 'tr td.details-control', function () {
+        var tr = $(this).closest('tr');
+        
+        var row = dt.row( tr );
+        var idx = $.inArray( tr.attr('id'), detailRows );
+ 
+        if ( row.child.isShown() ) {
+            tr.removeClass( 'details' );
+            row.child.hide();
+ 
+            // Remove from the 'open' array
+            detailRows.splice( idx, 1 );
+        }
+        else {
+            tr.addClass( 'details' );
+            row.child( format( row.data() ) ).show();
+ 
+            // Add to the 'open' array
+            if ( idx === -1 ) {
+                detailRows.push( tr.attr('id') );
+            }
+        }
+    } );
+
+    // On each draw, loop over the `detailRows` array and show any child rows
+    dt.on( 'draw', function () {
+        $.each( detailRows, function ( i, id ) {
+            $('#'+id+' td.details-control').trigger( 'click' );
+        } );
+    } );
+
+    
+    //end of datatble list barang
+}
+
+function format ( d ) {
+        // `d` is the original data object for the row
+        var jenis_kelamin = "";
+        var status = d.status_klsmhs;
+        if (status == 1) {
+            status = "Aktif";
+        }
+        else{
+            status = "Tidak Aktif";
+        }
+        
+            $tampil = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width:100%;">'+
+            
+            '<tr>'+
+                '<td>Level/Kelas</td>'+
+                '<td>'+d.level_ecc + '/' + d.nama_kelas +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Hari/Jam/Ruang</td>'+
+                '<td>'+d.hari + '/ ' + d.jam_awal + '-' + d.jam_akhir + '/ ' + d.nama_ruang +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Status</td>'+
+                '<td> <label>' + status+' </label> </td>' +
+            '</tr>'+
+        '</table>';
+        
+        return $tampil;
+    }
+    //end of function detail di list customer
+
+    function nonaktikfkan_klsmhs(idklsmhs,table) {
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            idklsmhs:idklsmhs,
+            jenis:"nonaktifkan_klsmhs",
+        },
+        function(data){
+            alert(data);
+            $(table).DataTable().ajax.reload(); //reload ajax datatable
+            
+        });
+    }
+
+    function aktikfkan_klsmhs(idklsmhs,table) {
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            idklsmhs:idklsmhs,
+            jenis:"aktifkan_klsmhs",
+        },
+        function(data){
+            alert(data);
+            $(table).DataTable().ajax.reload(); //reload ajax datatable
+            
+        });
+    }
 
 </script>
