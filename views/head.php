@@ -22,6 +22,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js' rel='stylesheet' type='text/css'>
+    
 </head>
 
 <?php

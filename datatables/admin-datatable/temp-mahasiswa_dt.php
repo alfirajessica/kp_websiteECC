@@ -7,10 +7,15 @@ $limit = $_POST['length']; // Ambil data limit per page
 $start = $_POST['start']; // Ambil data start
 $periode=$_POST["periode"];
 
-$sql = mysqli_query($connect, "SELECT nrp FROM mahasiswa"); // Query untuk menghitung seluruh data siswa
+$sql = mysqli_query($connect, "SELECT nrp FROM placement where id_periode='$periode'"); // Query untuk menghitung seluruh data siswa
 $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
-$query = "SELECT * FROM mahasiswa where id_periode='$periode' and status_mhs='0' and (nama_mhs like '%$search%' or nrp like '%$search%')";
+$query = "SELECT * FROM placement pt
+LEFT JOIN mahasiswa m
+ON m.nrp = pt.nrp
+where m.id_periode='$periode' and m.status_mhs='0' and (m.nrp LIKE '%".$search."%' OR m.nama_mhs LIKE '%".$search."%')";
+
+
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 $order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
 $order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;

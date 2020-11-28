@@ -25,13 +25,15 @@ session_start();
                 
                 $snama = ucwords($nama);
                 if ($nrp != '') {
-                    //$insertqry = "INSERT INTO `temp_mahasiswa`(`nrp`, `nama_mahasiswa`, `nilai_placement`,`level`) VALUES ('$nrp','$nama','$nilai','-')";
+                     $insertmhs = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,status_mhs) VALUES ('$periode','$nrp','$snama','0')";
+                     $insertres = mysqli_query($conn, $insertmhs);
 
-                    $insertqry = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('$periode','$nrp','$snama','$nilai','$level','0','0')";
-                    $insertres = mysqli_query($conn, $insertqry);
+                     $insertpt = "INSERT INTO placement(id_ptest,id_periode,nrp,nilai_ptest,ptest_level,status_kembar) VALUES (null,'$periode','$nrp','$nilai','$level','0')";
+                     $insertres = mysqli_query($conn, $insertpt);
 
-                    // $updateqry = "update mahasiswa set nama_mhs='$nama', nilai_placement='$nilai', placement_level='0' where nrp='$nrp' ";
-                    // $updateres = mysqli_query($conn, $updateqry);
+                    // $insertpt = "INSERT INTO temp_placement(id_periode,nrp,nama_mhs,nilai_ptest,ptest_level) VALUES ('$periode','$nrp','$nama','$nilai','$level')";
+                    // $insertres = mysqli_query($conn, $insertpt);
+                    
                 }
             } else {
                 // ini berati headernya di $row=1 
