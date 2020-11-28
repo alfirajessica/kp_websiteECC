@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            *<a onclick="window.location.href='../custom_export/nilaiuts.xlsx'" target="_blank"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
+            *<a onclick="window.location.href='../PHPexcel/nilaiuts.xlsx'" target="_blank"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
         </div>
 
 
@@ -87,6 +87,8 @@
                     <th scope="col" class="sort" data-sort="budget">UTS</th>
                     <th scope="col" class="sort" data-sort="budget">UAS</th>
                     <th scope="col" class="sort" data-sort="budget">NA</th>
+                    <th scope="col" class="sort" data-sort="budget">Aksi</th>
+
 
                 </tr>
             </thead>
@@ -186,6 +188,16 @@
                 },
                 {
                     "data": "na"
+                },{
+                    
+                "render": function(data, type, row) {
+                    var nrp = row.nrp;
+
+                  
+                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=edit('"+ row.nrp+"' >Edit</button>";
+                   
+
+                    
                 }
 
 
