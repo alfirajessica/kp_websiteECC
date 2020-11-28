@@ -30,9 +30,9 @@
                     <label id="help_pilihperiode" style="color:red;"></label>
                 </div>
                     
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <a style="color:blue; display:none;" data-toggle="modal" data-target="#modallevelnone" id="formaturstandard"> + Atur Standar nilai Periode ini </a>
-                </div>
+                </div> -->
                     
                 <div class="form-group">
                     <label> Silakan gunakan template ini sebelum melakukan import </label>
@@ -51,7 +51,6 @@
                             </div>
                                 
                             <div class="form-group">
-                                <!-- <label for="">dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label> -->
                                 <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
                                 <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
                                 <small id="help_file" class="text-muted"></small>
@@ -110,7 +109,7 @@
                                     
                             </div> <!-- end of form group row radio -->
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukan</button>
+                                <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukkan</button>
                             </div>
                         </form>
                     </div>
@@ -118,6 +117,7 @@
 
                 <div class="card" id="cardform2" style="display:none">
                     <div class="card-body">
+                        
                         <div class="form-group text-right">
                             <button type="button" class="btn btn-primary text-light" onclick="tempatkanmhs()">*Tempatkan  Mahasiswa</button>
                         </div>
@@ -133,7 +133,7 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="datanya"> </tbody>
+                            <tbody> </tbody>
                             </table>
                         </div>
 
@@ -239,16 +239,14 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <!-- <h3>Periode/</h3>
-                <p for="">Kelas</p> -->
-
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form role="form">
-                    <label id="statustable"></label>
+                    <label id="statustable" style="display:none" ></label>
+                    <label id="idptest" style="display:none"></label>
                     <table class="table table-borderless table-md text-right">
                         <tbody>
                             <tr>
@@ -300,43 +298,6 @@
 </div>
 <!-- end of Modal input/ubah nilai  -->
 
-<!-- Modal ubah nilai  -->
-<!-- <div class="modal fade" id="modalpindahlevel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">    
-                <form role="form">
-                    <div class="form-group">
-                        <label id="cnrp"> </label>
-                    </div>
-                    <div class="form-group">
-                        <label id="clevelsblmny"> Level sebelumnya :  </label>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label text-right">Pindah level </label>
-                        <div class="col-sm-9">
-                            <select name="select" id="pindahlevel" class="form-control">
-                                <option value="1">Level 1</option>
-                                <option value="2">Level 2</option>
-                                <option value="3">Level 3</option>
-                                <option value="4">Level 4</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="btn_update" type="button" class="btn btn-primary" data-dismiss="modal" onclick="pindahlevel()">Pindahkan</button>
-            </div>
-        </div>
-    </div>
-</div>
-end of Modal input/ubah nilai  -->
 
 <script>
 
@@ -354,6 +315,7 @@ function simpan_periode() {
         $("#help_pilihperiode").text("");
         $('#cardform1, #cardform2, #formaturstandard').show();
         datatable_lihatsemuamahasiswa();
+        jmdatakembarpt();
 
         //cek apakah pada periode tersebut sudah ada standar nilai placementnya dan masukkan ke dalam modal
         $.post("../ajaxes/a_placement.php", {
@@ -368,11 +330,11 @@ function simpan_periode() {
                 $("#level4").val(data["level4"]);
             });
     }
-    //updatelevel();
+    
 }
 
 //standar nilai pada modal
-function tetapkan_standarnilai() {
+/*function tetapkan_standarnilai() {
 
     var periode = $("#periode").val();
     var lev1 = $("#level1").val();
@@ -408,8 +370,8 @@ function tetapkan_standarnilai() {
 
             });
         }
-       // updatelevel();
-}
+       
+}*/
 
 function importfileada() {
     var periode = $("#periode").val();
@@ -420,7 +382,7 @@ function importfileada() {
     if (files != undefined) {
         var arr =
             $.ajax({
-                url: '../ajaxes/excel-upload.php',
+                url: '../ajaxes/ptest_upload.php',
                 type: 'post',
                 data: fd,
                 contentType: false,
@@ -431,7 +393,8 @@ function importfileada() {
                         $("#lbl_file1").html("Pilih File ...");
                         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
                         window.location.href="#table_tempmhs";
-
+                        jmdatakembarpt();
+                        
                     } else {
                         console.log(response);
                         alert(response);
@@ -442,7 +405,6 @@ function importfileada() {
     } else {
         $("#help_file").text("Pilih file excel dahulu !");
     }
-    //updatelevel();
 }
 
 function importfilenone() {
@@ -454,7 +416,7 @@ function importfilenone() {
     if (files != undefined) {
     var arr =
         $.ajax({
-            url: '../ajaxes/excel-upload.php',
+            url: '../ajaxes/ptest_upload.php',
             type: 'post',
             data:fd,
             contentType: false,
@@ -471,15 +433,15 @@ function importfilenone() {
                     $("#lbl_file1").html("Pilih File ...");
                     $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
                     window.location.href="#table_tempmhs";
+                    jmdatakembarpt();
                     
-
                 } else {
                     console.log(response);
                 }
             },
         }); 
     } else { $("#help_file").text("Pilih file excel dahulu !"); }
-    //updatelevel();
+    
 }
 
 
@@ -527,10 +489,10 @@ function addtempmahasiswa() {
             nrp: nrp,
         },
         function(data){
-            console.log(data["nrp"]);
+           // console.log(data["nrp"]);
             var ceknrp = data["nrp"];
             if (ceknrp == null) {
-                console.log("blm ada");
+                //console.log("blm ada");
                 $.post( "../ajaxes/a_placement.php", {
                     jenis: "addtempmhs",
                     periode:periode,
@@ -542,8 +504,9 @@ function addtempmahasiswa() {
                 function(data) {
                     if (data.includes("Berhasil")) {
                         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-                        reset();
                         alert("Berhasil menambahkan mahasiswa " + nrp);
+                        reset();
+                        
                     }
                     
                 });
@@ -576,6 +539,7 @@ function datatable_lihatsemuamahasiswa() {
     var table = "";
     table = $('#table_tempmhs').DataTable({
         destroy:true,
+        "responsive":true,
         "processing":true,
             "language": {
             "lengthMenu": "Tampilkan _MENU_ data per Halaman",
@@ -593,7 +557,7 @@ function datatable_lihatsemuamahasiswa() {
             },
         "serverSide":true,
         "ordering":true, //set true agar bisa di sorting
-        "order": [[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+        "order": [[1, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
         "ajax": {
             "url": "../datatables/admin-datatable/temp-mahasiswa_dt.php",
             "type": "POST",
@@ -605,63 +569,97 @@ function datatable_lihatsemuamahasiswa() {
             [10, 20, 50]
         ], //combobox limit
         "columns": [
-
-            { "data": "nrp" },
+            { "data": "nrp"},
             { "data": "nama_mhs" },
-            { "data": "nilai_placement" },
-            { "data":"placement_level",
+            { "data": "nilai_ptest" },
+            { "data":"ptest_level",
                 "searchable": true,
                 "orderable":true,
                 "render": function (data, type, row) {  
-                    if (row.placement_level == '0') //kelas aktif
+                    if (row.ptest_level == '0') //kelas aktif
                     {
                         return "<label class='text-danger'> Belum Ada level </label>";
                     }
-                    else if (row.placement_level != 0) {
-                        return "<label> Level " + row.placement_level + " </label>";
+                    else if (row.ptest_level != 0) {
+                        return "<label> Level " + row.ptest_level + " </label>";
                     }
                     
                 }
             },          
             {
-                "data": "nilai_placement",
+                "data": "nilai_ptest",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
+                    var id_ptest = row.id_ptest;
                     var table = "#table_tempmhs";
+                    var btn1="";
+                    var btn2="";
 
-                    if (row.nilai_placement == '0') {
-                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Input Nilai</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                    if (row.nilai_ptest == '0') {
+                        
+                        if (row.status_kembar == 1) {
+                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Input Nilai</button>";
+                        }
+                        else{
+                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Input Nilai</button>";
+                            
+                        }
+
+                        return btn1 + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' ?Hapus</button>";
                     }
                     else{
-                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Ubah</button>" + " <button onclick=\"hapus_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        if (row.status_kembar == 1) {
+                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Ubah</button>"
+
+                            
+                        }else{
+                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Ubah</button>"
+                        }
+                        return btn2  + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        
                     }
-
-                    
-
                 }
-            } 
+            },
+             
         ],
+        "rowCallback": function( row, data, index ) {
+        if ( data.status_kembar == "1" )
+        {
+            $('td', row).css('background-color', '#f0aaaa');
+        }
         
-        
+    }
     });
 }
 
-function loadmhs(nrp, table) {
+function loadmhs(id_ptest, nrp, table) {
+    $("#idptest").text(id_ptest);
     $.post(
         "../ajaxes/a_placement.php", {
-            jenis: "loadsel",
-            nrp: nrp
+            jenis: "loadmhs",
+            nrp:nrp
         },
         function(data) {
+            
             var arr = JSON.parse(data);
             $("#crnrp, #cnrp").html(arr.nrp);
             $("#crnama").html(arr.nama_mhs);
-            $("#crnilaiplacement").val(arr.nilai_placement);
-            $("#cperingkat").html(arr.placement_level);
-            $("#clevelsblmny").html("Level Hasil Placement : " + arr.placement_level);
-            $("#statustable").text(table);
-            var level_radio = arr.placement_level;
-            $("input[name=modalRadioInline1][value='"+level_radio+"']").prop("checked",true);
+
+            $.post(
+                "../ajaxes/a_placement.php", {
+                    jenis: "loadplacement",
+                    id_ptest:id_ptest
+                },
+                function(data) {
+                    var arr = JSON.parse(data);
+                    $("#crnilaiplacement").val(arr.nilai_ptest);
+                    $("#cperingkat").html(arr.ptest_level);
+                    $("#clevelsblmny").html("Level Hasil Placement : " + arr.ptest_level);
+                    $("#statustable").text(table);
+                    var level_radio = arr.ptest_level;
+                    $("input[name=modalRadioInline1][value='"+level_radio+"']").prop("checked",true);
+                });
+            
         }
     );
 }
@@ -671,6 +669,7 @@ function update() {
 var nrp = $("#crnrp").html();
 var nilai = $("#crnilaiplacement").val();
 var table = $("#statustable").text();
+var idptest = $("#idptest").text();
 var radio_val="";
 
 var result = $("#modalnilai input:radio:checked").get();
@@ -688,7 +687,7 @@ if (nilai == 0 || radio_val == "") {
 else{
     $.post("../ajaxes/a_placement.php", {
             jenis: "update",
-            id: nrp,
+            id_ptest: idptest,
             nilai: nilai,
             level:radio_val,
         },
@@ -712,15 +711,19 @@ function close_btn() {
 }
 
 
-function hapus_mhs(nrp) {
-$.post("../ajaxes/a_placement.php", {
+function hapus_mhs(id_ptest, nrp, table) {
+    var periode = $("#periode").val();
+    $.post("../ajaxes/a_placement.php", {
         jenis: "hapus_mhs",
-        nrp: nrp,
+        id_ptest: id_ptest,
+        nrp:nrp,
+        id_periode:periode
         
     },
     function(data) {
         alert(data);
         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatab
+        jmdatakembarpt();
     });
    // updatelevel();
 }
@@ -761,6 +764,20 @@ function pindah(nrp) {
     );
 }*/
 
+function jmdatakembarpt() {
+    var periode = $("#periode").val();
+    $.post(
+        "../ajaxes/a_placement.php", {
+            jenis: "jmdatakembarpt",
+            idperiode:periode,
+        },
+        function(data) {
+            // console.log(data);
+            // $("#jmdatakembarpt").text(data);
+            $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
+        }
+    );
+}
 
 function tempatkanmhs() {
     var periode = $("#periode").val();
@@ -771,8 +788,8 @@ function tempatkanmhs() {
 
     },
     function(data){
-        console.log(data["nrp"]);
-        var cek=data["nrp"];
+        console.log(data["id_ptest"]);
+        var cek=data["id_ptest"];
 
         if (cek != null) //ada yg belum terisi
         {
@@ -781,13 +798,14 @@ function tempatkanmhs() {
         else if (cek == null) //terisi semua
         {
             console.log("-+-");
+            
             $.post("../ajaxes/a_placement.php",
             {
                 idperiode:periode,
                 jenis:"aktifkan_allmhs",
             },
             function(data){
-                alert(data);
+                console.log(data);
                 $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
             });
             

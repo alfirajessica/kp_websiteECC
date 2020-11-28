@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2020 at 09:45 AM
+-- Generation Time: Nov 28, 2020 at 06:31 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -38,7 +38,7 @@ CREATE TABLE `kelas` (
   `kuota` int(10) NOT NULL,
   `dosen` varchar(10) NOT NULL,
   `status_kelas` varchar(2) NOT NULL COMMENT '0 - Tidak aktif, 1 - Aktif',
-  `id_ruangkelas` int(11) NOT NULL
+  `id_ruangkelas` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -72,65 +72,13 @@ INSERT INTO `kelas` (`id_periode`, `id_kelas`, `level_ecc`, `nama_kelas`, `hari`
 --
 
 CREATE TABLE `kelas_mhs` (
-  `id_periode` int(11) NOT NULL,
+  `id_klsmhs` int(10) NOT NULL,
+  `id_periode` int(10) NOT NULL,
   `nrp` varchar(10) NOT NULL,
-  `id_kelas` varchar(10) NOT NULL,
-  `id_nilai` varchar(10) NOT NULL,
-  `status_klsmhs` int(11) NOT NULL
+  `id_kelas` int(10) NOT NULL,
+  `id_nilai` int(10) NOT NULL,
+  `status_klsmhs` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `kelas_mhs`
---
-
-INSERT INTO `kelas_mhs` (`id_periode`, `nrp`, `id_kelas`, `id_nilai`, `status_klsmhs`) VALUES
-(17, '219180463', '0', '0', 1),
-(17, '219140099', '0', '0', 1),
-(17, '218120681', '0', '0', 1),
-(17, '219140100', '0', '0', 1),
-(17, '219180478', '0', '0', 1),
-(17, '219180480', '0', '0', 1),
-(17, '219180465', '0', '0', 1),
-(17, '219180457', '0', '0', 1),
-(17, '219180449', '0', '0', 1),
-(17, '219180446', '0', '0', 1),
-(17, '218116687', '0', '0', 1),
-(17, '219180468', '0', '0', 1),
-(17, '219170481', '0', '0', 1),
-(17, '219120694', '0', '0', 1),
-(17, '219180456', '0', '0', 1),
-(17, '218180442', '0', '0', 1),
-(17, '219116789', '0', '0', 1),
-(17, '219116799', '0', '0', 1),
-(17, '219116849', '0', '0', 1),
-(17, '217116607', '0', '0', 1),
-(17, '219116861', '0', '0', 1),
-(17, '219116792', '0', '0', 1),
-(17, '218116756', '0', '0', 1),
-(17, '219116803', '0', '0', 1),
-(17, '219116793', '0', '0', 1),
-(17, '219116809', '0', '0', 1),
-(17, '218180426', '0', '0', 1),
-(17, '219116790', '0', '0', 1),
-(17, '219116847', '0', '0', 1),
-(17, '219116862', '0', '0', 1),
-(17, '218116705', '0', '0', 1),
-(17, '218170435', '0', '0', 1),
-(17, '218170423', '0', '0', 1),
-(17, '218170422', '0', '0', 1),
-(17, '218170452', '0', '0', 1),
-(17, '219116779', '0', '0', 1),
-(17, '219116802', '0', '0', 1),
-(17, '219116822', '0', '0', 1),
-(17, '219116860', '0', '0', 1),
-(17, '219116842', '0', '0', 1),
-(17, '219116864', '0', '0', 1),
-(17, '217140071', '0', '0', 1),
-(17, '219116857', '0', '0', 1),
-(17, '218170451', '0', '0', 1),
-(17, '219140089', '0', '0', 1),
-(17, '216170333', '0', '0', 1),
-(17, '218180418', '0', '0', 1);
 
 -- --------------------------------------------------------
 
@@ -139,12 +87,9 @@ INSERT INTO `kelas_mhs` (`id_periode`, `nrp`, `id_kelas`, `id_nilai`, `status_kl
 --
 
 CREATE TABLE `mahasiswa` (
-  `id_periode` int(11) NOT NULL,
-  `nrp` varchar(10) NOT NULL,
+  `id_periode` int(10) NOT NULL,
+  `nrp` varchar(9) NOT NULL,
   `nama_mhs` varchar(30) NOT NULL,
-  `nilai_placement` int(10) NOT NULL,
-  `placement_level` int(11) NOT NULL,
-  `now_level` int(11) NOT NULL,
   `status_mhs` varchar(2) NOT NULL COMMENT '0 - Mhs nonaktif, 1 - mhs aktif ECC'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -152,60 +97,61 @@ CREATE TABLE `mahasiswa` (
 -- Dumping data for table `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`id_periode`, `nrp`, `nama_mhs`, `nilai_placement`, `placement_level`, `now_level`, `status_mhs`) VALUES
-(1, '216170333', 'Radwitya Prasidhi Taufik Putra', 0, 0, 0, '1'),
-(1, '217116607', 'Ivan', 0, 0, 0, '1'),
-(1, '217140071', 'Eric San Fokalie', 0, 0, 0, '1'),
-(16, '218116687', 'Gilberto Joshua Ramiro Abdinta', 333, 2, 0, '1'),
-(16, '218116705', 'Vincent Verrianto Chang', 679, 4, 0, '1'),
-(16, '218116756', 'I Gede Sriwibawa', 503, 3, 0, '1'),
-(16, '218120681', 'Siva Wahyu Harijanto', 267, 1, 0, '1'),
-(16, '218170422', 'Robert Buwono Kencono', 666, 4, 0, '1'),
-(16, '218170423', 'Rozak Lintang Martono', 600, 4, 0, '1'),
-(16, '218170435', 'Fandy Gunawan', 630, 4, 0, '1'),
-(16, '218170451', 'Wine Novita Mintono', 603, 4, 0, '1'),
-(16, '218170452', 'Yen Yen Putri Novena Kohar', 621, 4, 0, '1'),
-(16, '218180418', 'Kevin Hongary', 633, 4, 0, '1'),
-(16, '218180426', 'Wira Rafi Aji Pranata', 508, 3, 0, '1'),
-(16, '218180442', 'Stefanus Sanjaya', 540, 3, 0, '1'),
-(16, '219102600', 'Alwin', 390, 2, 0, '1'),
-(16, '219102603', 'Johan Stefanus Sanjaya', 376, 2, 0, '1'),
-(16, '219102606', 'Laurentius Bima Anggoro', 355, 2, 0, '1'),
-(16, '219116779', 'Bryan Andrew Wijaya', 620, 4, 0, '1'),
-(16, '219116786', 'Farhan Faisal Zainul Mustaqin', 389, 2, 0, '1'),
-(16, '219116789', 'Jonathan Arelio Bevan', 555, 3, 0, '1'),
-(16, '219116790', 'Kevin Ericko', 610, 4, 0, '1'),
-(16, '219116792', 'M. Abiansyah Putra Perdana A', 501, 3, 0, '1'),
-(16, '219116793', 'Maria Andreas Iskandar', 521, 3, 0, '1'),
-(16, '219116799', 'Albertus Verrel Rhesa Hardiant', 523, 3, 0, '1'),
-(16, '219116802', 'Farel Hansel Taner', 630, 4, 0, '1'),
-(16, '219116803', 'Felix Lung Santoso', 505, 3, 0, '1'),
-(16, '219116809', 'Ivan Yudinata Purwanto', 555, 3, 0, '1'),
-(16, '219116822', 'Bryant Melvern Pirih', 640, 4, 0, '1'),
-(16, '219116842', 'Russel Joshua Chandra', 622, 4, 0, '1'),
-(16, '219116847', 'Andrian Sugianto Putra', 620, 4, 0, '1'),
-(1, '219116849', 'Christian Evan', 0, 0, 0, '1'),
-(16, '219116857', 'Nicholas Tjandra', 601, 4, 0, '1'),
-(16, '219116860', 'Steven Liem', 682, 4, 0, '1'),
-(1, '219116861', 'Valentino Fransiskus Irawan', 0, 0, 0, '1'),
-(16, '219116862', 'Vincentius Alexander', 689, 4, 0, '1'),
-(16, '219116864', 'Yen Eduardo Nathan', 643, 4, 0, '1'),
-(16, '219120694', 'Naufal Bima Saputra', 400, 2, 0, '1'),
-(1, '219140089', 'Benedict Michael Maximus', 0, 0, 0, '1'),
-(1, '219140099', 'Victor Irviandi Pascalis', 0, 0, 0, '1'),
-(16, '219140100', 'Eugenius Ferera Herdany', 203, 1, 0, '1'),
-(16, '219170481', 'Jessica Ivana Winata', 444, 2, 0, '1'),
-(16, '219170492', 'Samuel Irawan', 390, 2, 0, '1'),
-(16, '219180446', 'Albert Wijaya', 345, 2, 0, '1'),
-(1, '219180449', 'Ben Auguere', 0, 0, 0, '1'),
-(16, '219180456', 'Hans Felix', 500, 3, 0, '1'),
-(16, '219180457', 'Hansen Valentino', 355, 2, 0, '1'),
-(16, '219180459', 'Jessica Anjani Viliang', 430, 2, 0, '1'),
-(16, '219180463', 'M.fierza Eries Erlangga', 204, 1, 0, '1'),
-(1, '219180465', 'Michelle Annabelle Surya Atmaj', 0, 0, 0, '1'),
-(16, '219180468', 'William Morgen', 453, 2, 0, '1'),
-(1, '219180478', 'Ivan Aubrey Adianto', 0, 0, 0, '1'),
-(16, '219180480', 'Jestine Siewij', 350, 2, 0, '1');
+INSERT INTO `mahasiswa` (`id_periode`, `nrp`, `nama_mhs`, `status_mhs`) VALUES
+(16, '216170333', 'Radwitya Prasidhi Taufik Putra', '0'),
+(16, '217116607', 'Ivan', '0'),
+(16, '217140071', 'Eric San Fokalie', '0'),
+(16, '217180382', 'Alfira Jessica', '0'),
+(16, '218116687', 'Gilberto Joshua Ramiro Abdinta', '0'),
+(16, '218116705', 'Vincent Verrianto Chang', '0'),
+(16, '218116756', 'I Gede Sriwibawa', '0'),
+(16, '218120681', 'Siva Wahyu Harijanto', '0'),
+(16, '218170422', 'Robert Buwono Kencono', '0'),
+(16, '218170423', 'Rozak Lintang Martono', '0'),
+(16, '218170435', 'Fandy Gunawan', '0'),
+(16, '218170451', 'Wine Novita Mintono', '0'),
+(16, '218170452', 'Yen Yen Putri Novena Kohar', '0'),
+(16, '218180418', 'Kevin Hongary', '0'),
+(16, '218180426', 'Wira Rafi Aji Pranata', '0'),
+(16, '218180442', 'Stefanus Sanjaya', '0'),
+(16, '219102600', 'Alwin', '0'),
+(16, '219102603', 'Johan Stefanus Sanjaya', '0'),
+(16, '219102606', 'Laurentius Bima Anggoro', '0'),
+(16, '219116779', 'Bryan Andrew Wijaya', '0'),
+(16, '219116786', 'Farhan Faisal Zainul Mustaqin', '0'),
+(16, '219116789', 'Jonathan Arelio Bevan', '0'),
+(16, '219116790', 'Kevin Ericko', '0'),
+(16, '219116792', 'M. Abiansyah Putra Perdana A', '0'),
+(16, '219116793', 'Maria Andreas Iskandar', '0'),
+(16, '219116799', 'Albertus Verrel Rhesa Hardiant', '0'),
+(16, '219116802', 'Farel Hansel Taner', '0'),
+(16, '219116803', 'Felix Lung Santoso', '0'),
+(16, '219116809', 'Ivan Yudinata Purwanto', '0'),
+(16, '219116822', 'Bryant Melvern Pirih', '0'),
+(16, '219116842', 'Russel Joshua Chandra', '0'),
+(16, '219116847', 'Andrian Sugianto Putra', '0'),
+(16, '219116849', 'Christian Evan', '0'),
+(16, '219116857', 'Nicholas Tjandra', '0'),
+(16, '219116860', 'Steven Liem', '0'),
+(16, '219116861', 'Valentino Fransiskus Irawan', '0'),
+(16, '219116862', 'Vincentius Alexander', '0'),
+(16, '219116864', 'Yen Eduardo Nathan', '0'),
+(16, '219120694', 'Naufal Bima Saputra', '0'),
+(16, '219140089', 'Benedict Michael Maximus', '0'),
+(16, '219140099', 'Victor Irviandi Pascalis', '0'),
+(16, '219140100', 'Eugenius Ferera Herdany', '0'),
+(16, '219170481', 'Jessica Ivana Winata', '0'),
+(16, '219170492', 'Samuel Irawan', '0'),
+(16, '219180446', 'Albert Wijaya', '0'),
+(16, '219180449', 'Ben Auguere', '0'),
+(16, '219180456', 'Hans Felix', '0'),
+(16, '219180457', 'Hansen Valentino', '0'),
+(16, '219180459', 'Jessica Anjani Viliang', '0'),
+(16, '219180463', 'M.fierza Eries Erlangga', '0'),
+(16, '219180465', 'Michelle Annabelle Surya Atmaj', '0'),
+(16, '219180468', 'William Morgen', '0'),
+(16, '219180478', 'Ivan Aubrey Adianto', '0'),
+(16, '219180480', 'Jestine Siewij', '0');
 
 -- --------------------------------------------------------
 
@@ -233,7 +179,7 @@ CREATE TABLE `periode` (
   `semester` varchar(20) NOT NULL COMMENT 'Gasal / Genap',
   `thn_akademik_awal` int(10) NOT NULL COMMENT 'tahun akademik awal YYYY',
   `thn_akademik_akhir` int(10) NOT NULL COMMENT 'tahun akademik akhir/YYYY',
-  `status_periode` int(11) NOT NULL
+  `status_periode` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -254,13 +200,135 @@ INSERT INTO `periode` (`id_periode`, `semester`, `thn_akademik_awal`, `thn_akade
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `placement`
+--
+
+CREATE TABLE `placement` (
+  `id_ptest` int(10) NOT NULL,
+  `id_periode` int(10) NOT NULL,
+  `nrp` varchar(9) NOT NULL,
+  `nilai_ptest` int(10) NOT NULL,
+  `ptest_level` int(10) NOT NULL,
+  `status_kembar` int(11) NOT NULL COMMENT '0-tdk, 1-ada kembar'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `placement`
+--
+
+INSERT INTO `placement` (`id_ptest`, `id_periode`, `nrp`, `nilai_ptest`, `ptest_level`, `status_kembar`) VALUES
+(1, 16, '219180463', 204, 1, 1),
+(2, 16, '219140099', 243, 1, 1),
+(3, 16, '218120681', 267, 1, 1),
+(4, 16, '219140100', 203, 1, 1),
+(5, 16, '219180478', 340, 2, 1),
+(6, 16, '219180465', 360, 2, 1),
+(7, 16, '219180457', 355, 2, 1),
+(8, 16, '219180449', 340, 2, 1),
+(10, 16, '218116687', 333, 2, 1),
+(11, 16, '219180468', 453, 2, 1),
+(12, 16, '219170481', 444, 2, 1),
+(13, 16, '219120694', 400, 2, 1),
+(14, 16, '219116786', 389, 2, 1),
+(16, 16, '219102603', 376, 2, 1),
+(17, 16, '219102606', 355, 2, 1),
+(18, 16, '219170492', 390, 2, 1),
+(19, 16, '219180456', 500, 3, 1),
+(20, 16, '218180442', 540, 3, 1),
+(21, 16, '219116789', 555, 3, 1),
+(22, 16, '219116799', 523, 3, 0),
+(23, 16, '219116849', 555, 3, 1),
+(24, 16, '217116607', 530, 3, 1),
+(25, 16, '219116861', 500, 3, 1),
+(26, 16, '219116792', 501, 3, 1),
+(27, 16, '218116756', 503, 3, 1),
+(28, 16, '219116803', 505, 3, 1),
+(29, 16, '219116793', 521, 3, 1),
+(30, 16, '218180426', 508, 3, 1),
+(31, 16, '219116790', 610, 4, 1),
+(32, 16, '219116847', 620, 4, 1),
+(33, 16, '219116862', 689, 4, 1),
+(34, 16, '218116705', 679, 4, 1),
+(35, 16, '218170435', 630, 4, 1),
+(36, 16, '218170423', 600, 4, 1),
+(37, 16, '218170422', 666, 4, 1),
+(38, 16, '218170452', 621, 4, 1),
+(39, 16, '219116779', 620, 4, 1),
+(40, 16, '219116802', 630, 4, 1),
+(41, 16, '219116822', 640, 4, 1),
+(42, 16, '219116860', 682, 4, 1),
+(43, 16, '219116842', 622, 4, 1),
+(44, 16, '219116864', 643, 4, 1),
+(45, 16, '217140071', 653, 4, 1),
+(46, 16, '219116857', 601, 4, 1),
+(47, 16, '218170451', 603, 4, 1),
+(48, 16, '219140089', 608, 4, 1),
+(49, 16, '216170333', 607, 4, 1),
+(50, 16, '218180418', 633, 4, 1),
+(51, 16, '219180463', 204, 1, 0),
+(52, 16, '219140099', 243, 1, 0),
+(53, 16, '218120681', 267, 1, 0),
+(54, 16, '219140100', 203, 1, 0),
+(55, 16, '219180478', 340, 2, 0),
+(56, 16, '219180480', 350, 2, 0),
+(57, 16, '219180465', 360, 2, 0),
+(58, 16, '219180457', 355, 2, 0),
+(59, 16, '219180449', 340, 2, 0),
+(60, 16, '219180446', 345, 2, 0),
+(61, 16, '218116687', 333, 2, 0),
+(62, 16, '219180468', 453, 2, 0),
+(63, 16, '219170481', 444, 2, 0),
+(64, 16, '219120694', 400, 2, 0),
+(65, 16, '219180459', 430, 2, 0),
+(66, 16, '219116786', 389, 2, 0),
+(67, 16, '219102600', 390, 2, 0),
+(68, 16, '219102603', 376, 2, 0),
+(69, 16, '219102606', 355, 2, 0),
+(70, 16, '219170492', 390, 2, 0),
+(71, 16, '219180456', 500, 3, 0),
+(72, 16, '218180442', 540, 3, 0),
+(73, 16, '219116789', 555, 3, 0),
+(75, 16, '219116849', 555, 3, 0),
+(76, 16, '217116607', 530, 3, 0),
+(77, 16, '219116861', 500, 3, 0),
+(78, 16, '219116792', 501, 3, 0),
+(79, 16, '218116756', 503, 3, 0),
+(80, 16, '219116803', 505, 3, 0),
+(81, 16, '219116793', 521, 3, 0),
+(82, 16, '219116809', 555, 3, 0),
+(83, 16, '218180426', 508, 3, 0),
+(84, 16, '219116790', 610, 4, 0),
+(85, 16, '219116847', 620, 4, 0),
+(86, 16, '219116862', 689, 4, 0),
+(87, 16, '218116705', 679, 4, 0),
+(88, 16, '218170435', 630, 4, 0),
+(89, 16, '218170423', 600, 4, 0),
+(90, 16, '218170422', 666, 4, 0),
+(91, 16, '218170452', 621, 4, 0),
+(92, 16, '219116779', 620, 4, 0),
+(93, 16, '219116802', 630, 4, 0),
+(94, 16, '219116822', 640, 4, 0),
+(95, 16, '219116860', 682, 4, 0),
+(96, 16, '219116842', 622, 4, 0),
+(97, 16, '219116864', 643, 4, 0),
+(98, 16, '217140071', 653, 4, 0),
+(99, 16, '219116857', 601, 4, 0),
+(100, 16, '218170451', 603, 4, 0),
+(101, 16, '219140089', 608, 4, 0),
+(102, 16, '216170333', 607, 4, 0),
+(103, 16, '218180418', 633, 4, 0),
+(104, 16, '217180382', 450, 3, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ruang_kelas`
 --
 
 CREATE TABLE `ruang_kelas` (
-  `id_ruangkelas` int(11) NOT NULL,
+  `id_ruangkelas` int(10) NOT NULL,
   `nama_ruang` varchar(10) NOT NULL,
-  `status_ruang` varchar(2) NOT NULL COMMENT '(0 - nonaktif) (1 - aktif)'
+  `status_ruang` int(2) NOT NULL COMMENT '(0 - nonaktif) (1 - aktif)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -268,13 +336,13 @@ CREATE TABLE `ruang_kelas` (
 --
 
 INSERT INTO `ruang_kelas` (`id_ruangkelas`, `nama_ruang`, `status_ruang`) VALUES
-(15, 'B-301', '1'),
-(16, 'B-302', '1'),
-(17, 'U-401', '1'),
-(18, 'U-402', '1'),
-(19, 'U-303', '1'),
-(20, 'E-301', '1'),
-(21, 'B-303', '1');
+(15, 'B-301', 1),
+(16, 'B-302', 1),
+(17, 'U-401', 1),
+(18, 'U-402', 1),
+(19, 'U-303', 1),
+(20, 'E-301', 1),
+(21, 'B-303', 1);
 
 -- --------------------------------------------------------
 
@@ -304,67 +372,28 @@ INSERT INTO `standard_nilaipt` (`id_periode`, `level1`, `level2`, `level3`, `lev
 --
 
 CREATE TABLE `tempkelas_mhs` (
-  `id_periode` int(11) NOT NULL,
+  `id_periode` int(10) NOT NULL,
   `nrp` varchar(9) NOT NULL,
   `nama_mhs` varchar(100) NOT NULL,
-  `level_ecc` varchar(10) NOT NULL,
+  `level_ecc` int(10) NOT NULL,
   `hari` varchar(10) NOT NULL,
   `jam_mulai` varchar(10) NOT NULL,
   `ruang_kode` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `tempkelas_mhs`
+-- Table structure for table `temp_placement`
 --
 
-INSERT INTO `tempkelas_mhs` (`id_periode`, `nrp`, `nama_mhs`, `level_ecc`, `hari`, `jam_mulai`, `ruang_kode`) VALUES
-(17, '219180463', 'M.fierza Eries Erlangga', '1', 'Senin', '06:30', 'B-303'),
-(17, '219140099', 'Victor Irviandi Pascalis', '1', 'Senin', '06:30', 'B-303'),
-(17, '218120681', 'Siva Wahyu Harijanto', '1', 'Senin', '06:30', 'B-303'),
-(17, '219140100', 'Eugenius Ferera Herdany', '1', 'Senin', '06:30', 'B-303'),
-(17, '219180478', 'Ivan Aubrey Adianto', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180480', 'Jestine Siewij', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180465', 'Michelle Annabelle Surya Atmaja', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180457', 'Hansen Valentino', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180449', 'Ben Auguere', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180446', 'Albert Wijaya', '2', 'Selasa', '06:30', 'B-301'),
-(17, '218116687', 'Gilberto Joshua Ramiro Abdintara', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180468', 'William Morgen', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219170481', 'Jessica Ivana Winata', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219120694', 'Naufal Bima Saputra', '2', 'Selasa', '06:30', 'B-301'),
-(17, '219180456', 'Hans Felix', '3', 'Senin', '06:30', 'B-302'),
-(17, '218180442', 'Stefanus Sanjaya', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116789', 'Jonathan Arelio Bevan', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116799', 'Albertus Verrel Rhesa Hardianto', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116849', 'Christian Evan', '3', 'Senin', '06:30', 'B-302'),
-(17, '217116607', 'Ivan', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116861', 'Valentino Fransiskus Irawan', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116792', 'M. Abiansyah Putra Perdana A', '3', 'Senin', '06:30', 'B-302'),
-(17, '218116756', 'I Gede Sriwibawa', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116803', 'Felix Lung Santoso', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116793', 'Maria Andreas Iskandar', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116809', 'Ivan Yudinata Purwanto', '3', 'Senin', '06:30', 'B-302'),
-(17, '218180426', 'Wira Rafi Aji Pranata', '3', 'Senin', '06:30', 'B-302'),
-(17, '219116790', 'Kevin Ericko', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116847', 'Andrian Sugianto Putra', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116862', 'Vincentius Alexander', '4', 'Senin', '06:30', 'U-303'),
-(17, '218116705', 'Vincent Verrianto Chang', '4', 'Senin', '06:30', 'U-303'),
-(17, '218170435', 'Fandy Gunawan', '4', 'Senin', '06:30', 'U-303'),
-(17, '218170423', 'Rozak Lintang Martono', '4', 'Senin', '06:30', 'U-303'),
-(17, '218170422', 'Robert Buwono Kencono', '4', 'Senin', '06:30', 'U-303'),
-(17, '218170452', 'Yen Yen Putri Novena Kohar', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116779', 'Bryan Andrew Wijaya', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116802', 'Farel Hansel Taner', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116822', 'Bryant Melvern Pirih', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116860', 'Steven Liem', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116842', 'Russel Joshua Chandra', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116864', 'Yen Eduardo Nathan', '4', 'Senin', '06:30', 'U-303'),
-(17, '217140071', 'Eric San Fokalie', '4', 'Senin', '06:30', 'U-303'),
-(17, '219116857', 'Nicholas Tjandra', '4', 'Senin', '06:30', 'U-303'),
-(17, '218170451', 'Wine Novita Mintono', '4', 'Senin', '06:30', 'U-303'),
-(17, '219140089', 'Benedict Michael Maximus', '4', 'Senin', '06:30', 'U-303'),
-(17, '216170333', 'Radwitya Prasidhi Taufik Putra', '4', 'Senin', '06:30', 'U-303'),
-(17, '218180418', 'Kevin Hongary', '4', 'Senin', '06:30', 'U-303');
+CREATE TABLE `temp_placement` (
+  `id_periode` int(10) NOT NULL,
+  `nrp` varchar(9) NOT NULL,
+  `nama_mhs` varchar(100) NOT NULL,
+  `nilai_ptest` int(10) NOT NULL,
+  `ptest_level` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -403,6 +432,12 @@ ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id_kelas`);
 
 --
+-- Indexes for table `kelas_mhs`
+--
+ALTER TABLE `kelas_mhs`
+  ADD PRIMARY KEY (`id_klsmhs`);
+
+--
 -- Indexes for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
@@ -421,10 +456,28 @@ ALTER TABLE `periode`
   ADD PRIMARY KEY (`id_periode`);
 
 --
+-- Indexes for table `placement`
+--
+ALTER TABLE `placement`
+  ADD PRIMARY KEY (`id_ptest`);
+
+--
 -- Indexes for table `ruang_kelas`
 --
 ALTER TABLE `ruang_kelas`
   ADD PRIMARY KEY (`id_ruangkelas`);
+
+--
+-- Indexes for table `tempkelas_mhs`
+--
+ALTER TABLE `tempkelas_mhs`
+  ADD PRIMARY KEY (`nrp`);
+
+--
+-- Indexes for table `temp_placement`
+--
+ALTER TABLE `temp_placement`
+  ADD PRIMARY KEY (`nrp`);
 
 --
 -- Indexes for table `user`
@@ -443,16 +496,28 @@ ALTER TABLE `kelas`
   MODIFY `id_kelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=650;
 
 --
+-- AUTO_INCREMENT for table `kelas_mhs`
+--
+ALTER TABLE `kelas_mhs`
+  MODIFY `id_klsmhs` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
   MODIFY `id_periode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `placement`
+--
+ALTER TABLE `placement`
+  MODIFY `id_ptest` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
 -- AUTO_INCREMENT for table `ruang_kelas`
 --
 ALTER TABLE `ruang_kelas`
-  MODIFY `id_ruangkelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_ruangkelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
