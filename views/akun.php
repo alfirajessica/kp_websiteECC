@@ -160,11 +160,14 @@ $nama = $arr->get_nama();
         },
         function(data) {
           console.log(data);
+          if (data == "Berhasil") {
+            $("#te_password").val("");
+            $("#te_cpassword").val("");
+          }
         });
     } else {
       alert("Password dan Konfirmasi password harus sama !");
     }
 
   }
-
 </script>
