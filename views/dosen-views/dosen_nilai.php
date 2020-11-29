@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            *<a onclick="window.location.href='../PHPexcel/nilaiuts.xlsx'" target="_blank"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
+            *<a onclick="downloadtemp()" target="_blank"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
         </div>
 
 
@@ -103,6 +103,46 @@
 </div>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td><strong>Nrp</strong></td>
+                        <td><input class='form-control' type="text" id="t_nrp"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nama</strong></td>
+                        <td><input class='form-control' type="text" id="t_nama"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uts</strong></td>
+                        <td><input class='form-control' type="text" id="t_uts"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uas</strong></td>
+                        <td><input class='form-control' type="text" id="t_uas"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         isikelas();
@@ -126,7 +166,7 @@
                 jenis: "get_kelasdos",
             },
             function(data) {
-                console.log("kelas:"+data);
+                console.log("kelas:" + data);
                 $("#kelas").html(data);
 
             });
@@ -188,20 +228,22 @@
                 },
                 {
                     "data": "na"
-                },{
-                    
-                "render": function(data, type, row) {
-                    var nrp = row.nrp;
+                }, {
 
-                  
-                        return "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=edit('"+ row.nrp+"' >Edit</button>";
-                   
+                    "render": function(data, type, row) {
+                        var nrp = row.nrp;
 
-                    
+
+                        return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' onclick=\"isiubah('" + row.nrp + "')\" >Edit</button>";
+
+
+
+                    }
                 }
+            ]
 
 
-            ],
+
 
 
         });
@@ -221,11 +263,11 @@
         var fd = new FormData();
         var files = $('#uts')[0].files[0];
         fd.append('file', files);
-        fd.append("jenis","uts");
-        var periode=$("#periode").val();
-        var kelas=$("#kelas").val();
-        fd.append("periode",periode);
-        fd.append("kelas",kelas);
+        fd.append("jenis", "uts");
+        var periode = $("#periode").val();
+        var kelas = $("#kelas").val();
+        fd.append("periode", periode);
+        fd.append("kelas", kelas);
         if (files != undefined) {
             var arr =
                 $.ajax({
@@ -252,11 +294,11 @@
         var fd = new FormData();
         var files = $('#uas')[0].files[0];
         fd.append('file', files);
-        fd.append("jenis","uas");
-        var periode=$("#periode").val();
-        var kelas=$("#kelas").val();
-        fd.append("periode",periode);
-        fd.append("kelas",kelas);
+        fd.append("jenis", "uas");
+        var periode = $("#periode").val();
+        var kelas = $("#kelas").val();
+        fd.append("periode", periode);
+        fd.append("kelas", kelas);
         if (files != undefined) {
             var arr =
                 $.ajax({
@@ -276,5 +318,28 @@
                 });
 
         }
+    }
+
+
+    function isiubah(params) {
+        $.post("../ajaxes/a_dos_nilai.php", {
+                jenis: "getinfo",
+                nrp: params,
+                kelas: $("#kelas").val()
+            },
+            function(data) {
+                console.log(data);
+                var arr = JSON.parse(data);
+                $("#t_nrp").val(arr.nrp);
+                $("#t_nama").val(arr.nama_mhs);
+                $("#t_uts").val(arr.nilai_uts);
+                $("#t_uas").val(arr.nilai_uas);
+
+            });
+    }
+
+    function downloadtemp() {
+        var kelas = $("#kelas").val();
+        window.location.href = '../PHPexcel/templeteutsuas.php?kelas=' + kelas;
     }
 </script>
