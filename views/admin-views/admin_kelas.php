@@ -154,7 +154,7 @@
           </div>
           <div class="modal-body">
           <form role="form">
-                <table class="table table-borderless table-md text-right">
+          <table class="table table-borderless table-md text-right">
                     <tbody>
                         <tr>
                             <td scope="row">Pilih Dosen : </td>
@@ -220,6 +220,46 @@
       </div>
     </div>
     <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
+
+    <!-- Modal lihat mahasiswa  -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal_lihatmhs" role="dialog" style="overflow-y:scroll;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="title_namakelas"></h5>
+            <h6 id="title_idkelas"></h6>
+            <h6 id="title_table"></h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          
+          <div class="table-responsive">
+                    <table id="table_lihatmhs" class="table table-striped table-bordered" width="100%">
+                        <thead>
+                            <tr class="clickable-row">
+                                <th>#</th>
+                                <th>#nrp</th>
+                                <th>Nama mahasiswa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            
+            
+          </div>
+          <div class="modal-footer">
+            <label id="update_warning"> </label>
+            <button id="btn_updatekelas" type="button" class="btn btn-primary" onclick="updatekelasini()" >Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
+
 <style>
   .warning{
     color:red;
@@ -530,6 +570,10 @@ function ubah_kelas(idkelas,table) {
     });
 }
 
+function lihat_mahasiswa(idkelas) {
+ console.log("lihat mahasiswa");
+ datatable_table_lihatmhs(idkelas);
+}
 
 
 function datatable_kelasnonaktif() {
@@ -809,7 +853,7 @@ function datatable_kelasaktif() {
                     var idkelas = row.id_kelas;
                     var table = "#table_kelasaktif";
 
-                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#exampleModal'>Lihat Mahasiswa</button>" + " <button onclick=\"nonaktikfkan_kls(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>Lihat Mahasiswa</button>" + " <button onclick=\"nonaktikfkan_kls(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
                     
                     
                 }
@@ -834,6 +878,54 @@ function datatable_kelasaktif() {
     }) 
     //end of datatble list barang
 }
+
+function datatable_table_lihatmhs(idkelas) {
+    console.log(idkelas);
+    var periode = $("#periode_lihatkelas").val();
+    //datatable list barang
+    var table= "";
+    var groupColumn = 1;
+    table = $('#table_lihatmhs').DataTable( 
+    {
+            destroy:true,
+            "processing":true,
+            "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
+            "zeroRecords": "Maaf Data yang dicari tidak ada",
+            "info": "Tampilkan data _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search":"Cari",
+            "paginate": {
+                "first":      "Pertama",
+                "last":       "terakhir",
+                "next":       "Selanjutnya",
+                "previous":   "Sebelumnya"
+                },
+            },
+            "serverSide":true,
+            "ordering":true, //set true agar bisa di sorting
+            "ajax":{
+                "url":"../datatables/admin-datatable/kelas_lihatmhs.php",
+                "type":"POST",
+                "data":{"idkelas":idkelas},
+            },
+            "deferRender":true,
+            "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
+            "order": [[0, 'asc']],
+            
+            "columns":[
+            {"data":"id_klsmhs"},
+            {"data":"nrp"},
+            {"data":"nama_mhs"},
+            
+
+            ],
+            
+    }) 
+    //end of datatble list barang
+}
+
 
 </script>
 

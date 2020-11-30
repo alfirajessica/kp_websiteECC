@@ -164,14 +164,16 @@
                     <table id="table_mhspt" class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th>#NRP</th>
-                            <th>Nama</th>
-                            <th>Nilai</th>
-                            <th>Level</th>
-                            <th>Aksi</th>
+                            <tr>
+                                <th>#NRP</th>
+                                <th>Nama</th>
+                                <th>Nilai</th>
+                                <th>Level</th>
+                                <th>Aksi</th>
+                            </tr>
                         </tr>
                         </thead>
-                        <tbody id="datanya"> </tbody>
+                        <tbody> </tbody>
                     </table>
                 </div>
                 <!-- end of tabel kelas yang tergenerate -->
@@ -872,7 +874,7 @@ function datatable_ptmhs_periodeini() {
             },
         "serverSide":true,
         "ordering":true, //set true agar bisa di sorting
-        "order": [[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
+        "order": [[1, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
         "ajax": {
             "url": "../datatables/admin-datatable/placement_mhsaktif.php",
             "type": "POST",
@@ -884,34 +886,34 @@ function datatable_ptmhs_periodeini() {
             [10, 20, 50]
         ], //combobox limit
         "columns": [
-
-            {
-                "data": "nrp"
-            },
-            {
-                "data": "nama_mhs"
-            },
-            {
-                "data": "nilai_placement",
-            },
-            { "data":"placement_level",
+            { "data": "nrp"},
+            { "data": "nama_mhs" },
+            { "data": "nilai_ptest" },
+            { "data":"ptest_level",
                 "searchable": true,
                 "orderable":true,
                 "render": function (data, type, row) {  
-                    return "<label> Level " + row.placement_level + " </label>";
+                    if (row.ptest_level == '0') //kelas aktif
+                    {
+                        return "<label class='text-danger'> Belum Ada level </label>";
+                    }
+                    else if (row.ptest_level != 0) {
+                        return "<label> Level " + row.ptest_level + " </label>";
+                    }
+                    
                 }
-            },
+            },          
             {
-                "data": "placement_level",
+                "data": "nilai_ptest",
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
+                    var id_ptest = row.id_ptest;
                     var table = "#table_mhspt";
-
-                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+nrp+"\',\'"+table+"\')\" >Ubah Nilai</button>" + " <button onclick=\"nonaktikfkan_mhs('" + nrp + "')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
-
+                    
+                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Ubah</button>";
                 }
-            }
-
+            },
+            
         ],
         
     });

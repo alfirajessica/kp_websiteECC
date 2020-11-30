@@ -51,22 +51,13 @@
 
         <table>
         <thead>
-        <tr> 
-            <?php 
-                for ($i=1; $i <= 4; $i++) { 
-                    ?> 
-                        <th colspan="5"> Hasil ECC Level <?php echo $i;?></th> 
-                        <th colspan="2"></th>
-                    
-                <?php } ?>
+        <tr>
+            <th colspan="5"> Hasil Placement</th> 
+            <th colspan="2"></th>
         </tr>
-        <tr> 
-            <?php 
-                for ($i=1; $i <= 4; $i++) { 
-                    ?> 
-                        <th colspan="5"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> <th colspan="2"></th>
-                    
-                <?php } ?>
+        <tr>
+            <th colspan="5"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> 
+            <th colspan="2"></th>
         </tr>
             
 		<tr>
@@ -76,27 +67,6 @@
             <th>Nilai Placement</th>
             <th>Level Placement</th>
             <th colspan="2"></th>
-
-            <th>#</th>
-            <th>Nrp</th>
-            <th>Nama Mahasiswa</th>
-            <th>Nilai Placement</th>
-            <th>Level Placement</th>
-            <th colspan="2"></th>
-
-            <th>#</th>
-            <th>Nrp</th>
-            <th>Nama Mahasiswa</th>
-            <th>Nilai Placement</th>
-            <th>Level Placement</th>
-            <th colspan="2"></th>
-
-            <th>#</th>
-            <th>Nrp</th>
-            <th>Nama Mahasiswa</th>
-            <th>Nilai Placement</th>
-            <th>Level Placement</th>
-           
 		</tr>
         </thead>
         <tbody>
@@ -105,7 +75,14 @@
         
     <?php
     }
-        $sql1 = "SELECT * FROM mahasiswa WHERE id_periode='$periode' and status_mhs='1' ORDER by nrp asc, placement_level asc";
+        $sql1 = "SELECT * FROM placement pt
+        LEFT JOIN mahasiswa m
+        ON m.nrp = pt.nrp
+        where m.id_periode='$periode' and m.status_mhs='1'
+        ORDER BY pt.nrp asc, ptest_level asc";
+
+        // SELECT * FROM mahasiswa 
+        //         WHERE id_periode='$periode' and status_mhs='1' ORDER by nrp asc, placement_level asc";
 
         $result = $conn->query($sql1);
         $stat="";
@@ -115,9 +92,9 @@
 			while ($row = $result->fetch_assoc()) {
 				$nrp = $row["nrp"];
 				$nama_mhs = $row["nama_mhs"];
-				$nilai_placement = $row["nilai_placement"];
-                $placement_level = $row["placement_level"];
-                $now_level = $row["now_level"];
+				$nilai_placement = $row["nilai_ptest"];
+                $placement_level = $row["ptest_level"];
+                //$now_level = $row["now_level"];
             
                 if ($placement_level == "1") {
                     $collevel1="<tr><td colspan='6'>Level 1</td></tr>";

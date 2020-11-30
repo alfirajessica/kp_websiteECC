@@ -35,8 +35,8 @@ session_start();
                     $insertqry = "INSERT INTO tempkelas_mhs(id_periode,nrp,nama_mhs,level_ecc,hari,jam_mulai,ruang_kode) VALUES ('$periode','$nrp','$snama','$level','$shari','$jam_mulai','$sruang')";
                     $insertres = mysqli_query($conn, $insertqry);
 
-                    $insertqry2 = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('1','$nrp','$snama','0','0','0','1')";
-                    $insertres2 = mysqli_query($conn, $insertqry2);
+                    // $insertqry2 = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,nilai_placement,placement_level,now_level,status_mhs) VALUES ('1','$nrp','$snama','0','0','0','1')";
+                    // $insertres2 = mysqli_query($conn, $insertqry2);
 
 
                 }

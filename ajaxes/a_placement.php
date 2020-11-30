@@ -292,16 +292,6 @@ if($_POST["jenis"]=="cek_periode"){
 if($_POST["jenis"]=="cek_dataterisi"){
     
     $idperiode = $_POST["idperiode"];
-
-    //cek dulu apakah semua kelas sudah terisi datanya
-    /*$sqlcek = "select * from temp_placement where id_periode='$idperiode' and nilai_ptest='0'";
-    $query = mysqli_query($conn,$sqlcek); // get the data from the db
-    $result = array();
-    while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
-
-        $result ["nrp"] = $row['nrp'];
-        
-    }*/
     $sqlcek = "select * from placement where id_periode='$idperiode' and nilai_ptest='0' or status_kembar='1'";
     $query = mysqli_query($conn,$sqlcek); // get the data from the db
     $result = array();
@@ -370,51 +360,6 @@ if($_POST["jenis"]=="insert_pt"){
             }
     
     }
-    // if ($ket == "0") {
-    //     $sqlsel1 = "select * from temp_placement where id_periode='$idperiode' and nrp='$nrp2'";
-    //         $result3 = $conn->query($sqlsel1);
-    //         while ($row3 = $result3->fetch_assoc()) {
-    //             $nrp3 = $row3["nrp"];
-    //             $nama3 = $row3["nama_mhs"];
-    //             $nilai3 = $row3["nilai_ptest"];
-    //             $level3 = $row3["ptest_level"];
-    
-    //             $sqlins1 = "INSERT INTO placement(id_ptest,id_periode,nrp,nilai_ptest,ptest_level) VALUES (null,'$idperiode','$nrp3','$nilai3','$level3')";
-    //             if ($conn->query($sqlins1)) {
-    //                 $ket = "koosoong";
-    //             }
-    //             else{
-    //                 $ket = "gagal"; //gagal
-    //             } 
-    //         }
-    // }
-    // else{
-    //     $sqlsel2 = "select * from temp_placement where id_periode='$idperiode' and nrp!='$nrp2'";
-    //         $result4 = $conn->query($sqlsel2);
-    //         while ($row4 = $result4->fetch_assoc()) {
-    //             $nrp4 = $row4["nrp"];
-    //             $nama4 = $row4["nama_mhs"];
-    //             $nilai4 = $row4["nilai_ptest"];
-    //             $level4 = $row4["ptest_level"];
-    
-    //             $sqlins2 = "INSERT INTO placement(id_ptest,id_periode,nrp,nilai_ptest,ptest_level) VALUES (null,'$idperiode','$nrp4','$nilai4','$level4')";
-    //             if ($conn->query($sqlins2)) {
-    //                 $ket = "isi";
-    //             }
-    //             else{
-    //                 $ket = "gagal"; //gagal
-    //             } 
-    //         }
-    // }
-
-    
-    // if ($kode == "0") {
-    //     $ket = "kosong";
-    // }
-    // else{
-    //     $ket = "isi";
-    // }
-    
     
     echo $ket;
     $conn->close();
@@ -423,18 +368,6 @@ if($_POST["jenis"]=="insert_mhs"){
     $idperiode = $_POST["idperiode"];
     $kode="";
     $ket="";
-
-    // WITH CTE AS (
-    //     SELECT Name, Email, City
-    //     ROW_NUMBER() OVER (
-    //     PARTITION BY Name, Email. City
-    //     ORDER BY Name, Email. City
-    //     ) row_num
-    //     FROM Geek
-    //     )
-    //     DELETE FROM CTE
-    //     WHERE row_num > 1;
-
     $sql = "select id_ptest, count(nrp) from placement group by nrp HAVING COUNT(id_periode) > 1 and COUNT(nrp) > 1 ";
     if ($conn->query($sql)) {
         $sql2 = "delete from placement where count(nrp)>1 and id_periode='$idperiode'";
@@ -450,95 +383,6 @@ if($_POST["jenis"]=="insert_mhs"){
     }
 
     
-    //select dulu semua value di temp_placement
-    /*$sqlseltp = "select * from temp_placement where id_periode='$idperiode'";
-    $result1 = $conn->query($sqlseltp);
-    while ($row1 = $result1->fetch_assoc()) {
-        $nrp = $row1["nrp"];
-        $nama = $row1["nama_mhs"];
-        $nilai = $row1["nilai_ptest"];
-        $level = $row1["ptest_level"];
-
-        //insert semua ke table mahasiswa
-        $sqlmhs = "INSERT INTO mahasiswa(id_periode,nrp,nama_mhs,status_mhs) VALUES ('$idperiode','$nrp','$nama','1')";
-        if ($conn->query($sqlmhs)) {
-            $kode =1;
-            // $sqlselpt = "select * from placement where id_periode='$idperiode' and nrp='$nrp'";
-            // $result2 = $conn->query($sqlselpt);
-            // while ($row2 = $result2->fetch_assoc()) {
-            //     $nrp2 = $row2["nrp"];
-            //     $idptest = $row2["id_ptest"];
-
-            //     if ($nrp2 == null || $nrp2 == "") {
-            //         $ket = "1";
-            //     }
-            //     else if($nrp2 != null){
-            //         $ket = $nrp2;
-            //     }          
-            // }
-        }
-        else{
-            $kode = 0; //gagal
-        } 
-    }
-
-    // if ($ket == 1) {
-    //     //select yg ada di placement apakah ada data nrp yang sama dgn temp_placement
-    //     $ket = "1";
-    // }
-    // else{
-    //     $ket= $ket;
-    // }
-
-    
-    /*if ($ket == "1") {
-        $ket = "koosoong";
-        $sqlsel1 = "select * from temp_placement where id_periode='$idperiode' and nrp='$nrp2'";
-        $result3 = $conn->query($sqlsel1);
-        while ($row3 = $result3->fetch_assoc()) {
-            $nrp3 = $row3["nrp"];
-            $nama3 = $row3["nama_mhs"];
-            $nilai3 = $row3["nilai_ptest"];
-            $level3 = $row3["ptest_level"];
-
-            $sqlins1 = "INSERT INTO placement(id_ptest,id_periode,nrp,nilai_ptest,ptest_level) VALUES (null,'$idperiode','$nrp3','$nilai3','$level3')";
-            if ($conn->query($sqlins1)) {
-                $ket = "koosoong";
-            }
-            else{
-                $ket = "gagal"; //gagal
-            } 
-        }
-    }
-    else{
-        $sqlsel2 = "select * from temp_placement where id_periode='$idperiode' and nrp!='$nrp2'";
-        $result4 = $conn->query($sqlsel2);
-        while ($row4 = $result4->fetch_assoc()) {
-            $nrp4 = $row4["nrp"];
-            $nama4 = $row4["nama_mhs"];
-            $nilai4 = $row4["nilai_ptest"];
-            $level4 = $row4["ptest_level"];
-
-            $sqlins2 = "INSERT INTO placement(id_ptest,id_periode,nrp,nilai_ptest,ptest_level) VALUES (null,'$idperiode','$nrp4','$nilai4','$level4')";
-            if ($conn->query($sqlins2)) {
-                $ket = "isi";
-            }
-            else{
-                $ket = "gagal"; //gagal
-            } 
-        }
-    }*/
-
-    
-
-    // //insert ke mhs dulu
-    
-    // $sql = "select * from placement where count(nrp) > 1";
-    // if ($result = mysqli_query($conn, $sql)) {
-    //     //simpan semua id kelas pada $set
-    //     for ($set = array (); $row = $result->fetch_assoc(); $set[] = $row['nrp']);
-    //     print_r($set);
-    //}
     echo $ket;
 
     $conn->close();
@@ -584,13 +428,12 @@ if($_POST["jenis"]=="jmdatakembarpt"){
     HAVING x >1";
 
     if ($result = mysqli_query($conn, $sql)) {
-        //     //simpan semua id kelas pada $set
+        
         for ($set = array (); $row = $result->fetch_assoc(); $set[] = $row['id_ptest']);
         print_r($set);
 
-        //update nama kelas -- generate ulang 
-        for ($i=0; $i <count($set) ; $i++) { 
         
+        for ($i=0; $i <count($set) ; $i++) { 
             $sql2 = "update placement set status_kembar='1' where id_ptest='$set[$i]' and id_periode='$idperiode'";
             if ($conn->query($sql2)) {
                 $ket = "berhasil ubah status placement";
@@ -603,5 +446,6 @@ if($_POST["jenis"]=="jmdatakembarpt"){
     $conn->close();
 
 }
+
 
 ?>

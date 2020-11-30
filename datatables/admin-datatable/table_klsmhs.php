@@ -19,7 +19,7 @@ LEFT JOIN user u
 ON u.username = ks.dosen
 LEFT JOIN ruang_kelas rk
 ON rk.id_ruangkelas = ks.id_ruangkelas
-WHERE k.id_periode='$idperiode' and (k.nrp LIKE '%".$search."%' OR m.nama_mhs LIKE '%".$search."%')";
+WHERE k.id_periode='$idperiode' and k.status_klsmhs='1' and (k.nrp LIKE '%".$search."%' OR m.nama_mhs LIKE '%".$search."%')";
 
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 $order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"

@@ -116,9 +116,8 @@
                                 <th style="display:none">Id</th>
                                 <th>Nrp</th>
                                 <th>Nama</th>
-                                <th style="display:none">Level</th>
-                                <th>Kelas</th>
-                                <th>Detail</th>
+                                <th>Level/Kelas</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,85 +133,51 @@
     </div> <!--end of card body -->
 </div> <!--end of card shadow -->
 
-<!-- Modal atur dosen/jam/kuota kelas ecc  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal atur pindah kelas  -->
+<div class="modal fade" id="modal_pindahkelas_level" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="title_namakelas"></h5>
             <h6 id="title_idkelas"></h6>
             <h6 id="title_table"></h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
           <form role="form">
-                <table class="table table-borderless table-md text-right">
-                    <tbody>
-                        <tr>
-                            <td scope="row">Pilih Dosen : </td>
-                            <td class="text-left">
-                              <select class="form-control" name="" id="all_dosen" aria-describedby="help_alldosen">
-                              
-                              </select>
-                              <small id="help_alldosen" class="form-text text-muted"></small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Pilih Hari : </td>
-                            <td class="text-left">
-                            <select class="form-control" name="" id="pilihhari" aria-describedby="help_pilihhari" placeholder="">
-                                <option value="-1">pilih hari</option>
-                                <option value="Senin">Senin</option>
-                                <option value="Selasa">Selasa</option>
-                                <option value="Rabu">Rabu</option>
-                                <option value="Kamis">Kamis</option>
-                                <option value="Jumat">Jumat</option>
-                            </select>
-                            <small id="help_pilihhari" class="form-text text-muted"></small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Pilih Ruang : </td>
-                            <td class="text-left">
-                              <select class="form-control" name="" id="all_ruang" aria-describedby="help_allruang" onchange="ruang_onchange(this.value)">
-                              
-                              </select>
-                              <small id="help_allruang" class="form-text text-muted"></small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Jam Awal : </td>
-                            <td class="text-left">
-                            <input class="form-control" type="time" value="06:30" id="jamawal">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Jam Akhir : </td>
-                            <td class="text-left">
-                            <input class="form-control" type="time" value="08:00" id="jamakhir">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Kuota : </td>
-                            <td class="text-left">
-                                <input type="number" min="0" max="1000" class="form-control-sm" name="" id="kuota" aria-describedby="help_kuota" placeholder="" onchange="kuota_onchange(this.value)"> 
-                                <small id="help_kuota" class="form-text text-muted"></small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
-            </form>
-            
+                    <label id="statustable" style="display:none" ></label>
+                    <label id="idklsmhs"></label>
+                    <table class="table table-borderless table-md text-right">
+                        <tbody>
+                            <tr>
+                                <td scope="row">NRP : </td>
+                                <td class="text-left" id="crnrp"></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Nama : </td>
+                                <td class="text-left" id="crnama"></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Level/Kelas: </td>
+                                <td>
+                                <select name="select" id="levelkls_select" class="form-control"  aria-describedby="help_pilihperiode">                                  
+                                </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
           </div>
           <div class="modal-footer">
-            <button id="btn_updatekelas" type="button" class="btn btn-primary" onclick="updatekelasini()" >Save changes</button>
+            <label id="update_warning"> </label>
+            <button id="btn_updatekelas" type="button" class="btn btn-primary" onclick="updateini()" >Save changes</button>
           </div>
         </div>
       </div>
     </div>
-    <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
+    <!-- end of Modal atur pindah kelas  -->
 
 <script>
 //saat menekan tombol simpan periode
@@ -228,6 +193,7 @@ function  simpan_periode() {
         $('#cardform1, #cardform2, #formaturstandard').show();
         //$("#cardform3").show();
         datatable_tempkelas_mhs();
+        
     }
     
 }
@@ -272,6 +238,7 @@ function importfileada() {
                         $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
                         window.location.href="#table_pwecc";
                         console.log(response);
+                        
 
                     } else {
                         console.log(response);
@@ -313,6 +280,7 @@ function importfilenone() {
                     $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
                     window.location.href="#table_pwecc";
                     console.log(response);
+                    
 
                 } else {
                     console.log(response);
@@ -330,6 +298,7 @@ function datatable_tempkelas_mhs() {
     table = $('#table_pwecc').DataTable( 
     {
         destroy:true,
+        "responsive":true,
             "processing":true,
             "language": {
             "lengthMenu": "Tampilkan _MENU_ data per Halaman",
@@ -378,10 +347,27 @@ function datatable_tempkelas_mhs() {
             },
             {"data":"ruang_kode"},
             ],
+        
             
     }) 
     //end of datatble list barang
 }
+
+function jmdatakembarpt() {
+    var periode = $("#periode").val();
+    $.post(
+        "../ajaxes/a_klsmhs.php", {
+            jenis: "jmdatakembarpt",
+            idperiode:periode,
+        },
+        function(data) {
+            // console.log(data);
+            // $("#jmdatakembarpt").text(data);
+            $('#table_klsmhs').DataTable().ajax.reload(); //reload ajax datatable 
+        }
+    );
+}
+
 
 function simpan_importmhs() {
     var periode = $("#periode").val();
@@ -398,7 +384,7 @@ function simpan_importmhs() {
 }
 
 //lihat mahasiswa dan kelasnya
-function  btn_cariperiode() {
+function btn_cariperiode() {
     console.log("button cari");
     var periode = $("#periode_lihatkelas").val();
     console.log(periode);
@@ -408,17 +394,72 @@ function  btn_cariperiode() {
     else{
         $("#help_pilihperiode2").text("");
         datatable_table_klsmhs();
+        
     }
 }
 
+function format ( d ) {
+        // `d` is the original data object for the row
+        var jenis_kelamin = "";
+        var btn="";
+        var ket1 = "pindahkelas";
+        var ket2 = "pindahlevel";
+        var status = d.status_klsmhs;
+        var kembar = d.status_kembar;
+        if (status == 1) {
+            status = "Aktif";
+            if (kembar == 1) {
+                btn = '<td>'+   
+                '<small>**Silakan hapus mahasiswa ini karena data sebelumnya sudah ada</small><br>' +
+                '</td>';
+            }
+            else{
+                btn = '<td>'+ 
+                    '<button onclick="load(\'' + d.id_klsmhs + '\',\'' + ket1 + '\')" type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#modal_pindahkelas_level"><i class="fa fa-dot-circle-o"></i> Pindah kelas </button>' +
+                    '<small>*Pilih tombol Pindah kelas untuk melakukan pindah kelas</small><br>'+
+                    '<small>**Pilih tombol Pindah level untuk melakukan pindah level</small><br>' +
+                '</td>';
+            }
+        }
+        else{
+            status = "Tidak Aktif";
+        }
+        
+            $tampil = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width:100%;">'+
+            
+            '<tr>'+
+                '<td>Level/Kelas</td>'+
+                '<td>'+d.level_ecc + '/' + d.nama_kelas +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Hari/Jam/Ruang</td>'+
+                '<td>'+d.hari + '/ ' + d.jam_awal + '-' + d.jam_akhir + '/ ' + d.nama_ruang +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Status</td>'+
+                '<td> <label>' + status+' </label> </td>' +
+            '</tr>'+
+            '<tr>'+
+                '<td></td>'+
+                btn +
+            
+            '</tr>'+
+        '</table>';
+        
+        return $tampil;
+    }
+
+
 function datatable_table_klsmhs() {
+    jmdatakembarpt();
     var periode = $("#periode_lihatkelas").val();
     //datatable list barang
     var table= "";
     var groupColumn = 4;
     table = $('#table_klsmhs').DataTable( 
     {
-        destroy:true,
+            destroy:true,
+            "responsive":true,
             "processing":true,
             "language": {
             "lengthMenu": "Tampilkan _MENU_ data per Halaman",
@@ -438,15 +479,12 @@ function datatable_table_klsmhs() {
             "ordering":true, //set true agar bisa di sorting
             "deferRender":true,
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
-            "order": [[1, 'asc']],
+            "order": [[3, 'asc']],
             "ajax":{
                 "url":"../datatables/admin-datatable/table_klsmhs.php",
                 "type":"POST",
                 "data":{"periode":periode},
             },
-            "columnDefs": [
-                { "visible": false, "targets": groupColumn }
-            ],
             "columns":[
             {
                 "class":          "details-control",
@@ -463,8 +501,13 @@ function datatable_table_klsmhs() {
             {"data":"nrp"},
             {"data":"nama_mhs"
             },
-            {"data":"level_ecc"},
-            {"data":"nama_kelas"},
+            {"data":"level_ecc",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    return row.level_ecc + "/" + row.nama_kelas;
+                }
+            },
             {"data":"status_klsmhs",
                 "render": function (data, type, row) { 
                     var idklsmhs = row.id_klsmhs; 
@@ -472,34 +515,34 @@ function datatable_table_klsmhs() {
                     var status = row.status_klsmhs;
                     
                     var btn="";
-                    var btnubah = "<button onclick=\"ubah_kelas(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>";
-                    if (status == 1) {
+                    //var btn1="";
+                    //var btnubah = "<button onclick=\"ubah_kelas(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>";
+                    if (status == 1) //status aktif
+                    {
                         btn = "<button onclick=\"nonaktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+
+                        if (row.status_kembar == 1) {
+                        btn = "<button onclick=\"hapus_klsmhs(\'"+idklsmhs+"\',\'"+row.nrp+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        }
                     }
-                    else{
+                    else if (status == 0) //status nonaktif
+                    {
                         btn = "<button onclick=\"aktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Aktifkan</button>";
                     }
-                    return btnubah + btn;
+                    
+                    return btn;
                     
                 }
             },
             
             ],
-            "drawCallback": function ( settings ) {
-            var api = this.api();
-            var rows = api.rows( {page:'current'} ).nodes();
-            var last=null;
- 
-            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-                if ( last !== group ) {
-                    $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="6">'+group+'</td></tr>'
-                    );
- 
-                    last = group;
+            
+            "rowCallback": function( row, data, index ) {
+                if ( data.status_kembar == "1" )
+                {
+                    $('td', row).css('background-color', '#f0aaaa');
                 }
-            } );
-        }
+            }
             
     });
 
@@ -541,35 +584,6 @@ function datatable_table_klsmhs() {
     //end of datatble list barang
 }
 
-function format ( d ) {
-        // `d` is the original data object for the row
-        var jenis_kelamin = "";
-        var status = d.status_klsmhs;
-        if (status == 1) {
-            status = "Aktif";
-        }
-        else{
-            status = "Tidak Aktif";
-        }
-        
-            $tampil = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width:100%;">'+
-            
-            '<tr>'+
-                '<td>Level/Kelas</td>'+
-                '<td>'+d.level_ecc + '/' + d.nama_kelas +'</td>'+
-            '</tr>'+
-            '<tr>'+
-                '<td>Hari/Jam/Ruang</td>'+
-                '<td>'+d.hari + '/ ' + d.jam_awal + '-' + d.jam_akhir + '/ ' + d.nama_ruang +'</td>'+
-            '</tr>'+
-            '<tr>'+
-                '<td>Status</td>'+
-                '<td> <label>' + status+' </label> </td>' +
-            '</tr>'+
-        '</table>';
-        
-        return $tampil;
-    }
     //end of function detail di list customer
 
     function nonaktikfkan_klsmhs(idklsmhs,table) {
@@ -597,5 +611,89 @@ function format ( d ) {
             
         });
     }
+
+    function load(id_klsmhs,ket) {
+        console.log(ket);
+        $("#idklsmhs").text(id_klsmhs);
+        //fill the ecc level class
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            jenis:"get_levelkls_mhs", 
+            id_klsmhs :id_klsmhs,
+            ket:ket,
+        },
+        function(data){
+            $("#levelkls_select").html(data);
+        });
+
+        //fill the data of the mahasiswa
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            jenis:"cek_datamodal_untuknama", 
+            id_klsmhs :id_klsmhs,
+        },
+        function(data){
+            console.log(data["nama_mhs"]);
+            $("#crnrp").html(data["nrp"]);
+            $("#crnama").html(data["nama_mhs"]);
+            
+            //going to select his/her class in combobox
+            $.post("../ajaxes/a_klsmhs.php",
+            {
+                jenis:"cek_datamodal_untukkelas", 
+                id_klsmhs :id_klsmhs,
+            },
+            function(data){
+                $("#levelkls_select").val(data["id_kelas"]);
+            });
+        });
+    }
+
+    function hapus_klsmhs(idklsmhs,nrp) {
+        var periode = $("#periode_lihatkelas").val();
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            jenis:"hapus_klsmhskembar", 
+            id_klsmhs :idklsmhs,
+            nrp:nrp,
+            id_periode:periode,
+        },
+        function(data){
+            console.log(data);
+            $("#table_klsmhs").DataTable().ajax.reload(); //reload ajax datatable
+        });
+    }
+
+    
+
+    function updateini() {
+        var idklsmhs = $("#idklsmhs").text();
+        var nrp = $("#crnrp").val();
+        var kelassel = $("#levelkls_select").val();
+        
+
+        $.post("../ajaxes/a_klsmhs.php",
+        {
+            jenis:"update_btnpindah", 
+            idklsmhs:idklsmhs,
+            kelassel:kelassel,
+            nrp:nrp,
+        },
+        function(data){
+            //var text = "Berhasil pindah ke "
+            $("#update_warning").text("Berhasil pindah kelas").css("color","blue");
+            $("#table_klsmhs").DataTable().ajax.reload(); //reload ajax datatable
+        });
+
+    }
+
+    function resetmodal() {
+    $("#update_warning").text("");
+}
+function close_btn() {
+    resetmodal();
+}
+
+
 
 </script>
