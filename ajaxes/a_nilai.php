@@ -68,4 +68,16 @@ if ($_POST["jenis"] == "uts") {
         }
     }
    
+}else if ($_POST["jenis"]=="update") {
+  $idnilai=$_POST["idnilai"];
+  $uas=$_POST["uas"];
+  $uts=$_POST["uts"];
+
+  $conn=getConn();
+
+  $update = "update nilai set nilai_uas='$uas',nilai_uts='$uts' where id_nilai='$idnilai' ";
+  $updateres = mysqli_query($conn, $update);
+
+  echo $updateres;
+
 }

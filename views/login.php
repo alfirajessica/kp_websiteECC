@@ -118,11 +118,12 @@
   }
 
   function forgot() {
-    $.post("../ajaxes/a_login.php", {
-        kind: "forgot",
-    }, function(data) {
-        console.log(data);
-    });
+    window.location.href="forgot.php";
+    // $.post("../ajaxes/a_login.php", {
+    //     kind: "forgot",
+    // }, function(data) {
+    //     console.log(data);
+    // });
   }
 
 </script>

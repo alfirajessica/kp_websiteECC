@@ -149,6 +149,7 @@
             </div>
             <div class="modal-body">
                 <table>
+                    <input type="hidden" id="t_nilai">
                     <tr>
                         <td><strong>Nrp</strong></td>
                         <td><input class='form-control' type="text" id="t_nrp"></td>
@@ -170,7 +171,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="simpan()" data-dismiss="modal">Simpan</button>
             </div>
         </div>
     </div>
@@ -308,6 +309,7 @@
                         console.log(response);
                         if (response.includes("success")) {
                             alert("Berhasil importfileada data !");
+                            $("#example").DataTable().ajax.reload(); 
                         } else {
                             console.log(response);
                             alert(response);
@@ -339,6 +341,7 @@
                         console.log(response);
                         if (response.includes("success")) {
                             alert("Berhasil import file ada data !");
+                            $("#example").DataTable().ajax.reload(); 
                         } else {
                             console.log(response);
                             alert(response);
@@ -359,6 +362,7 @@
             function(data) {
                 console.log(data);
                 var arr = JSON.parse(data);
+                $("#t_nilai").val(arr.id_nilai);
                 $("#t_nrp").val(arr.nrp);
                 $("#t_nama").val(arr.nama_mhs);
                 $("#t_uts").val(arr.nilai_uts);
@@ -372,4 +376,19 @@
         window.location.href = '../PHPexcel/templeteutsuas.php?kelas=' + kelas;
         $("#btnim").attr("style", "display:block");
     }
+
+    function simpan(){
+        $.post("../ajaxes/a_nilai.php", {
+                jenis: "update",
+                idnilai:$("#t_nilai").val(),
+                uts:$("#t_uts").val(),
+                uas:$("#t_uas").val()
+
+            },
+            function(data) {
+                console.log(data);
+                $("#example").DataTable().ajax.reload(); 
+            });
+    }    
+
 </script>

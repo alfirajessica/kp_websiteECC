@@ -50,7 +50,7 @@ if ($_POST["kind"] == "login") {
     }
 }else if($_POST["kind"]=="forgot"){
     $body="test";
-    $sendto="arnold.pramudita.wewe@gmail.com";
+    $sendto=$_POST["email"];
     $namauser="";
 
     kirimemail($body,$sendto,$namauser);
