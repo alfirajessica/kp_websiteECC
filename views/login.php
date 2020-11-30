@@ -56,7 +56,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                <a href="#" class="text-light"><small>Lupa password?</small></a>
+                <a onclick="forgot()" class="text-light"><small>Lupa password?</small></a>
                 </div>
                 
                 <div class="text-center">
@@ -113,7 +113,16 @@
         console.log(data);
     });
 
+    
 
+  }
+
+  function forgot() {
+    $.post("../ajaxes/a_login.php", {
+        kind: "forgot",
+    }, function(data) {
+        console.log(data);
+    });
   }
 
 </script>

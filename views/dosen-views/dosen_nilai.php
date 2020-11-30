@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            *<a onclick="downloadtemp()" target="_blank"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
+            *<a onclick="downloadtemp()" target="_blank" class="text-primary"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
         </div>
 
 
@@ -76,6 +76,37 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+  <div class="card-header">
+    Tambah Mahasiswa
+  </div>
+  <div class="card-body">
+   <table>
+       <tr>
+           <td><strong>Nrp</strong></td>
+           <td><input type="text" class="form-control" id="a_nrp"></td>
+       </tr>
+       <tr>
+           <td><strong>Nama</strong></td>
+           <td><input type="text" class="form-control" id="a_nama"></td>
+       </tr>
+       <tr>
+           <td><strong>Kelas</strong></td>
+           <td>  <div class="form-group">
+            <select class="form-control" name="" id="add_kelas" onchange="search()" aria-describedby="helpId" placeholder="">
+                <option>ECC Level 1 - Kelas A</option>
+                <option>ECC Level 1 - Kelas B</option>
+            </select>
+            
+        </div>
+</td>
+       </tr>
+       
+   </table>
+    <a href="#" class="btn btn-primary">Tambahkan</a>
+  </div>
+</div>
 
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
@@ -168,6 +199,7 @@
             function(data) {
                 console.log("kelas:" + data);
                 $("#kelas").html(data);
+                $("#add_kelas").html(data);
 
             });
     }
