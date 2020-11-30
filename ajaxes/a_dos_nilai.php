@@ -9,15 +9,21 @@ if($_POST["jenis"]=="get_kelasdos"){
     $kal="";
     $arr=unserialize($_SESSION["user"]);
     $dosen= $arr->get_u();
-    $stmt=$conn->prepare("select * from kelas where dosen='$dosen'");
+    $periode=$_POST["periode"];
+    $stmt=$conn->prepare("select * from kelas where dosen='$dosen' and id_periode='$periode' ");
     $stmt->execute();
     $res=$stmt->get_result();
-    while($row=$res->fetch_assoc()){
-        $level=$row["level_ecc"];
-        $idkelas=$row["id_kelas"];
-        $namakelas=$row["nama_kelas"];
-        $kal.="<option value='$idkelas' >"."ECC $level - Kelas $namakelas </option>";
+    if ($res->num_rows>0) {
+        while($row=$res->fetch_assoc()){
+            $level=$row["level_ecc"];
+            $idkelas=$row["id_kelas"];
+            $namakelas=$row["nama_kelas"];
+            $kal.="<option value='$idkelas' >ECC $level - Kelas $namakelas </option>";
+        }
+    }else{
+        $kal.="<option value='-1' >~Pilih kelas yang ada~ </option>";
     }
+   
     echo $kal;
 }else if($_POST["jenis"]=="getinfo"){
     $nrp=$_POST["nrp"];

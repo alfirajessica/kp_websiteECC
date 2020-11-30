@@ -2,7 +2,7 @@
     <form action="">
         <div class="form-group">
             <label for="">Pilih Periode</label>
-            <select name="select" id="periode" onchange="search()" class="form-control" aria-describedby="help_pilihperiode">
+            <select name="select" id="periode" onchange="isikelas()" class="form-control" aria-describedby="help_pilihperiode">
             </select>
             <small id="helpId" class="form-text text-muted">Help text</small>
         </div>
@@ -77,36 +77,38 @@
         </div>
     </div>
 
-    <div class="card">
-  <div class="card-header">
-    Tambah Mahasiswa
-  </div>
-  <div class="card-body">
-   <table>
-       <tr>
-           <td><strong>Nrp</strong></td>
-           <td><input type="text" class="form-control" id="a_nrp"></td>
-       </tr>
-       <tr>
-           <td><strong>Nama</strong></td>
-           <td><input type="text" class="form-control" id="a_nama"></td>
-       </tr>
-       <tr>
-           <td><strong>Kelas</strong></td>
-           <td>  <div class="form-group">
-            <select class="form-control" name="" id="add_kelas" onchange="search()" aria-describedby="helpId" placeholder="">
-                <option>ECC Level 1 - Kelas A</option>
-                <option>ECC Level 1 - Kelas B</option>
-            </select>
-            
+    <!-- <div class="card">
+        <div class="card-header">
+            Tambah Mahasiswa
         </div>
-</td>
-       </tr>
-       
-   </table>
-    <a href="#" class="btn btn-primary">Tambahkan</a>
-  </div>
-</div>
+
+        <div class="card-body">
+            <table>
+                <tr>
+                    <td><strong>Nrp</strong></td>
+                    <td><input type="text" class="form-control" id="a_nrp"></td>
+                </tr>
+                <tr>
+                    <td><strong>Nama</strong></td>
+                    <td><input type="text" class="form-control" id="a_nama"></td>
+                </tr>
+                <tr>
+                    <td><strong>Kelas</strong></td>
+                    <td>
+                        <div class="form-group">
+                            <select class="form-control" name="" id="add_kelas" onchange="search()" aria-describedby="helpId" placeholder="">
+                                <option>ECC Level 1 - Kelas A</option>
+                                <option>ECC Level 1 - Kelas B</option>
+                            </select>
+
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+            <a href="#" class="btn btn-primary">Tambahkan</a>
+        </div>
+    </div> -->
 
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
@@ -119,8 +121,6 @@
                     <th scope="col" class="sort" data-sort="budget">UAS</th>
                     <th scope="col" class="sort" data-sort="budget">NA</th>
                     <th scope="col" class="sort" data-sort="budget">Aksi</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -176,9 +176,7 @@
 
 <script>
     $(document).ready(function() {
-        isikelas();
         periode();
-        datatable_lihatsemuamahasiswa();
     });
 
     function periode() {
@@ -187,7 +185,7 @@
             },
             function(data) {
                 $("#periode").html(data);
-
+                isikelas();
             });
     }
 
@@ -195,12 +193,13 @@
     function isikelas() {
         $.post("../ajaxes/a_dos_nilai.php", {
                 jenis: "get_kelasdos",
+                periode:$("#periode").val()
             },
             function(data) {
                 console.log("kelas:" + data);
                 $("#kelas").html(data);
                 $("#add_kelas").html(data);
-
+                    datatable_lihatsemuamahasiswa();
             });
     }
 
@@ -236,7 +235,7 @@
                 "type": "POST",
                 "data": {
                     "periode": periode,
-                    "kelas": kelas
+                    "kelas": kelas 
                 },
             },
             "deferRender": true,
@@ -264,12 +263,7 @@
 
                     "render": function(data, type, row) {
                         var nrp = row.nrp;
-
-
                         return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' onclick=\"isiubah('" + row.nrp + "')\" >Edit</button>";
-
-
-
                     }
                 }
             ]
@@ -340,8 +334,9 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+                        console.log(response);
                         if (response.includes("success")) {
-                            alert("Berhasil importfileada data !");
+                            alert("Berhasil import file ada data !");
                         } else {
                             console.log(response);
                             alert(response);

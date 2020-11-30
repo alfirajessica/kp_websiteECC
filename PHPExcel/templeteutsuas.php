@@ -39,8 +39,9 @@
     ?>
 
 
-    <table>
+    <table border='1'>
         <tr>
+            <th>IDNILAI</th>
             <th>NRP</th>
             <th>NAMA</th>
             <th>NILAI(UTS/UAS)</th>
@@ -54,9 +55,11 @@
         $res = $stmt->get_result();
         while ($row = $res->fetch_assoc()) {
             $nrp=$row["nrp"];
+            $idnilai=$row["id_nilai"];
             $nama=$row["nama_mhs"];
             $kal.="
             <tr>
+                <td><strong>$idnilai</strong></td>
                 <td>$nrp</td>
                 <td>$nama</td>
                 <td></td>
