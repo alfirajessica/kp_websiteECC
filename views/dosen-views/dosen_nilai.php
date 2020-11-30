@@ -18,8 +18,10 @@
 
         <div class="form-group">
             <!-- <button type="button" class="btn btn-secondary">Import Excel</button> -->
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuts">Import UTS</button>
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button>
+            <div id="btnim" style="display:none">
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuts">Import UTS</button>
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button>
+            </div>
         </div>
 
         <div class="form-group">
@@ -193,13 +195,13 @@
     function isikelas() {
         $.post("../ajaxes/a_dos_nilai.php", {
                 jenis: "get_kelasdos",
-                periode:$("#periode").val()
+                periode: $("#periode").val()
             },
             function(data) {
                 console.log("kelas:" + data);
                 $("#kelas").html(data);
                 $("#add_kelas").html(data);
-                    datatable_lihatsemuamahasiswa();
+                datatable_lihatsemuamahasiswa();
             });
     }
 
@@ -235,7 +237,7 @@
                 "type": "POST",
                 "data": {
                     "periode": periode,
-                    "kelas": kelas 
+                    "kelas": kelas
                 },
             },
             "deferRender": true,
@@ -368,5 +370,6 @@
     function downloadtemp() {
         var kelas = $("#kelas").val();
         window.location.href = '../PHPexcel/templeteutsuas.php?kelas=' + kelas;
+        $("#btnim").attr("style", "display:block");
     }
 </script>
