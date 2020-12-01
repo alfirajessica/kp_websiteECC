@@ -5,6 +5,7 @@ $conn=getConn();
 if($_POST["jenis"]=="cek_dataditable_mahasiswa"){
     $idperiode = $_POST["idperiode"];
     $ket = "";
+    $kets="";
     $kode="";
 
     $sql1 = "select * from tempkelas_mhs where id_periode='$idperiode'";
@@ -47,7 +48,13 @@ if($_POST["jenis"]=="cek_dataditable_mahasiswa"){
         }else {
             $ket = "Gagal Aktifkan!";
         }
-        
+
+        $sqlinsnilai = "INSERT INTO nilai(id_nilai,id_periode,nrp,id_kelas,nilai_uts,nilai_uas,nilai_akhir,grade) VALUES (null,'$idperiode','$nrp','$idkelas','0','0','0','-')";
+        if ($conn->query($sqlinsnilai)) {
+            $kets = "Berhasil masukkan ke nilai";
+        }else {
+            $kets = "Gagal masukkan ke nilai";
+        }
 
         //delete table tempkelas_mhs
         $deltempkls = "delete from tempkelas_mhs where id_periode='$idperiode'";
@@ -62,7 +69,7 @@ if($_POST["jenis"]=="cek_dataditable_mahasiswa"){
     
     
     
-    echo $ket;
+    echo $kets;
     $conn->close();
 
 }
