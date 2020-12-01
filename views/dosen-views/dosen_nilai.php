@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label for="">Pilih Level - Kelas</label>
-            <select class="form-control" name="" id="kelas" onchange="search()" aria-describedby="helpId" placeholder="">
+            <select class="form-control" name="" onchange="klschange()" id="kelas" aria-describedby="helpId" placeholder="">
                 <option>ECC Level 1 - Kelas A</option>
                 <option>ECC Level 1 - Kelas B</option>
             </select>
@@ -23,7 +23,6 @@
                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button>
             </div>
         </div>
-
         <div class="form-group">
             *<a onclick="downloadtemp()" target="_blank" class="text-primary"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
         </div>
@@ -166,6 +165,14 @@
                         <td><strong>Uas</strong></td>
                         <td><input class='form-control' type="text" id="t_uas"></td>
                     </tr>
+                    <tr>
+                        <td><strong>Nilai akhir</strong></td>
+                        <td><input class='form-control' type="text" onkey="getgrade()" id="t_na"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grade</strong></td>
+                        <td><input class='form-control' type="text" id="t_grade"></td>
+                    </tr>
                 </table>
 
             </div>
@@ -180,7 +187,11 @@
 <script>
     $(document).ready(function() {
         periode();
+
+       
     });
+
+   
 
     function periode() {
         $.post("../ajaxes/a_periode.php", {
@@ -265,8 +276,8 @@
                 }, {
 
                     "render": function(data, type, row) {
-                        var nrp = row.nrp;
-                        return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' onclick=\"isiubah('" + row.nrp + "')\" >Edit</button>";
+
+                        return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' onclick=\"isiubah('" + row.id_nilai + "')\" >Edit</button>";
                     }
                 }
             ]
@@ -287,6 +298,8 @@
         var uas = $("#uas")[0].files[0];
         $("#file_uas").html(uas.name);
     });
+
+
 
     function imuts() {
         var fd = new FormData();
@@ -309,7 +322,7 @@
                         console.log(response);
                         if (response.includes("success")) {
                             alert("Berhasil importfileada data !");
-                            $("#example").DataTable().ajax.reload(); 
+                            $("#example").DataTable().ajax.reload();
                         } else {
                             console.log(response);
                             alert(response);
@@ -341,7 +354,7 @@
                         console.log(response);
                         if (response.includes("success")) {
                             alert("Berhasil import file ada data !");
-                            $("#example").DataTable().ajax.reload(); 
+                            $("#example").DataTable().ajax.reload();
                         } else {
                             console.log(response);
                             alert(response);
@@ -356,7 +369,7 @@
     function isiubah(params) {
         $.post("../ajaxes/a_dos_nilai.php", {
                 jenis: "getinfo",
-                nrp: params,
+                idnilai: params,
                 kelas: $("#kelas").val()
             },
             function(data) {
@@ -367,6 +380,8 @@
                 $("#t_nama").val(arr.nama_mhs);
                 $("#t_uts").val(arr.nilai_uts);
                 $("#t_uas").val(arr.nilai_uas);
+                $("#t_na").val(arr.nilai_akhir);
+                $("#t_grade").val(arr.grade);
 
             });
     }
@@ -377,18 +392,29 @@
         $("#btnim").attr("style", "display:block");
     }
 
-    function simpan(){
+    function simpan() {
         $.post("../ajaxes/a_nilai.php", {
                 jenis: "update",
-                idnilai:$("#t_nilai").val(),
-                uts:$("#t_uts").val(),
-                uas:$("#t_uas").val()
+                idnilai: $("#t_nilai").val(),
+                uts: $("#t_uts").val(),
+                uas: $("#t_uas").val(),
+                na: $("#t_na").val(),
+                grade: $("#t_grade").val()
 
             },
             function(data) {
                 console.log(data);
-                $("#example").DataTable().ajax.reload(); 
+                $("#example").DataTable().ajax.reload();
             });
-    }    
+    }
+
+    function klschange() {
+        datatable_lihatsemuamahasiswa();
+    }
+
+    function getgrade(){
+        var na = $("#t_na").val();
+        $("#t_grade").html(na+"tt");
+    }
 
 </script>

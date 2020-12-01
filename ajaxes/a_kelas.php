@@ -310,15 +310,21 @@ if($_POST["jenis"]=="nonaktifkan_kls"){
 if($_POST["jenis"]=="get_kelas"){
     $kal="";
     $conn=getConn();
-    $stmt=$conn->prepare("select * from kelas ");
+    $idperiode=$_POST["idperiode"];
+    $stmt=$conn->prepare("select * from kelas where id_periode='$idperiode' ");
     $stmt->execute();
     $res=$stmt->get_result();
-    while($row=$res->fetch_assoc()){
-        $level=$row["level_ecc"];
-        $idkelas=$row["id_kelas"];
-        $namakelas=$row["nama_kelas"];
-        $kal.="<option value='$idkelas' >"."ECC $level - Kelas $namakelas </option>";
+    if ($res->num_rows>0) {
+        while($row=$res->fetch_assoc()){
+            $level=$row["level_ecc"];
+            $idkelas=$row["id_kelas"];
+            $namakelas=$row["nama_kelas"];
+            $kal.="<option value='$idkelas' >"."ECC $level - Kelas $namakelas </option>";
+        }
+    }else{
+        $kal.="<option value='-1' >~ Tidak ada kelas di periode ini~</option>";
     }
+   
     echo $kal;
 }
 

@@ -2,14 +2,14 @@
     <form action="">
         <div class="form-group">
             <label for="">Pilih Periode</label>
-            <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
+            <select name="select" id="periode" class="form-control" onchange="isikelas()" aria-describedby="help_pilihperiode">                                  
                 </select>
             <small id="helpId" class="form-text text-muted">Help text</small>
         </div>
 
         <div class="form-group">
             <label for="">Pilih Level - Kelas</label>
-                <select class="form-control" id="kelas" aria-describedby="helpId" placeholder="">
+                <select class="form-control" id="kelas" onchange="klschange()" aria-describedby="helpId" placeholder="">
                     <option>ECC Level 1 - Kelas A</option>
                     <option>ECC Level 1 - Kelas B</option>
                 </select>
@@ -40,33 +40,88 @@
     </div>
     <!-- end of tabel kelas yang tergenerate -->
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <input type="hidden" id="t_nilai">
+                    <tr>
+                        <td><strong>Nrp</strong></td>
+                        <td><input class='form-control' type="text" id="t_nrp"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nama</strong></td>
+                        <td><input class='form-control' type="text" id="t_nama"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uts</strong></td>
+                        <td><input class='form-control' type="text" id="t_uts"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uas</strong></td>
+                        <td><input class='form-control' type="text" id="t_uas"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nilai akhir</strong></td>
+                        <td><input class='form-control' type="text" onkey="getgrade()" id="t_na"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grade</strong></td>
+                        <td><input class='form-control' type="text" id="t_grade"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="simpan()" data-dismiss="modal">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
  $(document).ready(function() {
-        isikelas();
         periode();
-        datatable_lihatsemuamahasiswa();
     });
 
-    function periode() {
+
+ function periode() {
         $.post("../ajaxes/a_periode.php", {
                 jenis: "get_allperiode",
             },
             function(data) {
-                console.log(data);
                 $("#periode").html(data);
-
+                isikelas();
             });
+    }
+
+
+  
+
+    function klschange() {
+        datatable_lihatsemuamahasiswa();
     }
 
 
     function isikelas() {
         $.post("../ajaxes/a_kelas.php", {
                 jenis: "get_kelas",
+                idperiode:$("#periode").val()
             },
             function(data) {
                 console.log(data);
                 $("#kelas").html(data);
-
             });
     }
 
@@ -98,7 +153,7 @@
                 [0, 'asc']
             ], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
             "ajax": {
-                "url": "../datatables/admin-datatable/dt_nilaiadmin.php",
+                "url": "../datatables/dosen-datatable/dt_nilaidosen.php",
                 "type": "POST",
                 "data": {
                     "periode": periode,
@@ -126,12 +181,57 @@
                 },
                 {
                     "data": "na"
+                }, {
+
+                    "render": function(data, type, row) {
+
+                        return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal1' onclick=\"isiubah('" + row.id_nilai + "')\" >Edit</button>";
+                    }
                 }
+            ]
 
 
-            ],
+
 
 
         });
     }
+
+    
+    function isiubah(params) {
+        $.post("../ajaxes/a_dos_nilai.php", {
+                jenis: "getinfo",
+                idnilai: params,
+                kelas: $("#kelas").val()
+            },
+            function(data) {
+                console.log(data);
+                var arr = JSON.parse(data);
+                $("#t_nilai").val(arr.id_nilai);
+                $("#t_nrp").val(arr.nrp);
+                $("#t_nama").val(arr.nama_mhs);
+                $("#t_uts").val(arr.nilai_uts);
+                $("#t_uas").val(arr.nilai_uas);
+                $("#t_na").val(arr.nilai_akhir);
+                $("#t_grade").val(arr.grade);
+
+            });
+    }
+
+    function simpan() {
+        $.post("../ajaxes/a_nilai.php", {
+                jenis: "update",
+                idnilai: $("#t_nilai").val(),
+                uts: $("#t_uts").val(),
+                uas: $("#t_uas").val(),
+                na: $("#t_na").val(),
+                grade: $("#t_grade").val()
+
+            },
+            function(data) {
+                console.log(data);
+                $("#example").DataTable().ajax.reload();
+            });
+    }
+
 </script>
