@@ -24,6 +24,10 @@
     <link href='https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js' rel='stylesheet' type='text/css'>
     
 </head>
+<style>
+    .navbar{position: fixed;
+        width: 160px; }
+</style>
 
 <?php
     session_start();

@@ -46,7 +46,7 @@ if($_POST["jenis"]=="get_alldosen"){
     $conn=getConn();
     $sql1="select * from user where level='dosen' and status=1";
     $result1 = $conn->query($sql1);
-    $kal="<option value='-1' >pilih dosen</option>";
+    $kal="<option value='-1' disabled>Select lecturer</option>";
     if ($result1->num_rows > 0) {
         while ($row1 = $result1->fetch_assoc()) {
             $username=$row1["username"];

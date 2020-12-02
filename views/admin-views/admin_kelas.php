@@ -4,138 +4,137 @@
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Atur Kelas</a>
+                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Set the class</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Lihat Kelas</a>
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>See class</a>
                 </li>
             </ul>
             <!--end tabs -->
         </div>
     </div>
 
-
     <div class="card-body"> <!-- card body -->
         <!-- tab content -->
         <div class="tab-content" id="myTabContent">
             <!-- atur kelas -->
             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-    
-                <!-- form tambah kelas -->
-                <form role="form">
-
-                    <div class="form-group">
-                        <label for="">Periode</label>
-                        <div class="input-group mb-3">
-                        <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
-                        </select>
+                <div class="form-group">
+                    <label for="">Select Period</label>
+                    <div class="input-group mb-3">
+                        <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode"></select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Simpan</button>
+                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Search</button>
                         </div>
-                        </div>
-                        <small id="help_pilihperiode" class="form-text text-muted"></small>
                     </div>
-                    
-                    
-
-                    <div class="form-group">
-                        <label for="">Level</label>
-                        <select disabled class="form-control" id="leveldipilih" aria-describedby="helpId" placeholder="" >
-                        <option value="-1">pilih level</option>
-                        <option>Level 1</option>
-                        <option>Level 2</option>
-                        <option>Level 3</option>
-                        <option>Level 4</option>
-                        </select>
-                        <small id="help_level" class="form-text text-muted"></small>
-                    </div>
-
-                    <div class="form-group">
-                    <label for="">Banyak Kelas akan dibuka</label>
-                        <div class="input-group mb-3">
-                        <select disabled class="form-control" id="banyakkelas" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <option value="0">0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                        <div class="input-group-append">
-                            <button disabled class="btn btn-outline-primary" type="button" id="btn_generate" onclick="generate()" >Generate kelas</button>
-                        </div>
-                        </div>
-                        <small id="help_bykkelas" class="form-text text-muted"></small>
-                    </div>
-
-                </form>
-                <!-- end of form tambah kelas -->
-
-                <div class="form-group text-right">
-                    <button class="btn btn-outline-primary" type="button" onclick="aktifkan_allkelas()">Aktifkan semua kelas</button>
+                    <label id="help_pilihperiode" style="color:red;"></label>
                 </div>
-        
-                <div class="table-responsive">
-                    <table id="table1" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Level</th>
-                                <th>Kelas</th>
-                                <th>Jadwal</th>
-                                <th>Dosen</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- end of tabel kelas yang tergenerate -->
+                    
+                <div class="card" id="cardform1" style="display:none">
+                    <div class="card-header">
+                        <form>
+                            <div class="alert alert-info" role="alert"> Use this form to add new class</div>
+                            <div class="form-group"> <!-- form group row radio -->
+                                <label for="">Select Level</label>
+                                <select disabled class="form-control" id="leveldipilih" aria-describedby="helpId" placeholder="" >
+                                <option value="-1" disabled>Select Level</option>
+                                <option>Level 1</option>
+                                <option>Level 2</option>
+                                <option>Level 3</option>
+                                <option>Level 4</option>
+                                </select>
+                                <small id="help_level"></small>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="">Many classes will be opened</label>
+                                <div class="input-group mb-3">
+                                    <select disabled class="form-control" id="banyakkelas" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <option value="0">0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button disabled class="btn btn-success" type="button" id="btn_generate" onclick="generate()" >Generate Class</button>
+                                    </div>
+                                </div>
+                                <small id="help_bykkelas"></small>
+                            </div>
+                                
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card" id="cardform2" style="display:none">
+                    <div class="card-body">
+                        <div class="form-group text-right">
+                            <button class="btn btn-outline-primary" type="button" onclick="aktifkan_allkelas()">Activate all class</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table id="table1" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Level</th>
+                                    <th>Class Name</th>
+                                    <th>Schedule</th>
+                                    <th>Lecturer</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody> </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>                
             </div>
-            <!-- end of atur kelas -->
+            <!-- end of atur placement -->
 
-            <!-- lihat kelas -->
+            <!-- lihat hasil placement -->
             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                 <div class="form-group">
-                    <label for="">Pilih Periode</label>
+                    <label for="">Select Period</label>
                     <div class="input-group mb-3">
-                        <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
-                        </select>
+                        <select name="select" id="periode_lihatkelas"  class="form-control" > </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" onclick="btn_cari()">Cari</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="btn_cari()">Search</button>
                         </div>
                     </div>
-                    <small id="helpId" class="form-text text-muted">Help text</small>
                 </div>
 
-                <div class="form-group">
-                    <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+                <div class="card" id="cardform3" style="display:none">
+                    <div class="card-body">
+                        <div class="form-group">
+                        <button type="button" class="btn btn-secondary text-light" onclick="exportfile()">Export</button>
+                        </div>
+        
+                        <div class="table-responsive">
+                            <table id="table_kelasaktif" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Level</th>
+                                        <th>Class</th>
+                                        <th>Schedule</th>
+                                        <th>Lecturer</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tr>
+                                </thead>
+                                <tbody> </tbody>
+                            </table>
+                        </div>
+                        <!-- end of tabel kelas yang tergenerate -->
                     </div>
-
-                
-                <div class="table-responsive">
-                    <table id="table_kelasaktif" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Level</th>
-                                <th>Kelas</th>
-                                <th>Jadwal</th>
-                                <th>Dosen</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
                 </div>
-                <!-- end of tabel kelas yang tergenerate -->
-
-                
-            </div> <!-- end of lihat kelas -->
+            </div> <!-- end of hasil placement -->
         </div> <!-- end of tab content -->
     </div> <!--end of card body -->
 </div> <!--end of card shadow -->
@@ -157,7 +156,7 @@
           <table class="table table-borderless table-md text-right">
                     <tbody>
                         <tr>
-                            <td scope="row">Pilih Dosen : </td>
+                            <td scope="row">Lecturer : </td>
                             <td class="text-left">
                               <select class="form-control" name="" id="all_dosen" aria-describedby="help_alldosen">
                               
@@ -166,21 +165,21 @@
                             </td>
                         </tr>
                         <tr>
-                            <td scope="row">Pilih Hari : </td>
+                            <td scope="row">Day : </td>
                             <td class="text-left">
                             <select class="form-control" name="" id="pilihhari" aria-describedby="help_pilihhari" placeholder="">
-                                <option value="-1">pilih hari</option>
-                                <option value="Senin">Senin</option>
-                                <option value="Selasa">Selasa</option>
-                                <option value="Rabu">Rabu</option>
-                                <option value="Kamis">Kamis</option>
-                                <option value="Jumat">Jumat</option>
+                                <option value="-1" disabled>Select Day</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
                             </select>
                             <small id="help_pilihhari" class="form-text text-muted"></small>
                             </td>
                         </tr>
                         <tr>
-                            <td scope="row">Pilih Ruang : </td>
+                            <td scope="row">Room : </td>
                             <td class="text-left">
                               <select class="form-control" name="" id="all_ruang" aria-describedby="help_allruang" >
                               
@@ -189,19 +188,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td scope="row">Jam Awal : </td>
+                            <td scope="row">Start at : </td>
                             <td class="text-left">
                             <input class="form-control" type="time" value="06:30" id="jamawal">
                             </td>
                         </tr>
                         <tr>
-                            <td scope="row">Jam Akhir : </td>
+                            <td scope="row">End at : </td>
                             <td class="text-left">
                             <input class="form-control" type="time" value="08:00" id="jamakhir">
                             </td>
                         </tr>
                         <tr>
-                            <td scope="row">Kuota : </td>
+                            <td scope="row">Quota : </td>
                             <td class="text-left">
                                 <input type="number" min="0" max="1000" class="form-control-sm" name="" id="kuota" aria-describedby="help_kuota" placeholder="" onchange="kuota_onchange(this.value)"> 
                                 <small id="help_kuota" class="form-text text-muted"></small>
@@ -226,34 +225,28 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="title_namakelas"></h5>
+            <h5 class="modal-title" id="namakelas"></h5>
             <h6 id="title_idkelas"></h6>
             <h6 id="title_table"></h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
           
           <div class="table-responsive">
-                    <table id="table_lihatmhs" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr class="clickable-row">
-                                <th>#</th>
-                                <th>#nrp</th>
-                                <th>Nama mahasiswa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            
-            
-          </div>
-          <div class="modal-footer">
-            <label id="update_warning"> </label>
-            <button id="btn_updatekelas" type="button" class="btn btn-primary" onclick="updatekelasini()" >Save changes</button>
+                <table id="table_lihatmhs" class="table table-striped table-bordered" width="100%">
+                    <thead>
+                        <tr class="clickable-row">
+                            <th>#</th>
+                            <th>#nrp</th>
+                            <th>Student Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>   
           </div>
         </div>
       </div>
@@ -300,6 +293,7 @@ function  simpan_periode() {
     else{
         $("#help_pilihperiode").text("");
         //cek kelas yang belum diaktifkan pada periode tsb
+        $('#cardform1, #cardform2').show();
         datatable_kelasnonaktif();
 
         //disabled button simpan dan select periode
@@ -326,11 +320,11 @@ function generate() {
 
     //cek apakah level telah dipilih dan byk kelasnya
     if (level_sel == "-1") {
-        $("#help_level").text("level belum dipilih");
+        $("#help_level").text("level belum dipilih").css("color","red");
         
     }
     else if (bykkelas == "0"){
-        $("#help_bykkelas").text("banyak kelas belum dipilih");
+        $("#help_bykkelas").text("banyak kelas belum dipilih").css("color","red");
     }
     else if(level_sel != "-1" && bykkelas != "0")
     {
@@ -499,12 +493,12 @@ function updatekelasini() {
             console.log(data);
             if (data == "1") {
                 $(table).DataTable().ajax.reload(); //reload ajax datatable 
-                $("#update_warning").text("Berhasil mengubah jadwal kelas");
+                $("#update_warning").text("Success to change the class schedule").css("color","blue");
                 
                 
             }
             else if(data == "0"){
-                $("#update_warning").text("Gagal mengubah jadwal kelas");
+                $("#update_warning").text("Failed to change the class schedule").css("color","red");
             }
             
         });
@@ -570,9 +564,10 @@ function ubah_kelas(idkelas,table) {
     });
 }
 
-function lihat_mahasiswa(idkelas) {
+function lihat_mahasiswa(idkelas,kelas) {
  console.log("lihat mahasiswa");
  datatable_table_lihatmhs(idkelas);
+ $("#namakelas").html(kelas);
 }
 
 
@@ -586,23 +581,17 @@ function datatable_kelasnonaktif() {
         destroy:true,
             "processing":true,
             "language": {
-            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
-            "zeroRecords": "Maaf Data yang dicari tidak ada",
-            "info": "Tampilkan data _PAGE_ dari _PAGES_",
-            "infoEmpty": "Tidak ada data",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search":"Cari",
-            "paginate": {
-                "first":      "Pertama",
-                "last":       "terakhir",
-                "next":       "Selanjutnya",
-                "previous":   "Sebelumnya"
+                "paginate": {
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide":true,
             "ordering":true, //set true agar bisa di sorting
             "ajax":{
-                "url":"../datatables/admin-datatable/kelas_nonaktifdt.php",
+                "url":"../datatables/admin-datatable/kelas-nonaktifdt.php",
                 "type":"POST",
                 "data":{"idperiode":periode},
             },
@@ -612,7 +601,6 @@ function datatable_kelasnonaktif() {
                 { "visible": false, "targets": groupColumn }
             ],
             "columns":[
-            
             {"data":"id_kelas",
                 "searchable": true,
                 "orderable":true,
@@ -634,22 +622,22 @@ function datatable_kelasnonaktif() {
                     var kuota = row.kuota;
 
                     if (hari == "") {
-                        hari = "<label class='text-danger'> Belum terisi </label>";
+                        hari = "<label class='text-danger'> Not filled </label>";
                     }
                     if (jam_awal == null) {
-                        jam_awal = "<label class='text-danger'> Belum terisi </label>";
+                        jam_awal = "<label class='text-danger'> Not filled </label>";
                     }
                     if (ruang == null) {
-                        ruang = "<label class='text-danger'> Belum terisi </label>";
+                        ruang = "<label class='text-danger'> Not filled </label>";
                     }
                     else if (ruang !=0) {
                         ruang = row.nama_ruang;
                     }
                     if (kuota == 0) 
                     {
-                        kuota = "<label class='text-danger'> Belum terisi </label>";
+                        kuota = "<label class='text-danger'> Not filled </label>";
                     }
-                    return "Hari : " + hari + "<br> Jam : " + jam_awal + "-" + jam_akhir + "<br> Ruang : " + ruang + "<br> Kuota : " + kuota;
+                    return "Day : " + hari + "<br> Time : " + jam_awal + "-" + jam_akhir + "<br> Room : " + ruang + "<br> Quota : " + kuota;
 
                    
                 }
@@ -660,7 +648,7 @@ function datatable_kelasnonaktif() {
                 "render": function (data, type, row) {  
                     if (row.dosen == '-') //kelas aktif
                     {
-                        return "<p class='text-danger'> Belum terisi </p>";
+                        return "<p class='text-danger'> Not filled </p>";
                     }
                     else if (row.dosen != '-') //kelas tdk aktif
                     {
@@ -676,11 +664,11 @@ function datatable_kelasnonaktif() {
                 "render": function (data, type, row) {  
                     if (row.status_kelas == '1') //kelas aktif
                     {
-                        return "Aktif";
+                        return "Active";
                     }
                     else if (row.status_kelas == '0') //kelas tdk aktif
                     {
-                        return "Belum Aktif";
+                        return "Not Active";
                     }
                     
                 }
@@ -693,14 +681,16 @@ function datatable_kelasnonaktif() {
                     var level = row.level_ecc;
                     var idperiode = row.id_periode;
                     var table= "#table1";
-                    if (row.dosen == "-") //kelas aktif
+                    var btn="";
+                    if (row.dosen == "-") //
                     {
-                        return "<button onclick=\"atur_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Atur Jadwal</button>" + "<button onclick=\"hapus_kelas(\'"+idkelas+"\',\'"+level+"\',\'"+idperiode+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        btn = "<button onclick=\"atur_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#exampleModal'>Set Class</button>";
                     }
-                    else if (row.dosen != "-") //kelas tdk aktif
+                    else if (row.dosen != "-") //
                     {
-                        return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"hapus_kelas(\'"+idkelas+"\',\'"+level+"\',\'"+idperiode+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        btn = "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Edit </button>";
                     }
+                    return btn + " <button onclick=\"hapus_kelas(\'"+idkelas+"\',\'"+level+"\',\'"+idperiode+"\')\" type='button' class='btn btn-danger btn-sm' >Delete</button>";
                     
                 }
             },
@@ -729,6 +719,7 @@ function datatable_kelasnonaktif() {
 function  btn_cari() {
     console.log("button cari");
     //cek kelas yang belum diaktifkan pada periode tsb
+    $('#cardform3').show();
     datatable_kelasaktif();
 }
 
@@ -760,25 +751,20 @@ function datatable_kelasaktif() {
     table = $('#table_kelasaktif').DataTable( 
     {
         destroy:true,
+            "responsive":true,
             "processing":true,
             "language": {
-            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
-            "zeroRecords": "Maaf Data yang dicari tidak ada",
-            "info": "Tampilkan data _PAGE_ dari _PAGES_",
-            "infoEmpty": "Tidak ada data",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search":"Cari",
-            "paginate": {
-                "first":      "Pertama",
-                "last":       "terakhir",
-                "next":       "Selanjutnya",
-                "previous":   "Sebelumnya"
+                "paginate": {
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide":true,
             "ordering":true, //set true agar bisa di sorting
             "ajax":{
-                "url":"../datatables/admin-datatable/kelas_aktifdt.php",
+                "url":"../datatables/admin-datatable/kelas-aktifdt.php",
                 "type":"POST",
                 "data":{"idperiode":periode},
             },
@@ -798,7 +784,13 @@ function datatable_kelasaktif() {
                 }
             },
             {"data":"level_ecc"},
-            {"data":"nama_kelas"},
+            {"data":"nama_kelas",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    return row.level_ecc + "/" + row.nama_kelas;
+                    
+                }},
             {"data":"hari",
                 "searchable": true,
                 "orderable":true,
@@ -810,22 +802,22 @@ function datatable_kelasaktif() {
                     var kuota = row.kuota;
 
                     if (hari == "") {
-                        hari = "<label class='text-danger'> Belum terisi </label>";
+                        hari = "<label class='text-danger'> Not Filled </label>";
                     }
                     if (jam_awal == null) {
-                        jam_awal = "<label class='text-danger'> Belum terisi </label>";
+                        jam_awal = "<label class='text-danger'> Not Filled </label>";
                     }
                     if (ruang == null) {
-                        ruang = "<label class='text-danger'> Belum terisi </label>";
+                        ruang = "<label class='text-danger'> Not Filled </label>";
                     }
                     else if (ruang !=0) {
                         ruang = row.nama_ruang;
                     }
                     if (kuota == 0) 
                     {
-                        kuota = "<label class='text-danger'> Belum terisi </label>";
+                        kuota = "<label class='text-danger'> Not Filled </label>";
                     }
-                    return "Hari : " + hari + "<br> Jam : " + jam_awal + "-" + jam_akhir + "<br> Ruang : " + ruang + "<br> Kuota : " + kuota;
+                    return "Day : " + hari + "<br> Time : " + jam_awal + "-" + jam_akhir + "<br> Room : " + ruang + "<br> Quota : " + kuota;
 
                    
                 }
@@ -836,7 +828,7 @@ function datatable_kelasaktif() {
                 "render": function (data, type, row) {  
                     if (row.dosen == '-') //kelas aktif
                     {
-                        return "<p class='text-danger'> Belum terisi </p>";
+                        return "<p class='text-danger'> Not Filled </p>";
                     }
                     else if (row.dosen != '-') //kelas tdk aktif
                     {
@@ -851,9 +843,10 @@ function datatable_kelasaktif() {
                 "orderable":true,
                 "render": function (data, type, row) {  
                     var idkelas = row.id_kelas;
+                    var kelas = row.level_ecc + "/" + row.nama_kelas;
                     var table = "#table_kelasaktif";
 
-                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah Jadwal</button>" + "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>Lihat Mahasiswa</button>" + " <button onclick=\"nonaktikfkan_kls(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                    return "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Edit </button>" + " <button onclick=\"lihat_mahasiswa(\'"+idkelas+"\',\'"+kelas+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>Student List </button>" + " <button onclick=\"nonaktikfkan_kls(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Non Active</button>";
                     
                     
                 }
@@ -888,25 +881,20 @@ function datatable_table_lihatmhs(idkelas) {
     table = $('#table_lihatmhs').DataTable( 
     {
             destroy:true,
+            "responsive":true,
             "processing":true,
             "language": {
-            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
-            "zeroRecords": "Maaf Data yang dicari tidak ada",
-            "info": "Tampilkan data _PAGE_ dari _PAGES_",
-            "infoEmpty": "Tidak ada data",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search":"Cari",
-            "paginate": {
-                "first":      "Pertama",
-                "last":       "terakhir",
-                "next":       "Selanjutnya",
-                "previous":   "Sebelumnya"
+                "paginate": {
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide":true,
             "ordering":true, //set true agar bisa di sorting
             "ajax":{
-                "url":"../datatables/admin-datatable/kelas_lihatmhs.php",
+                "url":"../datatables/admin-datatable/kelas-listmhs.php",
                 "type":"POST",
                 "data":{"idkelas":idkelas},
             },
@@ -918,8 +906,6 @@ function datatable_table_lihatmhs(idkelas) {
             {"data":"id_klsmhs"},
             {"data":"nrp"},
             {"data":"nama_mhs"},
-            
-
             ],
             
     }) 

@@ -430,19 +430,19 @@ if($_POST["jenis"]=="jmdatakembarpt"){
     if ($result = mysqli_query($conn, $sql)) {
         
         for ($set = array (); $row = $result->fetch_assoc(); $set[] = $row['id_ptest']);
-        print_r($set);
-
+        //print_r($set);
         
         for ($i=0; $i <count($set) ; $i++) { 
             $sql2 = "update placement set status_kembar='1' where id_ptest='$set[$i]' and id_periode='$idperiode'";
             if ($conn->query($sql2)) {
-                $ket = "berhasil ubah status placement";
+                $ket = "1";
             }else {
-                $ket = "gagal ubah status placement";
+                $ket = "0";
             }
         }
     }
-    //echo $ket;
+    
+    echo $ket;
     $conn->close();
 
 }
