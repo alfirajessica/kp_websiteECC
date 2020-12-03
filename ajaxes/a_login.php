@@ -49,11 +49,18 @@ if ($_POST["kind"] == "login") {
         echo "Gagal";
     }
 }else if($_POST["kind"]=="forgot"){
-    $body="test";
-    $sendto=$_POST["email"];
-    $namauser="";
-
-    kirimemail($body,$sendto,$namauser);
+    $conn=getConn();
+    $username=$_POST["email"];
+    $pass=$_POST["pass"];
+    $pass=sha1($pass);
+    $sql = "update user set password='$pass' where username='$username'";
+    $res = $conn->query($sql);
+    echo $res;
+}else if($_POST["kind"]=="finduser"){
+    $conn = getConn();
+    $user=$_POST["email"];
+    $res=$conn->query("select * from user where username='$user'");
+    echo $res->num_rows;
 }
 
 

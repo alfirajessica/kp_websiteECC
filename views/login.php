@@ -56,7 +56,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                <a onclick="forgot()" class="text-light"><small>Lupa password?</small></a>
+                <a onclick="forgot()" ><small>Lupa password?</small></a>
                 </div>
                 
                 <div class="text-center">

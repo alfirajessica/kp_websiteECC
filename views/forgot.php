@@ -36,7 +36,7 @@
 
                             <form role="form">
 
-                                <div class="form-group mb-3">
+                                <!-- <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-user"></i></span>
@@ -44,9 +44,45 @@
                                         <input class="form-control" id="te_username" placeholder="Masukan Email" type="email">
                                         <label class='text-secondary' for="">dengan memasukan alamat email anda akan mereset password sesuai link yang dikirim</label>
                                     </div>
+                                </div> -->
+
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                        </div>
+                                        <input class="form-control" id="te_user" placeholder="Masukan Username" onkeyup='finduser()' type="text">
+
+                                    </div>
+                                    <label id="info_user" class='text-danger'></label>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                        </div>
+                                        <input class="form-control" id="te_pass" placeholder="Masukan  Password" type="password">
+
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                        </div>
+                                        <input class="form-control" id="te_cpass" placeholder="Masukan Konfirmasi Password" type="password">
+
+                                    </div>
                                 </div>
 
                         </div>
+
+                        <div class="text-center">
+                            <a href="login.php"><small> Masuk !</small></a>
+                        </div>
+
+
 
                         <div class="text-center">
                             <button type="button" class="btn btn-primary my-4" onclick="kirim()">Kirim</button>
@@ -69,11 +105,35 @@
 
 <script>
     function kirim() {
+        if ($("#te_pass").val() == $("#te_cpass").val()) {
+            $.post("../ajaxes/a_login.php", {
+                kind: "forgot",
+                email: $("#te_user").val(),
+                pass: $("#te_pass").val()
+            }, function(data) {
+                console.log(data);
+                if (data==1) {
+                    alert("Berhasil ganti password di lupa password");
+                }else{
+                    alert("Gagal");
+                }
+            });
+        } else {
+            alert("Password dan Konfirmasi password harus sama !");
+        }
+
+    }
+
+    function finduser() {
         $.post("../ajaxes/a_login.php", {
-            kind: "forgot",
-            email:$("#te_username").val()
+            kind: "finduser",
+            email: $("#te_user").val()
         }, function(data) {
-            console.log(data);
+            if (data == 0) {
+                $("#info_user").html("Akun tidak ditemukan");
+            } else {
+                $("#info_user").html("");
+            }
         });
     }
 </script>
