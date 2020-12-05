@@ -48,15 +48,38 @@ if ($_POST["jenis"] == "setstandard") {
     $id_ptest = $_POST["id_ptest"];
     $nilai = $_POST["nilai"];
     $level = $_POST["level"];
+    $periode = $_POST["periode"];
+    $nama = $_POST["nama"];
+    $nrp = $_POST['nrp'];
     $conn = getConn();
     $ket="";
 
-    $sql = "update placement set nilai_ptest='$nilai', ptest_level='$level' where id_ptest='$id_ptest'";
+    //udpate di placement jika mengubah nilai dan level
+    $sql = "update placement set nilai_ptest='$nilai', ptest_level='$level', id_periode='$periode' where id_ptest='$id_ptest'";
     if ($conn->query($sql)) {
         $ket= "1"; //berhasil
     }else {
         $ket= "0"; //gagal
     }
+
+    //update di mahasiswa jika mengubah nama
+    $sqlmhs = "update mahasiswa set nama_mhs='$nama' where nrp='$nrp'";
+    if ($conn->query($sqlmhs)) {
+        $ket= "1"; //berhasil
+    }else {
+        $ket= "0"; //gagal
+    }
+
+    ///------------- untuk yang id periodenya tidak diketahui--------------------//
+    //karena dia update periode mahasiswa yang periodenya tidak diketahui,
+    //maka ia update otomoatis mahasiswa sekaligus
+    $sqlupmhs = "update mahasiswa set id_periode='$periode' where nrp='$nrp' and id_periode='1'";
+    if ($conn->query($sqlupmhs)) {
+        $ket= "1"; //berhasil
+    }else {
+        $ket= "0"; //gagal
+    }
+
 
     echo $ket;
     // updatelevel();
@@ -240,9 +263,9 @@ if($_POST["jenis"]=="hapus_mhs"){
 
             $sqlup = "update placement set status_kembar=0 where id_ptest='$idptest'";
             if ($conn->query($sqlup)) {
-                $ket="berhasil update";
+                $ket="Success to delete $nrp";
             }else {
-                $ket = "gagal update";
+                $ket = "Failed to delete $nrp";
             }
         
         }
@@ -394,10 +417,10 @@ if($_POST["jenis"]=="aktifkan_allmhs"){
     $conn = getConn();
     $sqlupmhs = "update mahasiswa set status_mhs='1' where id_periode='$idperiode'";
     if ($conn->query($sqlupmhs)) {
-        $ket = "Berhasil tempatkan mahasiswa placement";
+        $ket = "Success to save this placement";
     }
     else{
-        $ket = "Gagal menempatkan mahasiswa placement";
+        $ket = "Failed to save this placement";
     }   
     echo $ket;
     $conn->close();

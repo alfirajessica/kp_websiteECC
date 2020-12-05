@@ -4,10 +4,10 @@
         $level = $arr->get_level();
 
         if($level == "admin")
-                { require("admin-views/admin_sidenav.php"); }
-              else if ($level == "dosen") {
-                require("dosen-views/dosen_sidenav.php");
-              }
+            { require("admin-views/admin_sidenav.php"); }
+        else if ($level == "dosen") {
+            require("dosen-views/dosen_sidenav.php");
+        }
 ?>
 <div id="right-panel" class="right-panel">
     <!-- Header-->
@@ -49,8 +49,11 @@
         </div>
     </header><!-- /header -->
 
+    
 <script>
 function dipilih(clicked_id) {
     console.log(clicked_id);
+    $("#place").addClass("active");
 }
+
 </script>

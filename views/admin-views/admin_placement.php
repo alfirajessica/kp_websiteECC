@@ -1,5 +1,5 @@
 <div class="card shadow"> <!-- card shadow -->
-    <div class="card-header border-1">
+    <div class="card-header border-1 bg-dark text-white">
         <div class="nav-wrapper">
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -51,8 +51,8 @@
                             </div>
                                 
                             <div class="form-group">
-                                <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
-                                <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
+                                <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="Import File" class="btn btn-primary form-control">
+                                <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="Import File" class="btn btn-primary form-control">
                                 <small id="help_file" class="text-muted"></small>
                             </div>
                             <hr>
@@ -117,7 +117,7 @@
 
                 <div class="card" id="cardform2" style="display:none">
                     <div class="card-body">
-                        <div class="alert alert-warning" role="alert" id="alert_warningkembar" style="disabled:false"> </div>
+                        <div class="alert alert-danger" role="alert" id="alert_warningkembar" style="disabled:false"> </div>
                         <div class="form-group text-right">
                             <button type="button" class="btn btn-primary text-light" onclick="tempatkanmhs()">Save Placement</button>
                         </div>
@@ -251,17 +251,25 @@
             </div>
             <div class="modal-body">
                 <form role="form">
-                    <label id="statustable" style="display:none" ></label>
+                    <label id="statustable" ></label>
                     <label id="idptest" style="display:none"></label>
                     <table class="table table-borderless table-md text-right">
                         <tbody>
+                            <tr id="setperiode_modal" style="display:none">
+                                <td scope="row">Periode : </td>
+                                <td class="text-left" id="csetperiode">
+                                    <select name="select" id="modal_setperiode"  class="form-control" > </select>
+                                </td>
+                            </tr>
                             <tr>
                                 <td scope="row">NRP : </td>
                                 <td class="text-left" id="crnrp"></td>
                             </tr>
                             <tr>
                                 <td scope="row">Student Name : </td>
-                                <td class="text-left" id="crnama"></td>
+                                <td class="text-left">
+                                    <input type="text" class="form-control-sm" name="" id="crnama">
+                                </td>
                             </tr>
                             <tr>
                                 <td scope="row">Score : </td>
@@ -297,7 +305,7 @@
             </div>
             <div class="modal-footer">
                 <label id="update_warning"> </label>
-                <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Update</button>
+                <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Save Changes</button>
             </div>
         </div>
     </div>
@@ -485,7 +493,7 @@ function addtempmahasiswa() {
     console.log(radio_val);
 
     if (nrp == "" || nama == "" || nilai == "" || radio_val == null) {
-        $("#labelwarning1").text("Pastikan semua data terisi");
+        $("#labelwarning1").text("Make sure all form is filled");
         
     }
     else{
@@ -510,7 +518,7 @@ function addtempmahasiswa() {
                 function(data) {
                     if (data.includes("Berhasil")) {
                         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-                        alert("Berhasil menambahkan mahasiswa " + nrp);
+                        alert("Success to add new student : " + nrp);
                         reset();
                         
                     }
@@ -518,7 +526,7 @@ function addtempmahasiswa() {
                 });
             }
             else{
-                alert("Mahasiswa dengan nrp " + nrp + " telah terdaftar sebelumnya");
+                alert("Student with nrp " + nrp + " has been registered");
             }
         reset();
         });
@@ -579,7 +587,7 @@ function datatable_lihatsemuamahasiswa() {
                 "render": function (data, type, row) {  
                     if (row.ptest_level == '0') //kelas aktif
                     {
-                        return "<label class='text-danger'> Belum Ada level </label>";
+                        return "<label class='text-danger'> Not filled </label>";
                     }
                     else if (row.ptest_level != 0) {
                         return "<label> Level " + row.ptest_level + " </label>";
@@ -592,6 +600,7 @@ function datatable_lihatsemuamahasiswa() {
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
                     var id_ptest = row.id_ptest;
+                    var periode = row.id_periode;
                     var table = "#table_tempmhs";
                     var btn1="";
                     var btn2="";
@@ -599,10 +608,10 @@ function datatable_lihatsemuamahasiswa() {
                     if (row.nilai_ptest == '0') {
                         
                         if (row.status_kembar == 1) {
-                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Insert Score</button>";
+                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Insert Score</button>";
                         }
                         else{
-                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Insert Score</button>";
+                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Insert Score</button>";
                             
                         }
 
@@ -610,11 +619,11 @@ function datatable_lihatsemuamahasiswa() {
                     }
                     else{
                         if (row.status_kembar == 1) {
-                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\"> Edit </button>"
+                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\"> Edit </button>"
 
                             
                         }else{
-                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" > Edit </button>"
+                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\"> Edit </button>"
                         }
                         return btn2  + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' > Delete</button>";
                         
@@ -633,8 +642,17 @@ function datatable_lihatsemuamahasiswa() {
     });
 }
 
-function loadmhs(id_ptest, nrp, table) {
+function loadmhs(id_ptest, nrp, periode, table) {
     $("#idptest").text(id_ptest);
+    console.log(table);
+
+    if (periode == "1") {
+       $("#setperiode_modal").show();
+    }
+    else{
+        $("#setperiode_modal").hide();
+    }
+    
     $.post(
         "../ajaxes/a_placement.php", {
             jenis: "loadmhs",
@@ -644,7 +662,7 @@ function loadmhs(id_ptest, nrp, table) {
             
             var arr = JSON.parse(data);
             $("#crnrp, #cnrp").html(arr.nrp);
-            $("#crnama").html(arr.nama_mhs);
+            $("#crnama").val(arr.nama_mhs);
 
             $.post(
                 "../ajaxes/a_placement.php", {
@@ -653,10 +671,12 @@ function loadmhs(id_ptest, nrp, table) {
                 },
                 function(data) {
                     var arr = JSON.parse(data);
+                    $("#modal_setperiode").val(arr.id_periode);
                     $("#crnilaiplacement").val(arr.nilai_ptest);
                     $("#cperingkat").html(arr.ptest_level);
                     $("#clevelsblmny").html("Level Hasil Placement : " + arr.ptest_level);
                     $("#statustable").text(table);
+                    //console.log(table);
                     var level_radio = arr.ptest_level;
                     $("input[name=modalRadioInline1][value='"+level_radio+"']").prop("checked",true);
                 });
@@ -667,6 +687,8 @@ function loadmhs(id_ptest, nrp, table) {
 
 //button simpan perubahn nilai pada modal atur nilai
 function update() {
+var periode = $("#modal_setperiode").val();
+var nama = $("#crnama").val();
 var nrp = $("#crnrp").html();
 var nilai = $("#crnilaiplacement").val();
 var table = $("#statustable").text();
@@ -677,9 +699,9 @@ var result = $("#modalnilai input:radio:checked").get();
 var columns = $.map(result, function(element) {
     radio_val = $(element).attr("value");
 });
-console.log(nilai);
-console.log(radio_val);
-if (nilai == 0 || radio_val == "") {
+console.log(nama);
+console.log(periode);
+if (nilai == 0 || radio_val == "" || periode == "1") {
     console.log("kosong");
     $("#update_warning").text("Pastikan semua data terisi").css("color","red");
     //$("#update_warning").css("color","red");
@@ -691,15 +713,18 @@ else{
             id_ptest: idptest,
             nilai: nilai,
             level:radio_val,
+            periode:periode,
+            nama:nama,
+            nrp:nrp
         },
         function(data) {
             console.log(data);
             if (data == 1) {
                 $(table).DataTable().ajax.reload(); //reload ajax datata
-                $("#update_warning").text("Berhasil mengubah").css("color","blue");
+                $("#update_warning").text("Success to changes").css("color","blue");
             }
             else{
-                $("#update_warning").text("Pastikan semua data terisi").css("color","red");
+                $("#update_warning").text("Make sure all form is filled!").css("color","red");
             }
             
         });
@@ -776,10 +801,10 @@ function jmdatakembarpt() {
             console.log(data);
             if (data == "1") {
                 $("#alert_warningkembar").text("Please delete the red row! you have multiple data (same nrp)");
-                $("#alert_warningkembar").addClass('alert alert-warning');
+                $("#alert_warningkembar").addClass('alert alert-danger');
             }
             else{
-                $("#alert_warningkembar").removeClass('alert alert-warning');
+                $("#alert_warningkembar").removeClass('alert alert-danger');
             }
             $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
         }
@@ -800,7 +825,7 @@ function tempatkanmhs() {
 
         if (cek != null) //ada yg belum terisi
         {
-            alert("Anda belum dapat menempatkan semua mahasiswa! Pastikan semua data terisi")
+            alert("You can't save this placement! Please make sure all data is filled")
         }
         else if (cek == null) //terisi semua
         {
@@ -908,9 +933,17 @@ function datatable_ptmhs_periodeini() {
                 "render": function(data, type, row) {
                     var nrp = row.nrp;
                     var id_ptest = row.id_ptest;
+                    var periode = row.id_periode;
                     var table = "#table_mhspt";
+                    var btn="";
+
+                    // if (row.id_periode == "1") {
+                    //      btn = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Edit</button>";
+                    // }else{
+                    //      btn = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Edit</button>";
+                    //  }
                     
-                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Edit</button>";
+                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Edit</button>";;
                 }
             },
             

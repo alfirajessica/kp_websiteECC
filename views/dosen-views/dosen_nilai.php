@@ -1,30 +1,31 @@
 <div class="card-body">
     <form action="">
         <div class="form-group">
-            <label for="">Pilih Periode</label>
+            <label for="">Select Period</label>
             <select name="select" id="periode" onchange="isikelas()" class="form-control" aria-describedby="help_pilihperiode">
             </select>
-            <small id="helpId" class="form-text text-muted">Help text</small>
         </div>
 
         <div class="form-group">
-            <label for="">Pilih Level - Kelas</label>
+            <label for="">Select Level - Class</label>
             <select class="form-control" name="" onchange="klschange()" id="kelas" aria-describedby="helpId" placeholder="">
-                <option>ECC Level 1 - Kelas A</option>
-                <option>ECC Level 1 - Kelas B</option>
+                <!-- <option>ECC Level 1 - Kelas A</option>
+                <option>ECC Level 1 - Kelas B</option> -->
             </select>
-            <small id="helpId" class="form-text text-muted">Help text</small>
+            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+        </div>
+
+        <div class="form-group">
+            <label> Please use this template before you're going to import </label>
+            <button type="button" class="btn btn-success text-light" onclick="downloadtemp()" target="_blank">Download Templete</button>
         </div>
 
         <div class="form-group">
             <!-- <button type="button" class="btn btn-secondary">Import Excel</button> -->
-            <div id="btnim" style="display:none">
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuts">Import UTS</button>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button>
+            <div id="btnim">
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuts">Import Nilai</button>
+                <!-- <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button> -->
             </div>
-        </div>
-        <div class="form-group">
-            *<a onclick="downloadtemp()" target="_blank" class="text-primary"> Download ini</a> <span> untuk format excel yang harus digunakan</span>
         </div>
 
 
@@ -54,7 +55,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="importuas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--<div class="modal fade" id="importuas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,52 +77,21 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- <div class="card">
-        <div class="card-header">
-            Tambah Mahasiswa
-        </div>
-
-        <div class="card-body">
-            <table>
-                <tr>
-                    <td><strong>Nrp</strong></td>
-                    <td><input type="text" class="form-control" id="a_nrp"></td>
-                </tr>
-                <tr>
-                    <td><strong>Nama</strong></td>
-                    <td><input type="text" class="form-control" id="a_nama"></td>
-                </tr>
-                <tr>
-                    <td><strong>Kelas</strong></td>
-                    <td>
-                        <div class="form-group">
-                            <select class="form-control" name="" id="add_kelas" onchange="search()" aria-describedby="helpId" placeholder="">
-                                <option>ECC Level 1 - Kelas A</option>
-                                <option>ECC Level 1 - Kelas B</option>
-                            </select>
-
-                        </div>
-                    </td>
-                </tr>
-
-            </table>
-            <a href="#" class="btn btn-primary">Tambahkan</a>
-        </div>
     </div> -->
+
 
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
         <table class="table" id="example">
             <thead>
                 <tr>
-                    <th scope="col" class="sort" data-sort="name">NRP</th>
-                    <th scope="col" class="sort" data-sort="budget">Nama Mahasiswa</th>
-                    <th scope="col" class="sort" data-sort="budget">UTS</th>
-                    <th scope="col" class="sort" data-sort="budget">UAS</th>
-                    <th scope="col" class="sort" data-sort="budget">NA</th>
-                    <th scope="col" class="sort" data-sort="budget">Aksi</th>
+                    <th>NRP</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>UTS</th>
+                    <th>UAS</th>
+                    <th>NA</th>
+                    <th>GRADE</Th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -226,17 +196,11 @@
             destroy: true,
             "processing": true,
             "language": {
-                "lengthMenu": "Tampilkan MENU data per Halaman",
-                "zeroRecords": "Maaf Data yang dicari tidak ada",
-                "info": "Tampilkan data PAGE dari _PAGES_",
-                "infoEmpty": "Tidak ada data",
-                "infoFiltered": "(filtered from MAX total records)",
-                "search": "Cari",
                 "paginate": {
-                    "first": "Pertama",
-                    "last": "terakhir",
-                    "next": "Selanjutnya",
-                    "previous": "Sebelumnya"
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide": true,
@@ -273,7 +237,11 @@
                 },
                 {
                     "data": "na"
-                }, {
+                },
+                {
+                    "data": "grade"
+                },
+                {
 
                     "render": function(data, type, row) {
 
@@ -300,7 +268,7 @@
     });
 
 
-
+ 
     function imuts() {
         var fd = new FormData();
         var files = $('#uts')[0].files[0];
@@ -388,8 +356,8 @@
 
     function downloadtemp() {
         var kelas = $("#kelas").val();
-        window.location.href = '../PHPexcel/templeteutsuas.php?kelas=' + kelas;
-        $("#btnim").attr("style", "display:block");
+        window.location.href = '../custom_export/templeteutsuas.php?kelas=' + kelas;
+        // $("#btnim").attr("style", "display:block");
     }
 
     function simpan() {

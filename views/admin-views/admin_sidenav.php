@@ -1,3 +1,16 @@
+<style>
+    .navbar-nav .nav-item .nav-link {
+    color: red;
+}
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: pink;
+}
+}
+     
+</style>
+
+
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         
@@ -5,17 +18,20 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="./"><img src="../images/logo.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="./"><img src="../images/logo2.png" alt="Logo"></a>
+            <!-- <a class="navbar-brand" href="./"><img src="../images/logo.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src="../images/logo2.png" alt="Logo"></a> -->
+
+            <a class="navbar-brand" href="./">ECC</a>
+            <a class="navbar-brand hidden" href="./">ECC</a>
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a id="dashboard" href="dashboard.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                <li class="nav-item">
+                    <a class="nav-link" id="dashboard" href="dashboard.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <h3 class="menu-title">Fitur</h3><!-- /.menu-title -->
-                <li>
+                <li id="place">
                     <a id="placement" href="placement.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-laptop"></i>Placement</a>
                 </li>
                 <li>
@@ -43,6 +59,9 @@
 </aside><!-- /#left-panel -->
 
 <script>
-
+function dipilih(clicked_id) {
+    console.log(clicked_id);
+    $("#place").addClass("active");
+}
 
 </script>

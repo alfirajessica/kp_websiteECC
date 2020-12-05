@@ -8,11 +8,39 @@ $arr = unserialize($_SESSION["user"]);
 $level = $arr->get_level();
 
 ?>
+<style>
+    .navbar{position: fixed;
+        width: 160px; }
+
+    .nav-item:hover .nav-link{background-color:#fff;}
+    .nav > li > a:hover{
+    background-color:#FCC;
+}
+     
+</style>
 
 
 <body>
 
     <?php require_once("sidenav.php"); ?>
+    <!-- <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li class="active">Dashboard</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
     <!-- ini content -->
     <!-- container-fluid -->
@@ -48,7 +76,7 @@ $level = $arr->get_level();
             },
             function(data) {
                 $("#periode").html(data);
-                $("#periode_lihatkelas").html(data); //dilihat kelas
+                $("#periode_lihatkelas, #modal_setperiode").html(data); //dilihat kelas
             });
     }
 

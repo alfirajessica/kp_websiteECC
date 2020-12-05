@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Export Barang</title>
+    <!-- <title>Export Barang</title> -->
 </head>
 
 <body>
@@ -34,17 +34,20 @@
     <?php
     header("Content-type: application/vnd-ms-excel");
     $tgl = date("Ymd_his");
-    header("Content-Disposition: attachment; filename=" . $tgl . "_templete.xls");
+    header("Content-Disposition: attachment; filename=" . $tgl . "_DaftarNilaiMahasiswa.xls");
     require_once "../config/conn.php";
     ?>
 
 
     <table border='1'>
         <tr>
-            <th>IDNILAI</th>
+            <th>#Id</th>
             <th>NRP</th>
             <th>NAMA</th>
-            <th>NILAI(UTS/UAS)</th>
+            <th>NILAI UTS</th>
+            <th>NILAI UAS</th>
+            <th>NILAI NA</th>
+            <th>GRADE</th>
         </tr>
         <?php
         $kelas = $_GET["kelas"];
@@ -57,12 +60,20 @@
             $nrp=$row["nrp"];
             $idnilai=$row["id_nilai"];
             $nama=$row["nama_mhs"];
+            $uts = $row["nilai_uts"];
+            $uas = $row["nilai_uas"];
+            $na = $row["nilai_akhir"];
+            $grade = $row["grade"];
+
             $kal.="
             <tr>
                 <td><strong>$idnilai</strong></td>
                 <td>$nrp</td>
                 <td>$nama</td>
-                <td></td>
+                <td>$uts</td>
+                <td>$uas</td>
+                <td>$na</td>
+                <td>$grade</td>
             </tr>
             ";
         }
@@ -70,8 +81,6 @@
         ?>
  
     </table>
-
-
 
 </body>
 

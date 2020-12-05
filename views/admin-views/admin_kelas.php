@@ -1,5 +1,5 @@
 <div class="card shadow"> <!-- card shadow -->
-    <div class="card-header border-1">
+    <div class="card-header border-1 bg-dark">
         <div class="nav-wrapper">
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -84,7 +84,6 @@
                                     <th>Class Name</th>
                                     <th>Schedule</th>
                                     <th>Lecturer</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -169,11 +168,11 @@
                             <td class="text-left">
                             <select class="form-control" name="" id="pilihhari" aria-describedby="help_pilihhari" placeholder="">
                                 <option value="-1" disabled>Select Day</option>
-                                <option value="Monday">Monday</option>
-                                <option value="Tuesday">Tuesday</option>
-                                <option value="Wednesday">Wednesday</option>
-                                <option value="Thursday">Thursday</option>
-                                <option value="Friday">Friday</option>
+                                <option value="Senin">Senin</option>
+                                <option value="Selasa">Selasa</option>
+                                <option value="Rabu">Rabu</option>
+                                <option value="Kamis">Kamis</option>
+                                <option value="Jumat">Jumat</option>
                             </select>
                             <small id="help_pilihhari" class="form-text text-muted"></small>
                             </td>
@@ -523,7 +522,7 @@ function aktifkan_allkelas() {
 
         if (cek != null) //ada yg belum terisi
         {
-            alert("Anda belum dapat mengaktifkan semua kelas! Pastikan semua data terisi")
+            alert("You can't activate all class! Make sure all class is filled")
         }
         else if (cek == null) //terisi semua
         {
@@ -658,21 +657,7 @@ function datatable_kelasnonaktif() {
                     
                 }
             },
-            {"data":"status_kelas",
-                "searchable": true,
-                "orderable":true,
-                "render": function (data, type, row) {  
-                    if (row.status_kelas == '1') //kelas aktif
-                    {
-                        return "Active";
-                    }
-                    else if (row.status_kelas == '0') //kelas tdk aktif
-                    {
-                        return "Not Active";
-                    }
-                    
-                }
-            },
+            
             {"data":"dosen",
                 "searchable": false,
                 "orderable":false,
@@ -770,7 +755,7 @@ function datatable_kelasaktif() {
             },
             "deferRender":true,
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
-            "order": [[0, 'asc']],
+            "order": [[1, 'asc']],
             "columnDefs": [
                 { "visible": false, "targets": groupColumn }
             ],
