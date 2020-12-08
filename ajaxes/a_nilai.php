@@ -76,8 +76,26 @@ if ($_POST["jenis"] == "uts") {
   $grade=$_POST["grade"];
 
   $conn=getConn();
+$cumgrade="";
+if ($na<=44) {
+    $cumgrade="E";
+}else if ($na<=55) {
+    $cumgrade="D";
+}else if ($na<=62) {
+    $cumgrade="C";
+}else if ($na<=69) {
+    $cumgrade="C+";
+}else if ($na<=74) {
+    $cumgrade="B";
+}else if ($na<=79) {
+    $cumgrade="B+";
+}else {
+    $cumgrade="A";
+}
 
-  $update = "update nilai set nilai_uas='$uas',nilai_uts='$uts',nilai_akhir='$na',grade='$grade' where id_nilai='$idnilai' ";
+  $grade=$cumgrade;
+
+  $update = "update nilai set nilai_uas='$uas',nilai_uts='$uts',nilai_akhir='$na',grade='$cumgrade' where id_nilai='$idnilai' ";
   $updateres = mysqli_query($conn, $update);
 
   echo $updateres;
