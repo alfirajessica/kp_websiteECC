@@ -8,7 +8,7 @@ session_start();
     $periode = $_POST["idperiode"];
     $uploadfile = $_FILES['file']['tmp_name'];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
-    //turncate tokopedia
+    
     //$turncateqry = "TRUNCATE temp_mahasiswa";
     $turncateres = mysqli_query($conn, $turncateqry);
 

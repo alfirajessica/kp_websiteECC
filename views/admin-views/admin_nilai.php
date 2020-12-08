@@ -10,8 +10,8 @@
         <div class="form-group">
             <label for="">Pilih Level - Kelas</label>
                 <select class="form-control" id="kelas" onchange="klschange()" aria-describedby="helpId" placeholder="">
-                    <option>ECC Level 1 - Kelas A</option>
-                    <option>ECC Level 1 - Kelas B</option>
+                    <!-- <option>ECC Level 1 - Kelas A</option>
+                    <option>ECC Level 1 - Kelas B</option> -->
                 </select>
             <small id="helpId" class="form-text text-muted">Help text</small>
         </div>

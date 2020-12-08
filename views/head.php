@@ -27,6 +27,12 @@
 <style>
     .navbar{position: fixed;
         width: 160px; }
+
+    .navbar .nav-item:hover .nav-link{color:blue;}
+    .nav > li > a:hover{
+    background-color:#FCC;
+}
+     
 </style>
 
 <?php

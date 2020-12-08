@@ -12,7 +12,7 @@ $kelas=$_POST["kelas"];
 $sql = mysqli_query($connect, "SELECT nrp FROM mahasiswa "); // Query untuk menghitung seluruh data siswa
 $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
-$query = "SELECT distinct n.nilai_uts as uts,n.nilai_uas as uas,n.nilai_akhir as na,m.nama_mhs as nama,m.nrp as nrp,n.id_nilai as id_nilai 
+$query = "SELECT distinct n.nilai_uts as uts,n.nilai_uas as uas,n.nilai_akhir as na,m.nama_mhs as nama,m.nrp as nrp,n.id_nilai as id_nilai, n.grade as grade 
 FROM mahasiswa m, nilai n,kelas_mhs km 
 WHERE m.nrp=n.nrp and n.id_nilai=km.id_nilai and km.id_kelas='$kelas' and (m.nama_mhs like '%$search%' or m.nrp like '%$search%' )";
 

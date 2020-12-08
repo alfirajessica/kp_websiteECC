@@ -11,7 +11,6 @@ if ($_POST["jenis"] == "uts") {
     $kelas = $_POST["kelas"];
     $objExcel = PHPExcel_IOFactory::load($uploadfile);
 
-
     //get data from excel
     foreach ($objExcel->getWorksheetIterator() as $worksheet) {
         $highestrow = $worksheet->getHighestRow();
@@ -21,7 +20,10 @@ if ($_POST["jenis"] == "uts") {
                 $idnilai = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                 $nrp = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                 $nama = ucwords($worksheet->getCellByColumnAndRow(2, $row)->getValue());
-                $nilai = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                $nilaiuts = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                $nilaiuas = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                $nilaiakhir = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                $grade = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
                 if ($nrp != '') {
 
@@ -30,7 +32,7 @@ if ($_POST["jenis"] == "uts") {
                     $rom = $res->fetch_assoc();
                     $idnilai = $rom["id_nilai"];
                     if ($idnilai != "") {
-                        $update = "update nilai set nilai_uts='$nilai' where id_nilai='$idnilai' ";
+                        $update = "update nilai set nilai_uts='$nilaiuts', nilai_uas='$nilaiuas', nilai_akhir='$nilaiakhir', grade='$grade' where id_nilai='$idnilai' ";
                         $updateres = mysqli_query($conn, $update);
                     } 
                 }
@@ -40,35 +42,37 @@ if ($_POST["jenis"] == "uts") {
         }
     }
     echo "success-hasil:$idnilai";
-} else if ($_POST["jenis"] == "uas") {
-    $conn = getConn();
-    $uploadfile = $_FILES['file']['tmp_name'];
-    $objExcel = PHPExcel_IOFactory::load($uploadfile);
+} 
+// else if ($_POST["jenis"] == "uas") {
+//     $conn = getConn();
+//     $uploadfile = $_FILES['file']['tmp_name'];
+//     $objExcel = PHPExcel_IOFactory::load($uploadfile);
 
-    //get data from excel
-    foreach ($objExcel->getWorksheetIterator() as $worksheet) {
-        $highestrow = $worksheet->getHighestRow();
+//     //get data from excel
+//     foreach ($objExcel->getWorksheetIterator() as $worksheet) {
+//         $highestrow = $worksheet->getHighestRow();
 
-        for ($row = 0; $row <= $highestrow; $row++) {
-            if ($row > 1) {
-                $idnilai = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                $nrp = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                $nama = ucwords($worksheet->getCellByColumnAndRow(2, $row)->getValue());
-                $nilai = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+//         for ($row = 0; $row <= $highestrow; $row++) {
+//             if ($row > 1) {
+//                 $idnilai = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+//                 $nrp = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+//                 $nama = ucwords($worksheet->getCellByColumnAndRow(2, $row)->getValue());
+//                 $nilai = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
                 
-                echo "$nilai";
-                if ($idnilai!="") {
-                    $update = "update nilai set nilai_uas='$nilai' where id_nilai='$idnilai' ";
-                    $updateres = mysqli_query($conn, $update);
-                }
+//                 echo "$nilai";
+//                 if ($idnilai!="") {
+//                     $update = "update nilai set nilai_uas='$nilai' where id_nilai='$idnilai' ";
+//                     $updateres = mysqli_query($conn, $update);
+//                 }
 
-            } else {
-                // ini berati headernya di $row=1 
-            }
-        }
-    }
+//             } else {
+//                 // ini berati headernya di $row=1 
+//             }
+//         }
+//     }
    
-}else if ($_POST["jenis"]=="update") {
+// }
+else if ($_POST["jenis"]=="update") {
   $idnilai=$_POST["idnilai"];
   $uas=$_POST["uas"];
   $uts=$_POST["uts"];

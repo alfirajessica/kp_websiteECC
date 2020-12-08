@@ -51,26 +51,42 @@ if($_POST["jenis"]=="cek_dataditable_mahasiswa"){
 
         $sqlinsnilai = "INSERT INTO nilai(id_nilai,id_periode,nrp,id_kelas,nilai_uts,nilai_uas,nilai_akhir,grade) VALUES (null,'$idperiode','$nrp','$idkelas','0','0','0','-')";
         if ($conn->query($sqlinsnilai)) {
-            $kets = "Berhasil masukkan ke nilai";
+            //$ket = "Berhasil masukkan ke nilai";
+            updidnilai_diklsmhs($idperiode);
+            //delete table tempkelas_mhs
+            $deltempkls = "delete from tempkelas_mhs where id_periode='$idperiode'";
+            if ($conn->query($deltempkls)) {
+                $ket = "Success to activate all student";
+            }else {
+                $ket = "Failed to activate";
+            }
         }else {
-            $kets = "Gagal masukkan ke nilai";
+            $ket = "Failed to activate";
         }
-
-        //delete table tempkelas_mhs
-        $deltempkls = "delete from tempkelas_mhs where id_periode='$idperiode'";
-        if ($conn->query($deltempkls)) {
-            $ket = "Berhasil Aktifkan semua kelas mahasiswa";
-        }else {
-            $ket = "Gagal Aktifkan!";
-        }
-
         
     }
-    
-    
-    
-    echo $kets;
+    echo $ket;
     $conn->close();
+
+}
+
+function updidnilai_diklsmhs($idperiode){
+    $conn=getConn();
+    $kode="";
+    $sql1 = "select * from nilai where id_periode='$idperiode'";
+    $result1 = $conn->query($sql1);
+    while ($row1 = $result1->fetch_assoc()) {
+        $idnilai = $row1["id_nilai"];
+        $nrp = $row1["nrp"];
+        $idkelas = $row1["id_kelas"];
+
+        $sqlup = "update kelas_mhs set id_nilai='$idnilai' where id_periode='$idperiode' and nrp='$nrp' and id_kelas='$idkelas'";
+        if ($conn->query($sqlup)) {
+            $kode=1;
+        }else {
+            $kode=0;
+        }
+    }
 
 }
 
@@ -176,29 +192,7 @@ if ($_POST["jenis"]=="get_levelkls_mhs") {
             $kal="<option value='-1'>..</option>";
         }
 
-    // if ($ket == "pindahkelas") {
-    //     $sql2="select * from kelas where level_ecc='$level' and id_periode='$id_periode' and status_kelas='1'";
-    //     $result2 = $conn->query($sql2);
-    //     $kal="<option value='-1' >pilih Level/kelas</option>";
-    //     if ($result2->num_rows > 0) {
-    //         while ($row2 = $result2->fetch_assoc()) {
-    //             $id_kelas=$row2["id_kelas"];
-    //             $namakelas=$row2["nama_kelas"];
-    //             $level = $row2["level_ecc"];
-
-    //             $kal.="<option value='$id_kelas'>$level/$namakelas</option>";
-    //         }
-    //     }else{
-    //         $kal="<option value='-1'>..</option>";
-    //     }
-    // }
-    // else if ($ket == "pindahlevel")
-    // {
-        
-    // }
-
     
-
     echo $kal;
     $conn->close();
 }

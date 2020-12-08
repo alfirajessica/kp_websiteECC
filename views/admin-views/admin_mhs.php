@@ -1,13 +1,13 @@
 <div class="card shadow"> <!-- card shadow -->
-    <div class="card-header border-1">
+    <div class="card-header border-1 bg-dark">
         <div class="nav-wrapper">
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Atur Mahasiswa</a>
+                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Set of students</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Lihat Mahasiswa</a>
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>See Students</a>
                 </li>
             </ul>
             <!--end tabs -->
@@ -25,19 +25,19 @@
                 <form role="form">
 
                     <div class="form-group">
-                        <label for="">Periode Perwalian</label>
+                        <label for="">Select Period</label>
                         <div class="input-group mb-3">
                         <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode">                                  
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Simpan</button>
+                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Search</button>
                         </div>
                         </div>
                         <small id="help_pilihperiode" class="form-text text-muted"></small>
                     </div>
 
                     <div class="form-group">
-                        <label> Silakan gunakan template ini sebelum melakukan import </label>
+                        <label> Please use this template before you're going to import </label>
                         <button type="button" class="btn btn-success text-light" onclick="window.location.href='../custom_export/Perwalian_ecc.xlsx'" target="_blank">Download Templete</button>
                     </div>
                     
@@ -45,18 +45,17 @@
                     <div class="card-header">
                         <form>
                             <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Pilih file</label>
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Select File</label>
                                 <div class="custom-file col-sm-10"> 
                                     <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
-                                    <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
+                                    <label class="custom-file-label" id="lbl_file1">Select file ...</label>
                                 </div>
                             </div>
                                 
                             <div class="form-group">
-                                <!-- <label for="">dengan menekan tombol import file excel anda memasukan data ke dalam data mahasiswa sementara dan data sebelumnya akan dihapus seluruhnya</label> -->
                                 <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="*Import File Excel" class="btn btn-primary form-control">
                                 <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="*Import File Excel" class="btn btn-primary form-control">
-                                <small id="help_file" class="text-muted"></small>
+                                <small id="help_file"></small>
                             </div>
                             
                         </form>
@@ -69,19 +68,19 @@
                 <div class="card" id="cardform2" style="display:none">
                     <br>
                     <div class="form-group text-right">
-                        <button class="btn btn-outline-primary" type="button" onclick="simpan_importmhs()">Simpan kelas mahasiswa</button>
+                        <button class="btn btn-outline-primary" type="button" onclick="simpan_importmhs()">Save All</button>
                     </div>
         
                     <div class="table-responsive">
-                        <table id="table_pwecc" class="table table-striped table-bordered" width="100%">
+                        <table id="table_pwecc" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Nrp</th>
-                                    <th>Nama</th>
+                                    <th>#Nrp</th>
+                                    <th>Student Name</th>
                                     <th>Level</th>
-                                    <th>Hari</th>
-                                    <th>Jam</th>
-                                    <th>Ruang</th>
+                                    <th>Day</th>
+                                    <th>Time</th>
+                                    <th>Room</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,32 +96,35 @@
             <!-- lihat kelas -->
             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                 <div class="form-group">
-                    <label for="">Pilih Periode Perwalian</label>
+                    <label for="">Select Period</label>
                     <div class="input-group mb-3">
                         <select name="select" id="periode_lihatkelas"  class="form-control" aria-describedby="help_pilihperiode">                                  
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()">Cari</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()">Search</button>
                         </div>
                     </div>
-                    <small id="helpId" class="form-text text-muted">Help text</small>
                 </div>
 
-                <div class="table-responsive">
-                    <table id="table_klsmhs" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th style="display:none">Id</th>
-                                <th>Nrp</th>
-                                <th>Nama</th>
-                                <th>Level/Kelas</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="card" id="cardform3" style="display:none">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="table_klsmhs" class="table table-striped table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th style="display:none">Id</th>
+                                        <th>#Nrp</th>
+                                        <th>Student Name</th>
+                                        <th>Level/Class</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- end of tabel kelas yang tergenerate -->
@@ -140,7 +142,7 @@
           <div class="modal-header">
             <h5 class="modal-title" id="title_namakelas"></h5>
             <h6 id="title_idkelas"></h6>
-            <h6 id="title_table"></h6>
+            <h6 id="title_table" ></h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -148,7 +150,7 @@
           <div class="modal-body">
           <form role="form">
                     <label id="statustable" style="display:none" ></label>
-                    <label id="idklsmhs"></label>
+                    <label id="idklsmhs" style="display:none"></label>
                     <table class="table table-borderless table-md text-right">
                         <tbody>
                             <tr>
@@ -156,11 +158,11 @@
                                 <td class="text-left" id="crnrp"></td>
                             </tr>
                             <tr>
-                                <td scope="row">Nama : </td>
+                                <td scope="row">Student Name : </td>
                                 <td class="text-left" id="crnama"></td>
                             </tr>
                             <tr>
-                                <td scope="row">Level/Kelas: </td>
+                                <td scope="row">Level/Class: </td>
                                 <td>
                                 <select name="select" id="levelkls_select" class="form-control"  aria-describedby="help_pilihperiode">                                  
                                 </select>
@@ -248,7 +250,7 @@ function importfileada() {
             });
 
     } else {
-        $("#help_file").text("Pilih file excel dahulu !");
+        $("#help_file").text("Make sure you have inserted the file!").css("color","red");
     }
     //updatelevel();
 }
@@ -287,7 +289,7 @@ function importfilenone() {
                 }
             },
         }); 
-    } else { $("#help_file").text("Pilih file excel dahulu !"); }
+    } else { $("#help_file").text("Make sure you have inserted the file!").css("color","red"); }
     //updatelevel();
 }
 
@@ -298,26 +300,20 @@ function datatable_tempkelas_mhs() {
     table = $('#table_pwecc').DataTable( 
     {
         destroy:true,
-        "responsive":true,
+            "responsive":true,
             "processing":true,
             "language": {
-            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
-            "zeroRecords": "Maaf Data yang dicari tidak ada",
-            "info": "Tampilkan data _PAGE_ dari _PAGES_",
-            "infoEmpty": "Tidak ada data",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search":"Cari",
-            "paginate": {
-                "first":      "Pertama",
-                "last":       "terakhir",
-                "next":       "Selanjutnya",
-                "previous":   "Sebelumnya"
+                "paginate": {
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide":true,
             "ordering":true, //set true agar bisa di sorting
             "ajax":{
-                "url":"../datatables/admin-datatable/temp_mhskls.php",
+                "url":"../datatables/admin-datatable/mahasiswa-mhskls.php",
                 "type":"POST",
                 "data":{"periode":periode},
             },
@@ -342,6 +338,10 @@ function datatable_tempkelas_mhs() {
                     if (row.jam_mulai == '06:30' || row.jam_mulai == '06.30') //kelas aktif
                     {
                         return "06:30 - 08:00";
+                    }
+                    else if (row.jam_mulai == '15:30' || row.jam_mulai == '06.30') //kelas aktif
+                    {
+                        return "15:30 - 17:00";
                     }
                 }
             },
@@ -387,9 +387,10 @@ function simpan_importmhs() {
 function btn_cariperiode() {
     console.log("button cari");
     var periode = $("#periode_lihatkelas").val();
+    $("#cardform3").show();
     console.log(periode);
     if (periode == "-1") {
-        $("#help_pilihperiode2").text("pilih periode terlebih dahulu");
+        $("#help_pilihperiode2").text("Make sure you have selected the period");
     }
     else{
         $("#help_pilihperiode2").text("");
@@ -411,28 +412,27 @@ function format ( d ) {
             if (kembar == 1) {
                 btn = '<td>'+   
                 '<small>**Silakan hapus mahasiswa ini karena data sebelumnya sudah ada</small><br>' +
-                '</td>';
+                '</td>';  //gak kepakai
             }
             else{
                 btn = '<td>'+ 
-                    '<button onclick="load(\'' + d.id_klsmhs + '\',\'' + ket1 + '\')" type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#modal_pindahkelas_level"><i class="fa fa-dot-circle-o"></i> Pindah kelas </button>' +
-                    '<small>*Pilih tombol Pindah kelas untuk melakukan pindah kelas</small><br>'+
-                    '<small>**Pilih tombol Pindah level untuk melakukan pindah level</small><br>' +
+                    '<button onclick="load(\'' + d.id_klsmhs + '\',\'' + ket1 + '\')" type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#modal_pindahkelas_level"><i class="fa fa-dot-circle-o"></i> Edit </button> <br>' + 
+                    '<small>*Use "Edit" for move to other class </small><br>'+
                 '</td>';
             }
         }
         else{
-            status = "Tidak Aktif";
+            status = "Not Active";
         }
         
             $tampil = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width:100%;">'+
             
             '<tr>'+
-                '<td>Level/Kelas</td>'+
+                '<td>Level/Class</td>'+
                 '<td>'+d.level_ecc + '/' + d.nama_kelas +'</td>'+
             '</tr>'+
             '<tr>'+
-                '<td>Hari/Jam/Ruang</td>'+
+                '<td>Day/Time/Room</td>'+
                 '<td>'+d.hari + '/ ' + d.jam_awal + '-' + d.jam_akhir + '/ ' + d.nama_ruang +'</td>'+
             '</tr>'+
             '<tr>'+
@@ -462,17 +462,11 @@ function datatable_table_klsmhs() {
             "responsive":true,
             "processing":true,
             "language": {
-            "lengthMenu": "Tampilkan _MENU_ data per Halaman",
-            "zeroRecords": "Maaf Data yang dicari tidak ada",
-            "info": "Tampilkan data _PAGE_ dari _PAGES_",
-            "infoEmpty": "Tidak ada data",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search":"Cari",
-            "paginate": {
-                "first":      "Pertama",
-                "last":       "terakhir",
-                "next":       "Selanjutnya",
-                "previous":   "Sebelumnya"
+                "paginate": {
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide":true,
@@ -481,7 +475,7 @@ function datatable_table_klsmhs() {
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
             "order": [[3, 'asc']],
             "ajax":{
-                "url":"../datatables/admin-datatable/table_klsmhs.php",
+                "url":"../datatables/admin-datatable/mahasiswa-listmhs.php",
                 "type":"POST",
                 "data":{"periode":periode},
             },
@@ -519,15 +513,15 @@ function datatable_table_klsmhs() {
                     //var btnubah = "<button onclick=\"ubah_kelas(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>";
                     if (status == 1) //status aktif
                     {
-                        btn = "<button onclick=\"nonaktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Nonaktifkan</button>";
+                        btn = "<button onclick=\"nonaktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Non Activate</button>";
 
                         if (row.status_kembar == 1) {
-                        btn = "<button onclick=\"hapus_klsmhs(\'"+idklsmhs+"\',\'"+row.nrp+"\')\" type='button' class='btn btn-danger btn-sm' >Hapus</button>";
+                        btn = "<button onclick=\"hapus_klsmhs(\'"+idklsmhs+"\',\'"+row.nrp+"\')\" type='button' class='btn btn-danger btn-sm' >Delete</button>";
                         }
                     }
                     else if (status == 0) //status nonaktif
                     {
-                        btn = "<button onclick=\"aktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Aktifkan</button>";
+                        btn = "<button onclick=\"aktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Activate</button>";
                     }
                     
                     return btn;
@@ -681,7 +675,7 @@ function datatable_table_klsmhs() {
         },
         function(data){
             //var text = "Berhasil pindah ke "
-            $("#update_warning").text("Berhasil pindah kelas").css("color","blue");
+            $("#update_warning").text("Success to update").css("color","blue");
             $("#table_klsmhs").DataTable().ajax.reload(); //reload ajax datatable
         });
 
