@@ -105,3 +105,51 @@ if ($na<=44) {
   echo $updateres;
 
 }
+
+//get level in admin
+if ($_POST["jenis"]=="getadminlevel") {
+    $conn=getConn();
+    $kal="";
+    $kal.="<option value='-1'>-Pilih Level- </option>";
+    $periode=$_POST["periode"];
+    $stmt=$conn->prepare("select * from kelas where id_periode='$periode' group by level_ecc");
+    $stmt->execute();
+    $res=$stmt->get_result();
+   
+    if ($res->num_rows>0) {
+        
+        while($row=$res->fetch_assoc()){
+            
+            $level=$row["level_ecc"];
+            $idkelas=$row["id_kelas"];
+            $namakelas=$row["nama_kelas"];
+            $kal.="<option value='$level' >ECC $level </option>";
+        }
+    }else{
+        $kal.="<option value='-1' >~Tidak level di periode ini~ </option>";
+    }
+   
+    echo $kal;
+}else if($_POST["jenis"]=="getadminkelas"){
+    $conn=getConn();
+    $kal="";
+    $periode=$_POST["periode"];
+    $level=$_POST["level"];
+    $stmt=$conn->prepare("select * from kelas where id_periode='$periode' and level_ecc='$level' ");
+    $stmt->execute();
+    $res=$stmt->get_result();
+  
+    if ($res->num_rows>0) {
+        $kal.="<option value='all' >Semua</option>";
+        while($row=$res->fetch_assoc()){
+            $level=$row["level_ecc"];
+            $idkelas=$row["id_kelas"];
+            $namakelas=$row["nama_kelas"];
+            $kal.="<option value='$idkelas' >ECC $level - Kelas $namakelas </option>";
+        }
+    }else{
+        $kal.="<option value='-1' >~ Tidak ada kelas di periode ini ~</option>";
+    }
+   
+    echo $kal;
+}

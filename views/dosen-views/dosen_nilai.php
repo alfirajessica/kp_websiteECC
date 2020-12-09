@@ -6,14 +6,31 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="">Select Level - Class</label>
-            <select class="form-control" name="" onchange="klschange()" id="kelas" aria-describedby="helpId" placeholder="">
-                <!-- <option>ECC Level 1 - Kelas A</option>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="">Pilih Level</label>
+                    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">
+                        <!-- <option>ECC Level 1 - Kelas A</option>
                 <option>ECC Level 1 - Kelas B</option> -->
-            </select>
-            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                    </select>
+                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                </div>
+            </div>
+            <div class="col">
+            <div class="form-group">
+                    <label for="">Pilih Kelas</label>
+                    <select class="form-control" name="" onchange="klschange()" id="kelas" aria-describedby="helpId" placeholder="">
+                        <!-- <option>ECC Level 1 - Kelas A</option>
+                <option>ECC Level 1 - Kelas B</option> -->
+                    </select>
+                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                </div>
+            </div>
         </div>
+
+
 
         <div class="form-group">
             <label> Please use this template before you're going to import </label>
@@ -158,10 +175,10 @@
     $(document).ready(function() {
         periode();
 
-       
+
     });
 
-   
+
 
     function periode() {
         $.post("../ajaxes/a_periode.php", {
@@ -169,7 +186,7 @@
             },
             function(data) {
                 $("#periode").html(data);
-                isikelas();
+                isilevel();
             });
     }
 
@@ -177,7 +194,8 @@
     function isikelas() {
         $.post("../ajaxes/a_dos_nilai.php", {
                 jenis: "get_kelasdos",
-                periode: $("#periode").val()
+                periode: $("#periode").val(),
+                level: $("#level").val(),
             },
             function(data) {
                 console.log("kelas:" + data);
@@ -187,20 +205,43 @@
             });
     }
 
+    function lvlchange() {
+        isikelas();
+    }
+
+
+    function isilevel() {
+        $.post("../ajaxes/a_dos_nilai.php", {
+                jenis: "get_leveldos",
+                periode: $("#periode").val()
+            },
+            function(data) {
+                console.log("level:" + data);
+                $("#level").html(data);
+                
+            });
+    }
+
+    function klschange() {
+        datatable_lihatsemuamahasiswa();
+    }
+
+    
     function datatable_lihatsemuamahasiswa() {
         //datatable list barang
         var periode = $("#periode").val();
         var kelas = $("#kelas").val();
+        var level = $("#level").val();
         var table = "";
         table = $('#example').DataTable({
             destroy: true,
             "processing": true,
             "language": {
                 "paginate": {
-                "first":      "First",
-                "last":       "Last",
-                "next":       "Next",
-                "previous":   "Previous"
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Previous"
                 },
             },
             "serverSide": true,
@@ -213,7 +254,8 @@
                 "type": "POST",
                 "data": {
                     "periode": periode,
-                    "kelas": kelas
+                    "kelas": kelas,
+                    "level":level
                 },
             },
             "deferRender": true,
@@ -267,8 +309,6 @@
         $("#file_uas").html(uas.name);
     });
 
-
- 
     function imuts() {
         var fd = new FormData();
         var files = $('#uts')[0].files[0];
@@ -376,13 +416,10 @@
             });
     }
 
-    function klschange() {
-        datatable_lihatsemuamahasiswa();
-    }
+   
 
-    function getgrade(){
+    function getgrade() {
         var na = $("#t_na").val();
-        $("#t_grade").html(na+"tt");
+        $("#t_grade").html(na + "tt");
     }
-
 </script>

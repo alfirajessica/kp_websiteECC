@@ -7,13 +7,35 @@
             <small id="helpId" class="form-text text-muted">Help text</small>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="">Pilih Level - Kelas</label>
                 <select class="form-control" id="kelas" onchange="klschange()" aria-describedby="helpId" placeholder="">
-                    <!-- <option>ECC Level 1 - Kelas A</option>
-                    <option>ECC Level 1 - Kelas B</option> -->
+                  
                 </select>
             <small id="helpId" class="form-text text-muted">Help text</small>
+        </div> -->
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="">Pilih Level</label>
+                    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">
+                        <!-- <option>ECC Level 1 - Kelas A</option>
+                <option>ECC Level 1 - Kelas B</option> -->
+                    </select>
+                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                </div>
+            </div>
+            <div class="col">
+            <div class="form-group">
+                    <label for="">Pilih Kelas</label>
+                    <select class="form-control" name="" onchange="klschange()" id="kelas" aria-describedby="helpId" placeholder="">
+                        <!-- <option>ECC Level 1 - Kelas A</option>
+                <option>ECC Level 1 - Kelas B</option> -->
+                    </select>
+                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                </div>
+            </div>
         </div>
 
                     
@@ -102,12 +124,26 @@
             },
             function(data) {
                 $("#periode").html(data);
-                isikelas();
+                isilevel();
             });
     }
 
 
-  
+    function isilevel() {
+        $.post("../ajaxes/a_nilai.php", {
+                jenis: "getadminlevel",
+                periode:$("#periode").val()
+            },
+            function(data) {
+                console.log(data);
+                $("#level").html(data);
+                isikelas();
+            });
+    }
+
+    function lvlchange(){
+        isikelas(); 
+    }
 
     function klschange() {
         datatable_lihatsemuamahasiswa();
@@ -115,9 +151,12 @@
 
 
     function isikelas() {
-        $.post("../ajaxes/a_kelas.php", {
-                jenis: "get_kelas",
-                idperiode:$("#periode").val()
+        var periode=$("#periode").val();
+        var level= $("#level").val();
+        $.post("../ajaxes/a_nilai.php", {
+                jenis: "getadminkelas",
+                periode:periode,
+                level:level
             },
             function(data) {
                 console.log(data);
@@ -129,6 +168,8 @@
         //datatable list barang
         var periode = $("#periode").val();
         var kelas = $("#kelas").val();
+        var level = $("#level").val();
+
         var table = "";
         table = $('#example').DataTable({
             destroy: true,
@@ -157,7 +198,8 @@
                 "type": "POST",
                 "data": {
                     "periode": periode,
-                    "kelas": kelas
+                    "kelas": kelas,
+                    "level": level
                 },
             },
             "deferRender": true,

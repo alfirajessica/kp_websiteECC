@@ -6,7 +6,7 @@
 .navbar-nav .nav-item:hover .nav-link {
     color: pink;
 }
-}
+
      
 </style>
 
