@@ -45,13 +45,13 @@
     <div class="table-responsive">
         <table class="table" id="example">
             <thead>
-                <tr>
-                <th scope="col" class="sort" data-sort="name">NRP</th>
-                <th scope="col" class="sort" data-sort="budget">Nama Mahasiswa</th>
-                <th scope="col" class="sort" data-sort="budget">UTS</th>
-                <th scope="col" class="sort" data-sort="budget">UAS</th>
-                <th scope="col" class="sort" data-sort="budget">NA</th>
-                <th scope="col" class="sort" data-sort="budget">Ket</th>
+            <tr>
+                    <th>NRP</th>
+                    <th>Student Name</th>
+                    <th>UTS</th>
+                    <th>UAS</th>
+                    <th>NA</th>
+                    <th>Grade </th>
                 </tr>
             </thead>
             <tbody>

@@ -311,7 +311,7 @@ if($_POST["jenis"]=="get_kelas"){
     $kal="";
     $conn=getConn();
     $idperiode=$_POST["idperiode"];
-    $stmt=$conn->prepare("select * from kelas where id_periode='$idperiode' ");
+    $stmt=$conn->prepare("select * from kelas where id_periode='$idperiode' and status_kelas='1'");
     $stmt->execute();
     $res=$stmt->get_result();
     if ($res->num_rows>0) {

@@ -6,7 +6,7 @@
 .navbar-nav .nav-item:hover .nav-link {
     color: pink;
 }
-
+}
      
 </style>
 
@@ -38,7 +38,7 @@
                     <a href="kelas.php"> <i class="menu-icon fa fa-laptop"></i>Kelas</a>
                 </li>
                 <li>
-                    <a href="mahasiswa.php"> <i class="menu-icon fa fa-laptop"></i>Mahasiswa</a>
+                    <a href="mahasiswa.php"> <i class="menu-icon fa fa-laptop"></i>Perwalian ECC</a>
                 </li>
                 <li>
                     <a href="nilai.php"> <i class="menu-icon fa fa-laptop"></i>Nilai</a>
@@ -48,6 +48,9 @@
                 </li>
                 <li>
                     <a href="ruangan.php"> <i class="menu-icon fa fa-laptop"></i>Ruang ECC</a>
+                </li>
+                <li>
+                    <a href="transkrip.php"> <i class="menu-icon fa fa-laptop"></i>Transkrip ECC</a>
                 </li>
                 
                 <!-- <li>

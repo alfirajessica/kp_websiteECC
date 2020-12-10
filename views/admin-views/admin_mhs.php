@@ -1,5 +1,5 @@
 <div class="card shadow"> <!-- card shadow -->
-    <div class="card-header border-1 bg-dark">
+    <div class="card-header border-1 bg-dark text-white">
         <div class="nav-wrapper">
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -281,7 +281,7 @@ function importfilenone() {
                     $("#lbl_file1").html("Pilih File ...");
                     $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
                     window.location.href="#table_pwecc";
-                    console.log(response);
+                   // console.log(response);
                     
 
                 } else {
@@ -380,6 +380,7 @@ function simpan_importmhs() {
     function(data){
         alert(data);
         $('#table_pwecc').DataTable().ajax.reload(); //reload ajax datatable 
+        //jmdatakembarpt();
     });
 }
 
@@ -451,7 +452,7 @@ function format ( d ) {
 
 
 function datatable_table_klsmhs() {
-    jmdatakembarpt();
+    //jmdatakembarpt();
     var periode = $("#periode_lihatkelas").val();
     //datatable list barang
     var table= "";
@@ -489,17 +490,22 @@ function datatable_table_klsmhs() {
             {"data":"id_klsmhs",
                 "visible": false,
                 "render": function (data, type, row) {  
+                    var id = row.id_klsmhs;
+                    
                     return "#"+row.id_klsmhs;
                 }
             },
             {"data":"nrp"},
             {"data":"nama_mhs"
             },
+
             {"data":"level_ecc",
                 "searchable": true,
                 "orderable":true,
                 "render": function (data, type, row) {  
+                    
                     return row.level_ecc + "/" + row.nama_kelas;
+                    
                 }
             },
             {"data":"status_klsmhs",
@@ -516,7 +522,7 @@ function datatable_table_klsmhs() {
                         btn = "<button onclick=\"nonaktikfkan_klsmhs(\'"+idklsmhs+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' >Non Activate</button>";
 
                         if (row.status_kembar == 1) {
-                        btn = "<button onclick=\"hapus_klsmhs(\'"+idklsmhs+"\',\'"+row.nrp+"\')\" type='button' class='btn btn-danger btn-sm' >Delete</button>";
+                        btn = "<button onclick=\"hapus_klsmhs(\'"+idklsmhs+"\',\'"+row.nrp+"\',\'"+row.id_nilai+"\')\" type='button' class='btn btn-danger btn-sm' >Delete</button>";
                         }
                     }
                     else if (status == 0) //status nonaktif
@@ -643,13 +649,14 @@ function datatable_table_klsmhs() {
         });
     }
 
-    function hapus_klsmhs(idklsmhs,nrp) {
+    function hapus_klsmhs(idklsmhs,nrp,id_nilai) {
         var periode = $("#periode_lihatkelas").val();
         $.post("../ajaxes/a_klsmhs.php",
         {
             jenis:"hapus_klsmhskembar", 
             id_klsmhs :idklsmhs,
             nrp:nrp,
+            id_nilai:id_nilai,
             id_periode:periode,
         },
         function(data){
