@@ -130,14 +130,14 @@
 
 
     function isilevel() {
-        $.post("../ajaxes/a_nilai.php", {
+        $.post("../ajaxes/a_kelas.php", {
                 jenis: "getadminlevel",
                 periode:$("#periode").val()
             },
             function(data) {
                 console.log(data);
                 $("#level").html(data);
-                isikelas();
+                //isikelas();
             });
     }
 
@@ -153,7 +153,7 @@
     function isikelas() {
         var periode=$("#periode").val();
         var level= $("#level").val();
-        $.post("../ajaxes/a_nilai.php", {
+        $.post("../ajaxes/a_kelas.php", {
                 jenis: "getadminkelas",
                 periode:periode,
                 level:level
@@ -161,6 +161,7 @@
             function(data) {
                 console.log(data);
                 $("#kelas").html(data);
+                datatable_lihatsemuamahasiswa();
             });
     }
 
@@ -175,17 +176,11 @@
             destroy: true,
             "processing": true,
             "language": {
-                "lengthMenu": "Tampilkan MENU data per Halaman",
-                "zeroRecords": "Maaf Data yang dicari tidak ada",
-                "info": "Tampilkan data PAGE dari _PAGES_",
-                "infoEmpty": "Tidak ada data",
-                "infoFiltered": "(filtered from MAX total records)",
-                "search": "Cari",
                 "paginate": {
-                    "first": "Pertama",
-                    "last": "terakhir",
-                    "next": "Selanjutnya",
-                    "previous": "Sebelumnya"
+                "first":      "First",
+                "last":       "Last",
+                "next":       "Next",
+                "previous":   "Previous"
                 },
             },
             "serverSide": true,
@@ -223,13 +218,8 @@
                 },
                 {
                     "data": "na"
-                }, {
-
-                    "render": function(data, type, row) {
-
-                        return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal1' onclick=\"isiubah('" + row.id_nilai + "')\" >Edit</button>";
-                    }
-                }
+                }, 
+                {"data":"grade"}
             ]
 
 

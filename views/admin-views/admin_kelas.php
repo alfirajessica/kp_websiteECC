@@ -109,6 +109,13 @@
 
                 <div class="card" id="cardform3" style="display:none">
                     <div class="card-body">
+                    <div class="form-group">
+<label for="">Pilih Level</label>
+    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">
+        <!-- <option>ECC Level 1 - Kelas A</option>
+<option>ECC Level 1 - Kelas B</option> -->
+    </select>
+</div>
                         <div class="form-group">
                         <button type="button" class="btn btn-secondary text-light" onclick="exportfile()">Export</button>
                         </div>
@@ -705,8 +712,25 @@ function  btn_cari() {
     console.log("button cari");
     //cek kelas yang belum diaktifkan pada periode tsb
     $('#cardform3').show();
-    datatable_kelasaktif();
+    // datatable_kelasaktif();
+    isilevel();
 }
+function isilevel() {
+        $.post("../ajaxes/a_kelas.php", {
+            jenis: "getadminlevel",
+            periode:$("#periode_lihatkelas").val()
+        },
+        function(data) {
+            console.log(data);
+            $("#level").html(data);
+            //isikelas();
+        });
+    }
+
+    function lvlchange(){
+        datatable_kelasaktif();
+    }
+
 
 function exportfile() {
     var periode = $("#periode_lihatkelas").val();
@@ -730,6 +754,7 @@ function nonaktikfkan_kls(idkelas, table) {
 
 function datatable_kelasaktif() {
     var periode = $("#periode_lihatkelas").val();
+    var level = $("#level").val();
     //datatable list barang
     var table= "";
     var groupColumn = 1;
@@ -751,7 +776,7 @@ function datatable_kelasaktif() {
             "ajax":{
                 "url":"../datatables/admin-datatable/kelas-aktifdt.php",
                 "type":"POST",
-                "data":{"idperiode":periode},
+                "data":{"idperiode":periode, "level":level},
             },
             "deferRender":true,
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
