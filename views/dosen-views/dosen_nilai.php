@@ -219,7 +219,12 @@
                 console.log("level:" + data);
                 $("#level").html(data);
                 
+                setTimeout(() => {
+                    $("#level").val("all");
+                    lvlchange();
+                }, 300);
             });
+            
     }
 
     function klschange() {
