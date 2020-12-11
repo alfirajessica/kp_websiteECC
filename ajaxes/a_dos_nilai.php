@@ -40,7 +40,7 @@ if($_POST["jenis"]=="get_kelasdos"){
     $res=$stmt->get_result();
    
     if ($res->num_rows>0) {
-        
+        $kal.="<option value='all' >Semua</option>";
         while($row=$res->fetch_assoc()){
             
             $level=$row["level_ecc"];
