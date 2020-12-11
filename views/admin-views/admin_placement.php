@@ -157,7 +157,15 @@
                 </div>
 
                 <div class="card" id="cardform3" style="display:none">
+
                     <div class="card-body">
+                    <div class="form-group">
+<label for="">Pilih Level</label>
+    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">
+        <!-- <option>ECC Level 1 - Kelas A</option>
+<option>ECC Level 1 - Kelas B</option> -->
+    </select>
+</div>
                         <div class="form-group">
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
                         </div>
@@ -346,6 +354,7 @@ function simpan_periode() {
     }
     
 }
+
 
 //standar nilai pada modal
 /*function tetapkan_standarnilai() {
@@ -550,6 +559,7 @@ function datatable_lihatsemuamahasiswa() {
     
     //datatable list barang
     var periode = $("#periode").val();
+    var level = $("#level").val();
     var table = "";
     table = $('#table_tempmhs').DataTable({
         destroy:true,
@@ -569,7 +579,8 @@ function datatable_lihatsemuamahasiswa() {
         "ajax": {
             "url": "../datatables/admin-datatable/placement-tableatur.php",
             "type": "POST",
-            "data":{"periode":periode},
+            "data":{"periode":periode, 
+            "level":level},
         },
         "deferRender": true,
         "aLengthMenu": [
@@ -848,7 +859,7 @@ function tempatkanmhs() {
 
 //lihat hasil placement keseluruhan
 
-function  btn_cariperiode() {
+function btn_cariperiode() {
     console.log("button cari");
     var periode = $("#periode_lihatkelas").val();
     console.log(periode);
@@ -859,8 +870,26 @@ function  btn_cariperiode() {
         $("#help_pilihperiode2").text("");
         $('#cardform3').show();
         datatable_ptmhs_periodeini();
+        isilevel();
     }
 }
+
+function isilevel() {
+        $.post("../ajaxes/a_kelas.php", {
+                jenis: "get_level_placement",
+                periode:$("#periode_lihatkelas").val()
+            },
+            function(data) {
+                console.log(data);
+                $("#level").html(data);
+                //isikelas();
+            });
+    }
+
+    function lvlchange(){
+        datatable_ptmhs_periodeini();
+    }
+
 
 function exportfile() {
     var periode = $("#periode_lihatkelas").val();
@@ -885,6 +914,7 @@ function nonaktikfkan_mhs(nrp) {
 function datatable_ptmhs_periodeini() {
     //datatable list barang
     var periode = $("#periode_lihatkelas").val();
+    var level = $("#level").val();
     var table = "";
     table = $('#table_mhspt').DataTable({
         destroy:true,
@@ -903,7 +933,8 @@ function datatable_ptmhs_periodeini() {
         "ajax": {
             "url": "../datatables/admin-datatable/placement-result.php",
             "type": "POST",
-            "data":{"periode":periode},
+            "data":{"periode":periode, 
+                "level":level},
         },
         "deferRender": true,
         "aLengthMenu": [

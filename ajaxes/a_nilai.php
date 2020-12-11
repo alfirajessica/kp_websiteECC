@@ -145,7 +145,7 @@ if ($_POST["jenis"]=="getadminlevel") {
             $level=$row["level_ecc"];
             $idkelas=$row["id_kelas"];
             $namakelas=$row["nama_kelas"];
-            $kal.="<option value='$idkelas' >ECC $level - Kelas $namakelas </option>";
+            $kal.="<option value='$idkelas' >Kelas $namakelas </option>";
         }
     }else{
         $kal.="<option value='-1' >~ Tidak ada kelas di periode ini ~</option>";
