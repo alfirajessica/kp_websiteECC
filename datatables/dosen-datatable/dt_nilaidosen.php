@@ -16,16 +16,16 @@ $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
 if ($level == "all") {
     $query = "SELECT distinct n.nilai_uts as uts,n.nilai_uas as uas,n.nilai_akhir as na,m.nama_mhs as nama,m.nrp as nrp,n.id_nilai as id_nilai, n.grade as grade 
-    FROM mahasiswa m, nilai n,kelas_mhs km ,kelas k
+    FROM mahasiswa m, nilai_mhs n,kelas_mhs km ,kelas k
     WHERE k.id_kelas=km.id_kelas and m.nrp=n.nrp and n.id_nilai=km.id_nilai and n.id_periode='$periode' and (m.nama_mhs like '%$search%' or m.nrp like '%$search%' )";
 } else {
     if ($kelas == "all") {
         $query = "SELECT distinct n.nilai_uts as uts,n.nilai_uas as uas,n.nilai_akhir as na,m.nama_mhs as nama,m.nrp as nrp,n.id_nilai as id_nilai, n.grade as grade 
-    FROM mahasiswa m, nilai n,kelas_mhs km ,kelas k
+    FROM mahasiswa m, nilai_mhs n,kelas_mhs km ,kelas k
     WHERE k.id_kelas=km.id_kelas and k.level_ecc='$level' and m.nrp=n.nrp and n.id_nilai=km.id_nilai and n.id_periode='$periode' and (m.nama_mhs like '%$search%' or m.nrp like '%$search%' )";
     } else {
         $query = "SELECT distinct n.nilai_uts as uts,n.nilai_uas as uas,n.nilai_akhir as na,m.nama_mhs as nama,m.nrp as nrp,n.id_nilai as id_nilai, n.grade as grade 
-    FROM mahasiswa m, nilai n,kelas_mhs km 
+    FROM mahasiswa m, nilai_mhs n,kelas_mhs km 
     WHERE m.nrp=n.nrp and n.id_nilai=km.id_nilai and km.id_kelas='$kelas' and (m.nama_mhs like '%$search%' or m.nrp like '%$search%' )";
     }
 }
