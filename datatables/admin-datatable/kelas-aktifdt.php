@@ -25,7 +25,7 @@ WHERE (k.level_ecc LIKE '%".$search."%' OR k.nama_kelas LIKE '%".$search."%' OR 
     ON k.dosen = u.username
     LEFT JOIN ruang_kelas rk
     ON k.id_ruangkelas=rk.id_ruangkelas
-    WHERE k.level='$level' and (k.level_ecc LIKE '%".$search."%' OR k.nama_kelas LIKE '%".$search."%' OR k.hari LIKE '%".$search."%' OR k.jam_awal LIKE '%".$search."%' OR k.dosen LIKE '%".$search."%' OR k.kuota LIKE '%".$search."%' OR k.status_kelas LIKE '%".$search."%' OR u.nama LIKE '%".$search."%' OR rk.nama_ruang LIKE '%".$search."%') and k.id_periode='$idperiode' and k.status_kelas='1'";
+    WHERE k.level_ecc='$level' and (k.level_ecc LIKE '%".$search."%' OR k.nama_kelas LIKE '%".$search."%' OR k.hari LIKE '%".$search."%' OR k.jam_awal LIKE '%".$search."%' OR k.dosen LIKE '%".$search."%' OR k.kuota LIKE '%".$search."%' OR k.status_kelas LIKE '%".$search."%' OR u.nama LIKE '%".$search."%' OR rk.nama_ruang LIKE '%".$search."%') and k.id_periode='$idperiode' and k.status_kelas='1'";
     
 }
 

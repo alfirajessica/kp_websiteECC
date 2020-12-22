@@ -5,18 +5,20 @@ $connect=getConn();
 $search = $_POST['search']['value']; // Ambil data yang di ketik user pada textbox pencarian
 $limit = $_POST['length']; // Ambil data limit per page
 $start = $_POST['start']; // Ambil data start
-$periode=$_POST["periode"];
-$level = $_POST["level"];
+$nrp = $_POST["nrp"];
 
-$sql = mysqli_query($connect, "SELECT nrp FROM tempkelas_mhs"); // Query untuk menghitung seluruh data siswa
+$sql = mysqli_query($connect, "SELECT nrp FROM kelas_mhs"); 
 $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
-if ($level == "all") {
-    $query = "SELECT * FROM tempkelas_mhs where id_periode='$periode'";
-}
-else{
-    $query = "SELECT * FROM tempkelas_mhs where id_periode='$periode' and level_ecc='$level'";
-}
+$query = "SELECT * FROM kelas_mhs k
+LEFT JOIN periode p
+ON k.id_periode = p.id_periode
+LEFT JOIN kelas ks
+ON k.id_kelas=ks.id_kelas
+LEFT JOIN nilai_mhs nm
+ON k.id_nilai = nm.id_nilai
+WHERE k.nrp='$nrp'";
+
 
 
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting

@@ -1,26 +1,3 @@
-<div class="row"> <!-- row -->        
-    <!-- standar nilai ecc -->
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-            <div class="form-group">
-                <label for="">Nama Ruang</label>
-                    <div class="input-group mb-3">
-                        <input type="text" name="" id="namaruang" class="form-control" placeholder="" aria-describedby="help_namaruang" oninput="namaruang()">
-                        
-                    </div>
-                    <small id="help_namaruang" class="form-text text-muted"></small> 
-            </div>
-            <br>
-            <label for="">status ruang secara default adalah Aktif</label>
-            
-            <button class="btn btn-outline-primary" type="button" id="btn_generate" onclick="simpanruang()" >Simpan</button>
-                       
-            </div>
-        </div>
-    </div> <!-- end of standar nilai ecc -->
-</div> <!-- end of row -->
-
 <!-- row -->
 <div class="row">
     <div class="col-md-12"> <!-- col-md-12 -->
@@ -29,7 +6,32 @@
                 <strong class="card-title">List Ruangan</strong>
             </div>
 
-            <div class="card-body">          
+            <div class="card-body">  
+                <div class="card-header">
+                    <form>
+                        <div class="alert alert-info" role="alert"> Gunakan form ini untuk menambah ruang kelas baru</div>
+                        
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label text-right">Gedung</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="" id="namagedung" class="form-control">
+                                    <small id="helpId" class="form-text text-muted">Masukkan Nama Gedung : B/U/L</small>
+                                </div>
+
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nomor Ruang</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="" id="nomorruang" class="form-control">
+                                    
+                                </div>
+                        </div>
+
+                        <small id="warning1"></small>
+                        <button class="btn btn-primary btn-block" type="button" id="btn_generate" onclick="simpanruang()" >Simpan</button>
+                            
+                    </form>
+                </div>
+                <br>
+        
                 <div class="table-responsive">
                     <table id="table_lihatruangan" class="table table-striped table-bordered" width="100%">
                         <thead>
@@ -55,6 +57,7 @@
         <div class="modal-content">
           <div class="modal-body">
           <form role="form">
+            
                 <table class="table table-borderless table-md text-right">
                     <tbody>
                         <tr>
@@ -124,7 +127,7 @@
     <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
     
 <script>
-
+var statusbtnsimpan ="simpan";
 //menghilangkan spasi saat input nama ruang
 function namaruang() {
     $("#namaruang, #namaruang_modal").on({
@@ -143,35 +146,80 @@ function namaruang() {
 
 }
 
+function reset() {
+    $("#namagedung, #nomorruang").val("");
+}
 
 function simpanruang() {
-    var namaruang = $("#namaruang").val();
+    console.log(statusbtnsimpan);
+    var namagedung = $("#namagedung").val().toUpperCase();
+    var nomorruang = $("#nomorruang").val();
     var statusruang = $("#statusruang").val();
+
+    var ruang = namagedung + "-"+nomorruang;
 
     //cek ruangan ada apa tdk
     $.post("../ajaxes/a_ruang.php",
     {
-        namaruang:namaruang,
+        ruang:ruang,
         jenis:"cek_ruang",
     },
     function(data){
-        
-        if (data["nama_ruang"] == namaruang) {
-            console.log("nama ruang : "+ data["nama_ruang"] +" telah ada");
-            $("#help_namaruang").html("nama ruang : "+data["nama_ruang"] +" telah ada");
+        console.log(data["nama_ruang"]);
+        var id_ruangkelas = data["id_ruangkelas"];
+        if (data["nama_ruang"] == ruang) {
+            if (statusbtnsimpan == "simpan") {
+                console.log("nama ruang : "+ data["nama_ruang"] +" telah ada");
+                $("#warning1").html("nama ruang : "+data["nama_ruang"] +" telah ada").css("color","red");
+
+            }
+            else if (statusbtnsimpan == "ubah") {
+                
+                $.post("../ajaxes/a_ruang.php",
+                {
+                    id_ruangkelas:id_ruangkelas,
+                    ruang:ruang,
+                    jenis:"update_namaruanglama",
+                },
+                function(data){
+                    alert(data);
+                    reset();
+                });
+               // console.log("berhasil ubah");
+                
+            }
+            
         }
-        else if (data["nama_ruang"] != namaruang) {
-            $("#help_namaruang").html("");
-            $.post("../ajaxes/a_ruang.php",
-            {
-                namaruang:namaruang,
-                jenis:"simpan_ruang",
-            },
-            function(data){
-                console.log(data);
-                $('#table_lihatruangan').DataTable().ajax.reload(); //reload ajax datatable 
-                $("#namaruang").val("");
-            });
+        else if (data["nama_ruang"] != ruang) {
+            if (statusbtnsimpan == "simpan") {
+                $("#warning1").html("");
+                $.post("../ajaxes/a_ruang.php",
+                {
+                    ruang:ruang,
+                    jenis:"simpan_ruang",
+                },
+                function(data){
+                    alert(data);
+                    $('#table_lihatruangan').DataTable().ajax.reload(); //reload ajax datatable 
+                    $("#namagedung, #nomorruang").val("");
+                });
+            }
+            else if (statusbtnsimpan == "ubah") {
+               // var id_ruangkelas = data["id_ruangkelas"];
+                $.post("../ajaxes/a_ruang.php",
+                {
+                    id_ruangkelas:id_ruangkelas,
+                    ruang:ruang,
+                    jenis:"update_namaruangbaru",
+                },
+                function(data){
+                    alert(data);
+                    reset();
+                });
+               // console.log("berhasil ubah");
+                
+            }
+            
         }
         
        $('#table_lihatruangan').DataTable().ajax.reload(); //reload ajax datatable 
@@ -185,13 +233,19 @@ function datatable_lihatsemuaruang() {
     var table= "";
     table = $('#table_lihatruangan').DataTable( 
     {
-        dom: 'Bfrtip', 
-         "processing":true,
-         "serverSide":true,
-         "bInfo" : false,
-         dom:"<'myfilter'f><'mylength'l>t",
-         "pagingType": "numbers",
-         "ordering":true, //set true agar bisa di sorting
+        destroy:true,
+        "responsive":true,
+        "processing":true,
+        "language": {
+            "paginate": {
+            "first":      "First",
+            "last":       "Last",
+            "next":       "Next",
+            "previous":   "Previous"
+            },
+        },
+        "serverSide":true,
+        "ordering":true, //set true agar bisa di sorting
          "order":[[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
          "ajax":{
              "url":"../datatables/admin-datatable/ruangall_dt.php",
@@ -212,7 +266,7 @@ function datatable_lihatsemuaruang() {
                     }
                     else if (row.status_ruang == 0) //dosen tdk aktif
                     {
-                        return "<label class='text-success font-weight-bold'>Tidak Aktif</label> ";
+                        return "<label class='text-danger font-weight-bold'>Tidak Aktif</label> ";
                     }
                    
                 }
@@ -223,8 +277,15 @@ function datatable_lihatsemuaruang() {
                 "render": function (data, type, row) {  
                     var id_ruangkelas = row.id_ruangkelas;
                     var status = row.status_kelas;
-
-                    return "<button onclick=\"atur_ruang(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-default btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button>" + "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Lihat Daftar kelas</button>";
+                    var btn = "";
+                    if(row.status_ruang == "1"){
+                        btn = "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Nonaktifkan</button>";
+                    }
+                    else if (row.status_ruang == "0") {
+                        btn = "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Aktifkan</button>";
+                    }
+                   // "<button onclick=\"atur_ruang(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button> " + 
+                    return "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Lihat Daftar kelas</button> " + btn;
                     
                 },
                 "target":-1,
@@ -243,15 +304,26 @@ function atur_ruang(id_ruangkelas) {
         jenis:"get_detail_ruang",
     },
     function(data){
-        $('#namaruang_modal').val(data["nama_ruang"]);
-        if (data["status_ruang"] == 0)//tdk aktif
-        {
-            $('#pilih_status').val("Non-aktif");
-        }
-        else if(data["status_ruang"] == 1)
-        {
-            $('#pilih_status').val("Aktif");
-        }
+       // $('#namaruang_modal').val(data["nama_ruang"]);
+       var ruang = data["nama_ruang"];
+       var slice_ged = ruang.slice(0,1); //get gedungny
+       var slice_nomor = ruang.split("-");
+       console.log(slice_ged);
+       console.log(slice_nomor[1]);
+
+       //tinggal masukkin ke input atas aja
+       $("#namagedung").val(slice_ged);
+       $("#nomorruang").val(slice_nomor[1]);
+       statusbtnsimpan = "ubah";
+
+        // if (data["status_ruang"] == 0)//tdk aktif
+        // {
+        //     $('#pilih_status').val("Non-aktif");
+        // }
+        // else if(data["status_ruang"] == 1)
+        // {
+        //     $('#pilih_status').val("Aktif");
+        // }
         $('#table_lihatruangan').DataTable().ajax.reload(); //reload ajax datatable 
         idruang = data["id_ruangkelas"];
     });

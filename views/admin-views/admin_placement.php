@@ -4,10 +4,10 @@
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Set the placement</a>
+                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Atur Placement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Result of Placement</a>
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Hasil Placement</a>
                 </li>
             </ul>
             <!--end tabs -->
@@ -20,11 +20,11 @@
             <!-- atur kelas -->
             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                 <div class="form-group">
-                    <label for="">Select Period</label>
+                    <label for="">Periode Placement</label>
                     <div class="input-group mb-3">
                         <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode"></select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" >Search</button>
+                            <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" > <i class="menu-icon fa fa-search"></i> Cari</button>
                         </div>
                     </div>
                     <label id="help_pilihperiode" style="color:red;"></label>
@@ -35,91 +35,114 @@
                 </div> -->
                     
                 <div class="form-group">
-                    <label> Please use this template before you're going to import </label>
-                    <button type="button" class="btn btn-success text-light" onclick="window.location.href='../custom_export/nilaitest.xlsx'" target="_blank">Download Templete</button>
+                    <label> Gunakan template ini untuk mengimport data placement </label>
+                    <button type="button" class="btn btn-success text-light" onclick="window.location.href='../custom_export/nilaitest.xlsx'" target="_blank">Download ini</button>
                 </div>
 
                 <div class="card" id="cardform1" style="display:none">
-                    <div class="card-header">
-                        <form>
-                            <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Select file</label>
-                                <div class="custom-file col-sm-10"> 
-                                    <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
-                                    <label class="custom-file-label" id="lbl_file1">Select file ...</label>
-                                </div>
-                            </div>
-                                
-                            <div class="form-group">
-                                <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="Import File" class="btn btn-primary form-control">
-                                <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="Import File" class="btn btn-primary form-control">
-                                <small id="help_file" class="text-muted"></small>
-                            </div>
-                            <hr>
-                                
-                            <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">NRP</label>
-                                    <div class="col-sm-10">
-                                    <input type="number" id="addnrp" class="form-control" placeholder="fill in the Nrp of the student" aria-describedby="help_nrp">
-                                    <small id="help_nrp" class="form-text text-muted"></small>
-                                    </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Student Name</label>
-                                    <div class="col-sm-10">
-                                    <input type="text" id="addnama" class="form-control" placeholder="fill in the name of the student" aria-describedby="help_nama">
-                                    <small id="help_nama" class="form-text text-muted"></small>
-                                    </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Score</label>
-                                    <div class="col-sm-10">
-                                    <input type="number" id="addnilai" class="form-control" placeholder="fill in the score of the student" aria-describedby="help_nilai">
-                                    <small id="help_nilai" class="form-text text-muted"></small>
-                                    </div>
-                            </div>
-                            <div class="form-group row"> <!-- form group row radio -->
-                                <label for="staticEmail" class="col-sm-2 col-form-label text-right"></label>
-                                
-                                <div class="col-sm-10" id="radio1">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="radio_level1" value="1" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="radio_level1">Level 1</label>
-                                    </div>
+                    <div class="card-body">
+                        <div class="default-tab">
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Masukkan data manual</a>
+                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Import File</a>
                                         
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="radio_level2" value="2" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="radio_level2">Level 2</label>
                                     </div>
-
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="radio_level3" value="3" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="radio_level3">Level 3</label>
-                                    </div>
+                                </nav>
+                                <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                                    <form>
                                         
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="radio_level4" value="4" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="radio_level4">Level 4</label>
-                                    </div>
-
-                                    <label style="color:red;" id="labelwarning1"></label>
-                                </div>
+                                        <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label text-right">NRP</label>
+                                                <div class="col-sm-10">
+                                                <input type="number" id="addnrp" class="form-control" placeholder="Masukkan NRP mahasiswa" aria-describedby="help_nrp">
+                                                <small id="help_nrp" class="form-text text-muted"></small>
+                                                </div>
+                                        </div>
+            
+                                        <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nama</label>
+                                                <div class="col-sm-10">
+                                                <input type="text" id="addnama" class="form-control" placeholder="Masukkan nama mahasiswa" aria-describedby="help_nama">
+                                                <small id="help_nama" class="form-text text-muted"></small>
+                                                </div>
+                                        </div>
+            
+                                        <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nilai Placement</label>
+                                                <div class="col-sm-10">
+                                                <input type="number" id="addnilai" class="form-control" placeholder="Masukkan nilai placement mahasiswa" aria-describedby="help_nilai">
+                                                <small id="help_nilai" class="form-text text-muted"></small>
+                                                </div>
+                                        </div>
+                                        <div class="form-group row"> <!-- form group row radio -->
+                                            <label for="staticEmail" class="col-sm-2 col-form-label text-right"></label>
+                                            
+                                            <div class="col-sm-10" id="radio1">
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="radio_level1" value="1" name="customRadioInline1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="radio_level1">Level 1</label>
+                                                </div>
+                                                    
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="radio_level2" value="2" name="customRadioInline1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="radio_level2">Level 2</label>
+                                                </div>
+            
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="radio_level3" value="3" name="customRadioInline1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="radio_level3">Level 3</label>
+                                                </div>
+                                                    
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="radio_level4" value="4" name="customRadioInline1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="radio_level4">Level 4</label>
+                                                </div>
+            
+                                                <label style="color:red;" id="labelwarning1"></label>
+                                            </div>
+                                                
+                                        </div> <!-- end of form group row radio -->
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Masukkan Mahasiswa Ini</button>
+                                        </div>
+                                    </form>    
                                     
-                            </div> <!-- end of form group row radio -->
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary btn-block" onclick="addtempmahasiswa()">Confirmation</button>
-                            </div>
-                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
+                                    <form>
+                                        <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label text-right">File</label>
+                                                <div class="custom-file col-sm-9"> 
+                                                    <input type="file" class="custom-file-input form-control" name="uploadfile" id="file1">
+                                                    <label class="custom-file-label" id="lbl_file1">Pilih file ...</label>
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="button" href="#table_tempmhs" onclick="importfileada()" id="btnimportada" value="Import File" class="btn btn-primary form-control">
+                                            <input aria-describedby="help_file" type="button" href="#table_tempmhs"  onclick="importfilenone()" id="btnimportnone" value="Import File" class="btn btn-primary form-control">
+                                            <label style="color:red;" id="help_file"></label>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+
+                            </div>  
                     </div>
                 </div>
 
                 <div class="card" id="cardform2" style="display:none">
                     <div class="card-body">
+                        <div class="form-group">
+                        <label for="">Filter berdasarkan Level</label>
+                            <select class="form-control" name="" onchange="lvlchange()" id="filter1_level" aria-describedby="helpId" placeholder="">
+                            </select>
+                        </div>
+
                         <div class="alert alert-danger" role="alert" id="alert_warningkembar" style="disabled:false"> </div>
                         <div class="form-group text-right">
-                            <button type="button" class="btn btn-primary text-light" onclick="tempatkanmhs()">Save Placement</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="tempatkanmhs()">Simpan data Placement</button>
                         </div>
 
                         <div class="table-responsive">
@@ -127,10 +150,10 @@
                             <thead>
                                 <tr>
                                     <th>#NRP</th>
-                                    <th>Student Name</th>
-                                    <th>Score</th>
-                                    <th>Level</th>
-                                    <th>Action</th>
+                                    <th>Nama mahasiswa</th>
+                                    <th>Nilai PT</th>
+                                    <th>Level PT</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -145,11 +168,11 @@
             <!-- lihat hasil placement -->
             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                 <div class="form-group">
-                    <label for="">Select Period</label>
+                    <label for="">Periode Placement</label>
                     <div class="input-group mb-3">
                         <select name="select" id="periode_lihatkelas"  class="form-control" > </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()">Search</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="btn_cariperiode()"><i class="menu-icon fa fa-search"></i> Cari</button>
                         </div>
                     </div>
                     <label id="help_pilihperiode2" style="color:red;"></label>
@@ -159,13 +182,13 @@
                 <div class="card" id="cardform3" style="display:none">
 
                     <div class="card-body">
-                    <div class="form-group">
-<label for="">Pilih Level</label>
-    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">
-        <!-- <option>ECC Level 1 - Kelas A</option>
-<option>ECC Level 1 - Kelas B</option> -->
-    </select>
-</div>
+                        <div class="form-group">
+                        <label for="">Filter berdasarkan Level</label>
+                            <select class="form-control" name="" onchange="lvlchange()" id="filter2_level" aria-describedby="helpId" placeholder="">
+                                <!-- <option>ECC Level 1 - Kelas A</option>
+                        <option>ECC Level 1 - Kelas B</option> -->
+                            </select>
+                        </div>
                         <div class="form-group">
                             <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
                         </div>
@@ -176,10 +199,10 @@
                                 <tr>
                                     <tr>
                                         <th>#NRP</th>
-                                        <th>Student Name</th>
-                                        <th>Score</th>
-                                        <th>Level</th>
-                                        <th>Action</th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Nilai PT</th>
+                                        <th>Level PT</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tr>
                                 </thead>
@@ -259,7 +282,7 @@
             </div>
             <div class="modal-body">
                 <form role="form">
-                    <label id="statustable" ></label>
+                    <label id="statustable" style="display:none"></label>
                     <label id="idptest" style="display:none"></label>
                     <table class="table table-borderless table-md text-right">
                         <tbody>
@@ -274,13 +297,13 @@
                                 <td class="text-left" id="crnrp"></td>
                             </tr>
                             <tr>
-                                <td scope="row">Student Name : </td>
+                                <td scope="row">Nama Mahasiswa : </td>
                                 <td class="text-left">
                                     <input type="text" class="form-control-sm" name="" id="crnama">
                                 </td>
                             </tr>
                             <tr>
-                                <td scope="row">Score : </td>
+                                <td scope="row">Nilai PT : </td>
                                 <td class="text-left">
                                     <input min=0 type="number" class="form-control-sm" name="" id="crnilaiplacement" aria-describedby="helpId" placeholder="">
                                 </td>
@@ -313,7 +336,7 @@
             </div>
             <div class="modal-footer">
                 <label id="update_warning"> </label>
-                <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Save Changes</button>
+                <button id="btn_update" type="button" class="btn btn-primary" onclick="update()">Simpan</button>
             </div>
         </div>
     </div>
@@ -330,12 +353,12 @@ function simpan_periode() {
     
     if (periode == "-1") {
         $("#help_pilihperiode").text("Pilih periode terlebih dahulu");
-       // $("#help_pilihperiode").css("style","color:red");
     }
     else
     {
         $("#help_pilihperiode").text("");
         $('#cardform1, #cardform2, #formaturstandard').show();
+        isilevel(periode);
         datatable_lihatsemuamahasiswa();
         jmdatakembarpt();
 
@@ -412,7 +435,7 @@ function importfileada() {
                 processData: false,
                 success: function(response) {
                     if (response.includes("success")) {
-                        alert("Berhasil importfileada data !");
+                        alert("Berhasil Mengimport data");
                         $("#lbl_file1").html("Pilih File ...");
                         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
                         window.location.href="#table_tempmhs";
@@ -467,27 +490,25 @@ function importfilenone() {
     
 }
 
-
-
 function cekfileimport() {
-        $.post(
-            "../ajaxes/a_placement.php", {
-                jenis: "cekdata"
-            },
-            function(data) {
-                // alert(data);
-                if (data == "ada") {
-                    $("#btnimportnone").css("display", "none");
-                    $("#btnimpotada").css("display", "block");
-                } else {
-                    $("#btnimportnone").css("display", "block");
-                    $("#btnimportada").css("display", "none");
-                }
+    $.post(
+        "../ajaxes/a_placement.php", {
+            jenis: "cekdata"
+        },
+        function(data) {
+            // alert(data);
+            if (data == "ada") {
+                $("#btnimportnone").css("display", "none");
+                $("#btnimpotada").css("display", "block");
+            } else {
+                $("#btnimportnone").css("display", "block");
+                $("#btnimportada").css("display", "none");
             }
-        );
-    }
+        }
+    );
+}
 
-//nambah satu2
+//nambah data placement peserta ECC secara manual
 function addtempmahasiswa() {
     var periode = $("#periode").val();
     var nrp = $("#addnrp").val();
@@ -499,11 +520,10 @@ function addtempmahasiswa() {
     var columns = $.map(result, function(element) {
         radio_val = $(element).attr("value");
     });
-    console.log(radio_val);
+    //console.log(radio_val);
 
     if (nrp == "" || nama == "" || nilai == "" || radio_val == null) {
-        $("#labelwarning1").text("Make sure all form is filled");
-        
+        $("#labelwarning1").text("Pastikan semua form terisi!"); 
     }
     else{
         $.post("../ajaxes/a_placement.php",
@@ -527,20 +547,17 @@ function addtempmahasiswa() {
                 function(data) {
                     if (data.includes("Berhasil")) {
                         $('#table_tempmhs').DataTable().ajax.reload(); //reload ajax datatable 
-                        alert("Success to add new student : " + nrp);
-                        reset();
-                        
-                    }
-                    
+                        alert("Berhasil menambahkan peserta Placement Test : " + nrp);
+                        reset();      
+                    } 
                 });
             }
             else{
-                alert("Student with nrp " + nrp + " has been registered");
+                alert("Mahasiswa dengan Nrp " + nrp + " telah terdaftar");
             }
         reset();
         });
-    }
-    
+    }  
 }
 
 function resetmodal() {
@@ -552,14 +569,11 @@ function reset() {
     $("#addnama").val("");
     $("#addnilai").val("");
     $("#labelwarning1").text("");
-   
 }
     
 function datatable_lihatsemuamahasiswa() {
-    
-    //datatable list barang
     var periode = $("#periode").val();
-    var level = $("#level").val();
+    var level = $("#filter1_level").val();
     var table = "";
     table = $('#table_tempmhs').DataTable({
         destroy:true,
@@ -571,7 +585,7 @@ function datatable_lihatsemuamahasiswa() {
                 "last":       "Last",
                 "next":       "Next",
                 "previous":   "Previous"
-                },
+            },
         },
         "serverSide":true,
         "ordering":true, //set true agar bisa di sorting
@@ -579,8 +593,8 @@ function datatable_lihatsemuamahasiswa() {
         "ajax": {
             "url": "../datatables/admin-datatable/placement-tableatur.php",
             "type": "POST",
-            "data":{"periode":periode, 
-            "level":level},
+            "data":{"periode":periode, "level":level,
+            },
         },
         "deferRender": true,
         "aLengthMenu": [
@@ -598,7 +612,7 @@ function datatable_lihatsemuamahasiswa() {
                 "render": function (data, type, row) {  
                     if (row.ptest_level == '0') //kelas aktif
                     {
-                        return "<label class='text-danger'> Not filled </label>";
+                        return "<label class='text-danger'> Belum terisi </label>";
                     }
                     else if (row.ptest_level != 0) {
                         return "<label> Level " + row.ptest_level + " </label>";
@@ -619,26 +633,27 @@ function datatable_lihatsemuamahasiswa() {
                     if (row.nilai_ptest == '0') {
                         
                         if (row.status_kembar == 1) {
-                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Insert Score</button>";
+                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Input Nilai</button>";
                         }
                         else{
-                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Insert Score</button>";
+                            btn1 = "<button class='btn btn-primary rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Input Nilai</button>";
                             
                         }
 
-                        return btn1 + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm'> Delete </button>";
+                        //return btn1 + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm'> Delete </button>";
                     }
                     else{
                         if (row.status_kembar == 1) {
-                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\"> Edit </button>"
+                            btn1 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' disabled onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\"> Ubah </button>"
 
                             
                         }else{
-                            btn2 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\"> Edit </button>"
+                            btn1 = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\"> Ubah </button>"
                         }
-                        return btn2  + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' > Delete</button>";
+                        //return btn2  + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm' > Delete</button>";
                         
                     }
+                    return btn1 + " <button onclick=\"hapus_mhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm'>Hapus</button>";
                 }
             },
              
@@ -648,7 +663,6 @@ function datatable_lihatsemuamahasiswa() {
         {
             $('td', row).css('background-color', '#f0aaaa');
         }
-        
     }
     });
 }
@@ -732,10 +746,10 @@ else{
             console.log(data);
             if (data == 1) {
                 $(table).DataTable().ajax.reload(); //reload ajax datata
-                $("#update_warning").text("Success to changes").css("color","blue");
+                $("#update_warning").text("Berhasil Simpan").css("color","blue");
             }
             else{
-                $("#update_warning").text("Make sure all form is filled!").css("color","red");
+                $("#update_warning").text("Pastikan semua terisi!").css("color","red");
             }
             
         });
@@ -809,9 +823,9 @@ function jmdatakembarpt() {
             idperiode:periode,
         },
         function(data) {
-            console.log(data);
+            console.log("jmdatakembarpt " + data);
             if (data == "1") {
-                $("#alert_warningkembar").text("Please delete the red row! you have multiple data (same nrp)");
+                $("#alert_warningkembar").text("Row berwarna merah menandakan terdapat data yang kembar,  Silakan hapus row berwarna merah!");
                 $("#alert_warningkembar").addClass('alert alert-danger');
             }
             else{
@@ -836,7 +850,7 @@ function tempatkanmhs() {
 
         if (cek != null) //ada yg belum terisi
         {
-            alert("You can't save this placement! Please make sure all data is filled")
+            alert("Tidak dapat menyimpan hasil placement! Pastikan semua data terisi dan tidak ada data yang kembar");
         }
         else if (cek == null) //terisi semua
         {
@@ -869,26 +883,31 @@ function btn_cariperiode() {
     else{
         $("#help_pilihperiode2").text("");
         $('#cardform3').show();
+        isilevel(periode);
         datatable_ptmhs_periodeini();
-        isilevel();
+        
     }
 }
 
-function isilevel() {
-        $.post("../ajaxes/a_kelas.php", {
-                jenis: "get_level_placement",
-                periode:$("#periode_lihatkelas").val()
-            },
-            function(data) {
-                console.log(data);
-                $("#level").html(data);
-                //isikelas();
-            });
-    }
+//---------- filter berdasarkan level-------------//
+function isilevel(periode) {
+    $.post("../ajaxes/a_kelas.php", {
+            jenis: "get_level_placement",
+            periode:periode,
+        },
+        function(data) {
+            console.log(data);
+            $("#filter1_level, #filter2_level").html(data);
+            datatable_lihatsemuamahasiswa();
+            datatable_ptmhs_periodeini();
+        });
+}
 
-    function lvlchange(){
-        datatable_ptmhs_periodeini();
-    }
+function lvlchange(){
+    datatable_lihatsemuamahasiswa();
+    datatable_ptmhs_periodeini();
+}
+//----------end of filter berdasarkan level-------------//
 
 
 function exportfile() {
@@ -914,7 +933,7 @@ function nonaktikfkan_mhs(nrp) {
 function datatable_ptmhs_periodeini() {
     //datatable list barang
     var periode = $("#periode_lihatkelas").val();
-    var level = $("#level").val();
+    var level = $("#filter2_level").val();
     var table = "";
     table = $('#table_mhspt').DataTable({
         destroy:true,
@@ -966,15 +985,8 @@ function datatable_ptmhs_periodeini() {
                     var id_ptest = row.id_ptest;
                     var periode = row.id_periode;
                     var table = "#table_mhspt";
-                    var btn="";
-
-                    // if (row.id_periode == "1") {
-                    //      btn = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Edit</button>";
-                    // }else{
-                    //      btn = "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+table+"\')\" >Edit</button>";
-                    //  }
-                    
-                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Edit</button>";;
+        
+                    return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#isinilai' onclick=\"loadmhs(\'"+id_ptest+"\',\'"+nrp+"\',\'"+periode+"\',\'"+table+"\')\" >Ubah</button>";;
                 }
             },
             

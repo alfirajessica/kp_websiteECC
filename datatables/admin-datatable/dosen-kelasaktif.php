@@ -6,6 +6,7 @@ $search = $_POST['search']['value']; // Ambil data yang di ketik user pada textb
 $limit = $_POST['length']; // Ambil data limit per page
 $start = $_POST['start']; // Ambil data start
 $username = $_POST["username"];
+$periode = $_POST["periode"];
 
 $sql = mysqli_query($connect, "SELECT id_kelas FROM kelas where status_kelas=1"); // Query untuk menghitung seluruh data kelas
 $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
@@ -15,7 +16,7 @@ LEFT JOIN user u
 ON k.dosen = u.username
 LEFT JOIN ruang_kelas rk
 ON k.id_ruangkelas=rk.id_ruangkelas
-WHERE (k.level_ecc LIKE '%".$search."%' OR k.nama_kelas LIKE '%".$search."%' OR k.hari LIKE '%".$search."%' OR k.jam_awal LIKE '%".$search."%' OR k.dosen LIKE '%".$search."%' OR k.kuota LIKE '%".$search."%' OR k.status_kelas LIKE '%".$search."%' OR u.nama LIKE '%".$search."%' OR rk.nama_ruang LIKE '%".$search."%') and k.dosen='$username' and k.status_kelas='1'";
+WHERE (k.level_ecc LIKE '%".$search."%' OR k.nama_kelas LIKE '%".$search."%' OR k.hari LIKE '%".$search."%' OR k.jam_awal LIKE '%".$search."%' OR k.dosen LIKE '%".$search."%' OR k.kuota LIKE '%".$search."%' OR k.status_kelas LIKE '%".$search."%' OR u.nama LIKE '%".$search."%' OR rk.nama_ruang LIKE '%".$search."%') and k.dosen='$username' and k.status_kelas='1' and k.id_periode='$periode'";
 
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 $order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"

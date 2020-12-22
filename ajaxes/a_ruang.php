@@ -20,14 +20,13 @@ if ($_POST["jenis"]=="get_allruang") {
 }
 
 if($_POST["jenis"]=="cek_ruang"){
-    $namaruang = strtoupper($_POST["namaruang"]);
-    $sqlcek = "select * from ruang_kelas where nama_ruang='$namaruang'";
+    $ruang = strtoupper($_POST["ruang"]);
+    $sqlcek = "select * from ruang_kelas where nama_ruang='$ruang'";
     $query = mysqli_query($conn,$sqlcek); // get the data from the db
     $result = array();
     while ($row = $query->fetch_array(MYSQLI_ASSOC)) { // fetches a result row as an associative array
-
         $result ["nama_ruang"] = $row['nama_ruang'];
-        
+        $result ["id_ruangkelas"] = $row['id_ruangkelas'];
     }
     
     $conn->close();
@@ -36,14 +35,14 @@ if($_POST["jenis"]=="cek_ruang"){
 }
 
 if($_POST["jenis"]=="simpan_ruang"){
-    $namaruang = strtoupper($_POST["namaruang"]);
+    $ruang = strtoupper($_POST["ruang"]);
     $status="1";
     $nama="";
-    $sql="insert into ruang_kelas (id_ruangkelas,nama_ruang, status_ruang) values (null,'$namaruang','$status')";
+    $sql="insert into ruang_kelas (id_ruangkelas,nama_ruang, status_ruang) values (null,'$ruang','$status')";
             if ($conn->query($sql)) {
-                echo "berhasil tambah kelas";
+                echo "Berhasil tambah ruang kelas";
             }else {
-                echo "gagal";
+                echo "Gagal tambah ruang kelas";
             }
     $conn->close();
 }
@@ -67,16 +66,16 @@ if($_POST["jenis"]=="get_detail_ruang"){
     echo json_encode($result); // return value of $result
 }
 
-if($_POST["jenis"]=="update_ruang"){
+if($_POST["jenis"]=="update_namaruanglama"){
     $id_ruangkelas = $_POST["id_ruangkelas"];
-    $namaruang = $_POST["namaruang"];
-    $statusruang=$_POST["statusruang"];
+    $ruang = $_POST["ruang"];
     
-    $sql = "update ruang_kelas set nama_ruang='$namaruang', status_ruang='$statusruang' where id_ruangkelas='$id_ruangkelas'";
+    
+    $sql = "update ruang_kelas set nama_ruang='$ruang' where id_ruangkelas='$id_ruangkelas'";
     if ($conn->query($sql)) {
-        echo "berhasil ubah ruangan";
+        echo "Berhasil ubah nama ruang";
     }else {
-        echo "gagal";
+        echo "Gagal mengubah";
     }
     $conn->close();
 
@@ -84,5 +83,20 @@ if($_POST["jenis"]=="update_ruang"){
 }
 
 
+if($_POST["jenis"]=="update_namaruangbaru"){
+    $id_ruangkelas = $_POST["id_ruangkelas"];
+    $ruang = $_POST["ruang"];
+    
+    
+    $sql = "update ruang_kelas set nama_ruang='$ruang' where id_ruangkelas='$id_ruangkelas'";
+    if ($conn->query($sql)) {
+        echo "Berhasil ubah nama ruang";
+    }else {
+        echo "Gagal mengubah";
+    }
+    $conn->close();
+
+    
+}
 
 ?>

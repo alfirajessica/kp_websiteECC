@@ -148,9 +148,9 @@ if($_POST["jenis"]=="hapus_kelas"){
     //delete kelas dengan idkelas tsb
     $sql = "delete from kelas where id_kelas='$idkelas'";
     if ($conn->query($sql)) {
-        $ket= "berhasil hapus";
+        $ket= "Berhasil hapus kelas ini";
     }else {
-        $ket= "gagal hapus";
+        $ket= "Gagal hapus kelas ini";
     }
 
     echo $ket;
@@ -287,7 +287,7 @@ if($_POST["jenis"]=="aktifkan_allkelas"){
     if ($conn->query($sql)) {
         $ket = "Berhasil mengaktifkan semua kelas"; //berhasil
     }else {
-        $ket = "Gagl mengaktifkan semua kelas! Pastikan data semua kelas terisi"; //gagal
+        $ket = "Gagal mengaktifkan semua kelas! Pastikan data semua kelas terisi"; //gagal
     }
     echo $ket;
     $conn->close();
@@ -299,9 +299,9 @@ if($_POST["jenis"]=="nonaktifkan_kls"){
     $sql = "update kelas set status_kelas='0' where id_kelas='$idkelas'";
     
     if ($conn->query($sql)) {
-        $ket= "1"; //berhasil
+        $ket= "Berhasil menonaktifkan kelas ini"; //berhasil
     }else {
-        $ket= "0"; //gagal
+        $ket= "Gagagl menonaktifkan kelas ini"; //gagal
     }
     echo $ket;
     $conn->close();
@@ -331,24 +331,26 @@ if($_POST["jenis"]=="get_kelas"){
 if($_POST["jenis"]=="get_level_placement"){
     $conn=getConn();
     $kal="";
-    // $kal.="<option value='-1'>-Pilih Level- </option>";
-    $periode=$_POST["periode"];
-    $stmt=$conn->prepare("select * from placement where id_periode='$periode' group by ptest_level");
-    $stmt->execute();
-    $res=$stmt->get_result();
-   
-    if ($res->num_rows>0) {
-        $kal.="<option value='all' >All</option>";
-        while($row=$res->fetch_assoc()){
-            $level=$row["ptest_level"];
-            $kal.="<option value='$level' >ECC $level </option>";
-        }
-    }else{
-        $kal.="<option value='-1' >~Tidak ada placement di periode ini~ </option>";
+    
+    $kal.="<option value='all' >Semua</option>";
+    for ($i=1; $i < 5; $i++) { 
+        $kal.="<option value='$i' >ECC Level $i </option>";
     }
-   
+    
     echo $kal;
 }
+
+if($_POST["jenis"]=="get_level_perwalian"){
+    $conn=getConn();
+    $kal="";
+    
+    for ($i=1; $i < 5; $i++) { 
+        $kal.="<option value='$i' >ECC Level $i </option>";
+    }
+    
+    echo $kal;
+}
+
 
 
 if ($_POST["jenis"]=="getadminlevel") {

@@ -263,9 +263,9 @@ if($_POST["jenis"]=="hapus_mhs"){
 
             $sqlup = "update placement set status_kembar=0 where id_ptest='$idptest'";
             if ($conn->query($sqlup)) {
-                $ket="Success to delete $nrp";
+                $ket="Berhasil menghapus mahasiswa dengan NRP $nrp";
             }else {
-                $ket = "Failed to delete $nrp";
+                $ket = "Gagal menghapus mahasiswa dengan NRP $nrp";
             }
         
         }
@@ -417,10 +417,10 @@ if($_POST["jenis"]=="aktifkan_allmhs"){
     $conn = getConn();
     $sqlupmhs = "update mahasiswa set status_mhs='1' where id_periode='$idperiode'";
     if ($conn->query($sqlupmhs)) {
-        $ket = "Success to save this placement";
+        $ket = "Berhasil menyimpan placement test periode ini";
     }
     else{
-        $ket = "Failed to save this placement";
+        $ket = "Gagaal menyimpan placement test periode ini";
     }   
     echo $ket;
     $conn->close();

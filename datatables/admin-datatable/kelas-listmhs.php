@@ -8,7 +8,7 @@ $start = $_POST['start']; // Ambil data start
 // $idperiode = $_POST["idperiode"];
 $idkelas = $_POST["idkelas"];
 
-$sql = mysqli_query($connect, "SELECT nrp FROM kelas_mhs where id_kelas='$idkelas'"); // Query untuk menghitung seluruh data kelas
+$sql = mysqli_query($connect, "SELECT id_klsmhs FROM kelas_mhs where id_kelas='$idkelas'"); // Query untuk menghitung seluruh data kelas
 $sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 
 $query = "SELECT * FROM kelas_mhs k

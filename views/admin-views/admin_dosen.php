@@ -1,54 +1,4 @@
-<div class="row"> <!-- row --> 
-    <div class="col-md-5">
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                  <label for="">Penting!</label>
-                  
-                </div>
-                
-            </div>
-        </div>
-    </div> <!-- end of standar nilai ecc -->
-    <!-- standar nilai ecc -->
-    <div class="col-md-7">
-        <div class="card">
-            <div class="card-body">
-                <form>
-                <table class="table table-borderless table-md text-right">
-                    <tbody>
-                        <tr>
-                            <td scope="row">Nama : </td>
-                            <td class="text-left">
-                            <input type="text" name="" id="namadosen" class="form-control" placeholder="" aria-describedby="help_nama">
-                              <small id="help_nama" class="form-text text-muted"></small>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Username : </td>
-                            <td class="text-left">
-                            <input type="text" name="" id="userdosen" class="form-control" placeholder="" aria-describedby="help_username">
-                              <small id="help_username" class="form-text text-muted"></small>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td scope="row"></td>
-                            <td>
-                            <button type="button" class="btn btn-outline-primary" onclick="simpandosen()">Save</button>
-                            </td>
-                            <td></td>
-                        </tr>
-                        
-                    </tbody>
-                </table> 
-                </form>
-                
-            </div>
-        </div>
-    </div> <!-- end of standar nilai ecc -->
-</div> <!-- end of row -->
+
 
 <!-- row -->
 <div class="row">
@@ -59,9 +9,33 @@
             </div>
 
             <div class="card-body">  
+                <div class="card-header">
+                        <form>
+                            <div class="alert alert-info" role="alert"> Gunakan form ini untuk menambah user dosen baru</div>
+                            <div class="form-group"> <!-- form group row radio -->
+                                <label for="">Nama</label>
+                                <input type="text" name="" id="namadosen" class="form-control" placeholder="" aria-describedby="help_nama">
+                              <small id="help_nama" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">username</label>
+                                <div class="input-group mb-3">
+                                <input type="text" name="" id="userdosen" class="form-control" placeholder="" aria-describedby="help_username"> 
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" onclick="simpandosen()">Simpan</button>
+                                    </div>
+                                </div>
+                              <small id="help_username" class="form-text text-muted"></small>
+                            </div>
+                                
+                        </form>
+                    </div>
+                    <br>
+                
                 
                 <div class="table-responsive">
-                    <table id="table_lihatsemuadosen" class="table table-striped table-bordered" width="100%">
+                    <table id="table_lihatsemuadosen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nama Dosen</th>
@@ -101,23 +75,36 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="namakelas"></h5>
-            <h6 id="title_idkelas"></h6>
+            <div id="userdosenecc" style="display:none"></div>
+            <h5 class="modal-title">Daftar Kelas ECC pada dosen <i id="namadosenecc"> </i> <br>
+            <p> Daftar kelas dibawah adalah daftar kelas berdasarkan periode</p>
+            </h5>
+
             <h6 id="title_table"></h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-          
+          <div class="form-group">
+                <label for="">Periode</label>
+                <div class="input-group mb-3">
+                    <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode"></select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" > <i class="menu-icon fa fa-search"></i> Cari</button>
+                    </div>
+                </div>
+                <label id="help_pilihperiode" style="color:red;"></label>
+            </div>
           <div class="table-responsive">
                 <table id="table_kelasaktif" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr class="clickable-row">
                             <th>#</th>
                             <th>Level</th>
-                            <th>Class Name</th>
-                            <th>Schedule</th>
+                            <th>Level/Kelas</th>
+                            <th>Hari/Jam</th>
+                            <th>Ruang/Kuota</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -167,6 +154,14 @@ function simpandosen(){
     }); 
 }
 
+function simpan_periode() {
+    var periode = $("#periode").val();
+    var username = $("#userdosenecc").text();
+    
+    datatable_kelasaktif_dosen(username);
+}
+
+
 function nonaktifkan(username, status) {
     $.post("../ajaxes/a_dosen.php",{
         jenis:"update_statusdosen",
@@ -185,13 +180,19 @@ function datatable_lihatsemuadosen() {
         var table= "";
         table = $('#table_lihatsemuadosen').DataTable( 
         {
-            dom: 'Bfrtip', 
-             "processing":true,
-             "serverSide":true,
-             "bInfo" : false,
-             dom:"<'myfilter'f><'mylength'l>t",
-             "pagingType": "numbers",
-             "ordering":true, //set true agar bisa di sorting
+            destroy:true,
+            "responsive":true,
+            "processing":true,
+            "language": {
+                "paginate": {
+                    "first":      "First",
+                    "last":       "Last",
+                    "next":       "Next",
+                    "previous":   "Previous"
+                },
+            },
+            "serverSide":true,
+            "ordering":true, //set true agar bisa di sorting
              "order":[[0, 'asc']], //default sortingnya berdasarkan kolom, field ke 0 paling pertama
              "ajax":{
                  "url":"../datatables/admin-datatable/dosenall_dt.php",
@@ -213,7 +214,7 @@ function datatable_lihatsemuadosen() {
                         }
                         else if (row.status == 0) //dosen tdk aktif
                         {
-                            return "<label class='text-success font-weight-bold'>Tidak Aktif</label> ";
+                            return "<label class='text-danger font-weight-bold'>Tidak Aktif</label> ";
                         }
                        
                     }
@@ -224,17 +225,18 @@ function datatable_lihatsemuadosen() {
                     "render": function (data, type, row) {  
                         var username = row.username;
                         var status = row.status;
+                        var nama = row.nama;
                         var btn="";
                         if (row.status == '1') //dosen aktif
                         {
-                            btn =  "<button class='btn btn-warning text-dark btn-sm' onclick=\"nonaktifkan(\'"+username+"\',\'"+status+"\')\" >Non-aktifkan</button>";  
+                            btn =  "<button class='btn btn-danger btn-sm' onclick=\"nonaktifkan(\'"+username+"\',\'"+status+"\')\" >Non-aktifkan</button>";  
                         }
                         else if (row.status == '0') //dosen tdk aktif
                         {
-                            btn = "<button class='btn btn-primary text-dark btn-sm' onclick=\"nonaktifkan(\'"+username+"\',\'"+status+"\')\">Aktifkan</button>";
+                            btn = "<button class='btn btn-danger btn-sm' onclick=\"nonaktifkan(\'"+username+"\',\'"+status+"\')\">Aktifkan</button>";
                         }
                        
-                        return btn + " <button onclick=\"lihatdaftar_kelas(\'"+username+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Lihat Daftar kelas</button>";
+                        return "<button onclick=\"lihatdaftar_kelas(\'"+username+"\',\'"+nama+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas'>Lihat Daftar kelas</button> " + btn;
                     },
                     "target":-1,
                 },
@@ -243,19 +245,21 @@ function datatable_lihatsemuadosen() {
         });     
 }
 
-function lihatdaftar_kelas(username) {
+function lihatdaftar_kelas(username,nama) {
+    $("#namadosenecc").text(nama);
+    $("#userdosenecc").text(username);
     datatable_kelasaktif_dosen(username);
     //melihat daftar kelas yang menggunakan ruangan tsb
 }
 
 function datatable_kelasaktif_dosen(username) {
-    //var periode = $("#periode_lihatkelas").val();
+    var periode = $("#periode").val();
     //datatable list barang
     var table= "";
     var groupColumn = 1;
     table = $('#table_kelasaktif').DataTable( 
     {
-        destroy:true,
+            destroy:true,
             "responsive":true,
             "processing":true,
             "language": {
@@ -271,7 +275,7 @@ function datatable_kelasaktif_dosen(username) {
             "ajax":{
                 "url":"../datatables/admin-datatable/dosen-kelasaktif.php",
                 "type":"POST",
-                "data":{"username":username},
+                "data":{"username":username, "periode":periode},
             },
             "deferRender":true,
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
@@ -284,7 +288,7 @@ function datatable_kelasaktif_dosen(username) {
                 "searchable": true,
                 "orderable":true,
                 "render": function (data, type, row) {  
-                    return "#"+row.id_kelas;
+                    return "#";
                     
                 }
             },
@@ -303,26 +307,37 @@ function datatable_kelasaktif_dosen(username) {
                     var hari = row.hari;
                     var jam_awal = row.jam_awal;
                     var jam_akhir = row.jam_akhir;
-                    var ruang = row.id_ruangkelas;
+                    
+                    // if (hari == "") {
+                    //     hari = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    // if (jam_awal == null) {
+                    //     jam_awal = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    // if (ruang == null) {
+                    //     ruang = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    // else if (ruang !=0) {
+                    //     ruang = row.nama_ruang;
+                    // }
+                    // if (kuota == 0) 
+                    // {
+                    //     kuota = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    return hari + "<br> Jam : " + jam_awal + "-" + jam_akhir;
+
+                   
+                }
+            },
+            {"data":"kuota",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    
+                    var ruang = row.nama_ruang;
                     var kuota = row.kuota;
 
-                    if (hari == "") {
-                        hari = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    if (jam_awal == null) {
-                        jam_awal = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    if (ruang == null) {
-                        ruang = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    else if (ruang !=0) {
-                        ruang = row.nama_ruang;
-                    }
-                    if (kuota == 0) 
-                    {
-                        kuota = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    return "Day : " + hari + "<br> Time : " + jam_awal + "-" + jam_akhir + "<br> Room : " + ruang + "<br> Quota : " + kuota;
+                    return ruang + "/ " + kuota;
 
                    
                 }
@@ -336,7 +351,7 @@ function datatable_kelasaktif_dosen(username) {
             api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                 if ( last !== group ) {
                     $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+                        '<tr class="group"><td colspan="6"> Level '+group+'</td></tr>'
                     );
  
                     last = group;
