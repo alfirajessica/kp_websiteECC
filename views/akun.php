@@ -3,10 +3,13 @@
 
 <!-- head -->
 
-<?php require_once("head.php");
+<?php 
+
+require_once("head.php");
 $arr = unserialize($_SESSION["user"]);
 $username = $arr->get_u();
 $nama = $arr->get_nama();
+
 ?>
 
 
@@ -36,7 +39,7 @@ $nama = $arr->get_nama();
                   <div class="col-lg-12">
                     <div class="form-group">
                       <label class="form-control-label" for="input-username">Nama</label>
-                      <input type="text" id="input-nama" class="form-control" value=<?php echo $nama; ?>>
+                      <input type="text" id="input-nama" class="form-control" value="<?php echo $nama; ?>">
                     </div>
                   </div>
                 </div>
@@ -114,6 +117,7 @@ $nama = $arr->get_nama();
 </html>
 <script>
   var username = "<?php echo $username; ?>";
+  var nama = "<?php echo $nama; ?>";
   $(document).ready(function() {
 
 
