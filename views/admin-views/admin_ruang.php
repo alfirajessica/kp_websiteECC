@@ -91,29 +91,41 @@
     </div>
     <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
 
-    <!-- Modal lihat mahasiswa  -->
+    <!-- Modal lihat daftar kelas  -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal_lihatdaftarkelas" role="dialog" style="overflow-y:scroll;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="namakelas"></h5>
-            <h6 id="title_idkelas"></h6>
+            <div class="modal-header">
+            <div id="idruang" style="display:none"></div>
+            <h5 class="modal-title">Daftar Kelas ECC pada ruang <i id="namaruangmodal"> </i> <br>
+            <p> Daftar kelas dibawah adalah daftar kelas berdasarkan periode</p>
+            </h5>
             <h6 id="title_table"></h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-          
+          <div class="form-group">
+                <label for="">Periode</label>
+                <div class="input-group mb-3">
+                    <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode"></select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button" id="btn_simpanperiode" onclick="simpan_periode()" > <i class="menu-icon fa fa-search"></i> Cari</button>
+                    </div>
+                </div>
+                <label id="help_pilihperiode" style="color:red;"></label>
+            </div>
           <div class="table-responsive">
                 <table id="table_kelasaktif" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr class="clickable-row">
                             <th>#</th>
                             <th>Level</th>
-                            <th>Class Name</th>
-                            <th>Schedule</th>
-                            <th>Lecturer</th>
+                            <th>Level/Kelas</th>
+                            <th>Hari/Jam</th>
+                            <th>Ruang/Kuota</th>
+                            <th>Dosen</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,7 +136,7 @@
         </div>
       </div>
     </div>
-    <!-- end of Modal atur dosen/jam/kuota kelas ecc  -->
+    <!-- end of Modal lihat daftar kelas  -->
     
 <script>
 var statusbtnsimpan ="simpan";
@@ -276,16 +288,17 @@ function datatable_lihatsemuaruang() {
                 "orderable":false,
                 "render": function (data, type, row) {  
                     var id_ruangkelas = row.id_ruangkelas;
+                    var nama_ruangkelas = row.nama_ruang;
                     var status = row.status_kelas;
                     var btn = "";
                     if(row.status_ruang == "1"){
-                        btn = "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Nonaktifkan</button>";
+                        btn = "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\',\'"+nama_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Nonaktifkan</button>";
                     }
                     else if (row.status_ruang == "0") {
-                        btn = "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Aktifkan</button>";
+                        btn = "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\',\'"+nama_ruangkelas+"\')\" type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Aktifkan</button>";
                     }
                    // "<button onclick=\"atur_ruang(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah</button> " + 
-                    return "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Lihat Daftar kelas</button> " + btn;
+                    return "<button onclick=\"lihatdaftar_kelas(\'"+id_ruangkelas+"\',\'"+nama_ruangkelas+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatdaftarkelas' >Lihat Daftar kelas</button> " + btn;
                     
                 },
                 "target":-1,
@@ -370,14 +383,26 @@ function update_ruang() {
     
 }
 
-function lihatdaftar_kelas(id_ruangkelas) {
+function lihatdaftar_kelas(id_ruangkelas, nama_ruangkelas) {
     datatable_kelasaktif(id_ruangkelas);
+    $("#namaruangmodal").text(nama_ruangkelas);
+    $("#idruang").text(id_ruangkelas);
+
     //melihat daftar kelas yang menggunakan ruangan tsb
 }
 
+function simpan_periode() {
+    var periode = $("#periode").val();
+    var id_ruangkelas = $("#idruang").text();
+    
+    datatable_kelasaktif(id_ruangkelas);
+}
+
+
 function datatable_kelasaktif(id_ruangkelas) {
     //var periode = $("#periode_lihatkelas").val();
-    //datatable list barang
+   
+    var periode = $("#periode").val();
     var table= "";
     var groupColumn = 1;
     table = $('#table_kelasaktif').DataTable( 
@@ -398,7 +423,7 @@ function datatable_kelasaktif(id_ruangkelas) {
             "ajax":{
                 "url":"../datatables/admin-datatable/ruang-kelasaktif.php",
                 "type":"POST",
-                "data":{"id_ruangkelas":id_ruangkelas},
+                "data":{"id_ruangkelas":id_ruangkelas, "periode":periode},
             },
             "deferRender":true,
             "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
@@ -411,7 +436,7 @@ function datatable_kelasaktif(id_ruangkelas) {
                 "searchable": true,
                 "orderable":true,
                 "render": function (data, type, row) {  
-                    return "#"+row.id_kelas;
+                    return "#";
                     
                 }
             },
@@ -433,23 +458,37 @@ function datatable_kelasaktif(id_ruangkelas) {
                     var ruang = row.id_ruangkelas;
                     var kuota = row.kuota;
 
-                    if (hari == "") {
-                        hari = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    if (jam_awal == null) {
-                        jam_awal = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    if (ruang == null) {
-                        ruang = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    else if (ruang !=0) {
-                        ruang = row.nama_ruang;
-                    }
-                    if (kuota == 0) 
-                    {
-                        kuota = "<label class='text-danger'> Not Filled </label>";
-                    }
-                    return "Day : " + hari + "<br> Time : " + jam_awal + "-" + jam_akhir + "<br> Room : " + ruang + "<br> Quota : " + kuota;
+                    // if (hari == "") {
+                    //     hari = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    // if (jam_awal == null) {
+                    //     jam_awal = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    // if (ruang == null) {
+                    //     ruang = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    // else if (ruang !=0) {
+                    //     ruang = row.nama_ruang;
+                    // }
+                    // if (kuota == 0) 
+                    // {
+                    //     kuota = "<label class='text-danger'> Not Filled </label>";
+                    // }
+                    return hari + "<br> Jam : " + jam_awal + "-" + jam_akhir;
+                    // return "Day : " + hari + "<br> Time : " + jam_awal + "-" + jam_akhir + "<br> Room : " + ruang + "<br> Quota : " + kuota;
+
+                   
+                }
+            },
+            {"data":"kuota",
+                "searchable": true,
+                "orderable":true,
+                "render": function (data, type, row) {  
+                    
+                    var ruang = row.nama_ruang;
+                    var kuota = row.kuota;
+
+                    return ruang + "/ " + kuota;
 
                    
                 }
@@ -479,7 +518,7 @@ function datatable_kelasaktif(id_ruangkelas) {
             api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                 if ( last !== group ) {
                     $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+                        '<tr class="group"><td colspan="6"> Level'+group+'</td></tr>'
                     );
  
                     last = group;

@@ -18,7 +18,7 @@ if ($_POST["jenis"]=="get_allruang") {
     echo $kal;
     $conn->close();
 }
-
+ 
 if($_POST["jenis"]=="cek_ruang"){
     $ruang = strtoupper($_POST["ruang"]);
     $sqlcek = "select * from ruang_kelas where nama_ruang='$ruang'";

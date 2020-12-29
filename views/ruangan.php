@@ -32,9 +32,19 @@ $level = $arr->get_level();
 <?php include_once('scripts.php')?>
 <script>
 $(document).ready(function(){
+    periode();
     datatable_lihatsemuaruang();
 });    
 
+function periode() {
+        $.post("../ajaxes/a_periode.php",
+        {
+            jenis:"get_allperiode",
+        },
+        function(data){
+            $("#periode").html(data);
+        });
+    }
 </script>
 
 </html>

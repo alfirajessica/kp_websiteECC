@@ -86,7 +86,7 @@
             </button>
           </div>
           <div class="modal-body">
-          <div class="form-group">
+            <div class="form-group">
                 <label for="">Periode</label>
                 <div class="input-group mb-3">
                     <select name="select" id="periode" class="form-control"  aria-describedby="help_pilihperiode"></select>
