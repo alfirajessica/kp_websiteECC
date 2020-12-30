@@ -27,12 +27,75 @@ $nama = $arr->get_nama();
           <div class="card-header">
             <div class="row align-items-center">
               <div class="col-8">
-                <h3 class="mb-0">Pengaturan Akun</h3>
+                <h4 class="mb-0">Pengaturan Akun</h4>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <form>
+            <div class="default-tab">
+              <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Profil</a>
+                      <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Ubah Password</a>
+                      
+                  </div>
+              </nav>
+              <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                  <form>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label text-right">Nama</label>
+                            <div class="col-sm-10">
+                            <input type="text" id="input-nama" class="form-control" value="<?php echo $nama; ?>">
+                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label text-right">Username</label>
+                            <div class="col-sm-10">
+                            <input type="text" id="input-username" class="form-control" disabled value=<?php echo $username; ?>>
+                            </div>
+                    </div>
+                    <div class="form-group text-right">
+                      <button class="btn btn-outline-primary" type="button" onclick="simpan()">Simpan Perubahan</button>
+                    </div>
+                  </form>
+              </div>
+              <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
+                <form>
+                  <div class="alert alert-warning" role="alert">
+                    <strong>Perhatian! </strong> Isi jika Anda ingin mengubah password
+                  </div>
+
+                  <div class="form-group row">
+                      <label for="staticEmail" class="col-sm-3 col-form-label text-right">Password Baru</label>
+                          <div class="col-sm-9">
+                            <div class="input-group input-group-merge input-group-alternative">
+                              <input class="form-control" placeholder="Password" id="te_password" type="password">
+                                <span class="input-group-text" id="i_eye" style="display:block;" onclick="show()"><i class="fa fa-eye"></i></span>
+                                <span class="input-group-text" id="i_slash" style="display:none;" onclick="hide()"><i class="fa fa-eye-slash"></i></span>
+                            </div>
+                          </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label for="staticEmail" class="col-sm-3 col-form-label text-right">Konfirmasi Password Baru</label>
+                          <div class="col-sm-9">
+                            <div class="input-group input-group-merge input-group-alternative">
+                              <input class="form-control" placeholder="Konfirmasi Password" id="te_cpassword" type="password">
+                              <span class="input-group-text" id="i_eye" style="display:block;" onclick="show()"><i class="fa fa-eye"></i></span>
+                              <span class="input-group-text" id="i_slash" style="display:none;" onclick="hide()"><i class="fa fa-eye-slash"></i></span>
+                            </div>
+                          </div>
+                  </div>
+
+                  <div class="form-group text-right">
+                    <button type="button" class="btn btn-outline-primary" onclick="gantipass()">Simpan Password</button>
+                    </div>
+                </form>
+              </div>
+            </div><!-- end of default-tab -->
+
+            <!-- <form>
 
               <div class="pl-lg-4">
                 <div class="row">
@@ -49,6 +112,9 @@ $nama = $arr->get_nama();
                       <label class="form-control-label" for="input-first-name">Username</label>
                       <input type="text" id="input-username" class="form-control" disabled value=<?php echo $username; ?>>
                     </div>
+                  </div>
+                  <div class="alert alert-warning" role="alert">
+                    <strong>Isi jika Anda ingin mengubah password</strong>
                   </div>
                   <div class="col-lg-8">
                     <div class="form-group">
@@ -74,7 +140,7 @@ $nama = $arr->get_nama();
                   <button class="btn btn-outline-primary" type="button" onclick="simpan()">Simpan</button>
                 </div>
               </div>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>
@@ -148,6 +214,7 @@ $nama = $arr->get_nama();
       function(data) {
         console.log(data);
         $("#input-nama").val(nama);
+        $("#input-username").val(user);
       });
 
   }

@@ -235,7 +235,11 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="namakelas"></h5>
+            <h5 class="modal-title">Daftar Mahasiswa pada <i id="namakelas"> </i> <br>
+            <p id="details"> </p>
+            </h5>
+            <h5 class="modal-title" ></h5>
+
             <h6 id="title_idkelas"></h6>
             <h6 id="title_table"></h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_btn()">
@@ -575,10 +579,12 @@ function ubah_kelas(idkelas,table) {
     });
 }
 
-function lihat_mahasiswa(idkelas,kelas) {
+function lihat_mahasiswa(idkelas,kelas,detail) {
  console.log("lihat mahasiswa");
  datatable_table_lihatmhs(idkelas);
- $("#namakelas").html(kelas);
+ $("#namakelas").html("Level " +kelas);
+ $("#details").html(detail);
+ 
 }
 
 
@@ -871,11 +877,12 @@ function datatable_kelasaktif() {
                 "render": function (data, type, row) {  
                     var idkelas = row.id_kelas;
                     var kelas = row.level_ecc + "/" + row.nama_kelas;
+                    var detail = "Jadwal : " + row.hari + "/" + row.nama_ruang + "/" + row.jam_awal+ "-" + row.jam_akhir + "<br> Dosen : " + row.nama;
                     var table = "#table_kelasaktif";
 
                     var btnubah = "<button onclick=\"ubah_kelas(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#exampleModal'>Ubah </button>";
 
-                    var btnlistmhs = " <button onclick=\"lihat_mahasiswa(\'"+idkelas+"\',\'"+kelas+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>List Mahasiswa </button>";
+                    var btnlistmhs = " <button onclick=\"lihat_mahasiswa(\'"+idkelas+"\',\'"+kelas+"\',\'"+detail+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>List Mahasiswa </button>";
 
                     var btnnonaktif = " <button onclick=\"nonaktikfkan_kls(\'"+idkelas+"\',\'"+table+"\')\" type='button' class='btn btn-danger btn-sm'>Nonaktifkan</button>";
 
