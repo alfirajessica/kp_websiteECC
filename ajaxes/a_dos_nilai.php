@@ -46,7 +46,7 @@ if($_POST["jenis"]=="get_kelasdos"){
             $level=$row["level_ecc"];
             $idkelas=$row["id_kelas"];
             $namakelas=$row["nama_kelas"];
-            $kal.="<option value='$level' >ECC $level </option>";
+            $kal.="<option value='$level' >ECC Level $level </option>";
         }
     }else{
         $kal.="<option value='-1' >~Tidak level di periode ini~ </option>";
@@ -57,7 +57,7 @@ if($_POST["jenis"]=="get_kelasdos"){
     $idnilai=$_POST["idnilai"];
     
     $conn=getConn();
-    $stmt=$conn->prepare("select * from nilai n,mahasiswa m where m.nrp=n.nrp and n.id_nilai='$idnilai' ");
+    $stmt=$conn->prepare("select * from nilai_mhs n,mahasiswa m where m.nrp=n.nrp and n.id_nilai='$idnilai' ");
     $stmt->execute();
     $res=$stmt->get_result();
     $row=$res->fetch_assoc();

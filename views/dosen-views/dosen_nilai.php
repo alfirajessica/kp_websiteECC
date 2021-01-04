@@ -1,7 +1,7 @@
 <div class="card-body">
     <form action="">
         <div class="form-group">
-            <label for="">Select Period</label>
+            <label for="">Periode</label>
             <select name="select" id="periode" onchange="isikelas()" class="form-control" aria-describedby="help_pilihperiode">
             </select>
         </div>
@@ -33,15 +33,14 @@
 
 
         <div class="form-group">
-            <label> Please use this template before you're going to import </label>
+            <label> Gunakan template ini untuk mengimport nilai </label>
             <button type="button" class="btn btn-success text-light" onclick="downloadtemp()" target="_blank">Download Templete</button>
         </div>
 
         <div class="form-group">
-            <!-- <button type="button" class="btn btn-secondary">Import Excel</button> -->
-            <div id="btnim">
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuts">Import Nilai</button>
-                <!-- <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#importuas">Import UAS</button> -->
+            <div class="alert alert-info" role="alert">
+                Lakukan Import file excel pada tombol disamping               
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#importuts">Import Nilai</button>
             </div>
         </div>
 
@@ -52,21 +51,21 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Import Nilai Ujian ECC</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    UTS
+                    File
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="uts">
-                        <label class="custom-file-label" for="uts" id='file_uts'>Pilih file uts ...</label>
+                        <label class="custom-file-label" for="uts" id='file_uts'>Pilih file ...</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuts()">IMPORT UTS</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuts()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -102,7 +101,7 @@
         <table class="table" id="example">
             <thead>
                 <tr>
-                    <th>NRP</th>
+                    <th>Nrp</th>
                     <th>Nama Mahasiswa</th>
                     <th>UTS</th>
                     <th>UAS</th>
@@ -292,7 +291,7 @@
 
                     "render": function(data, type, row) {
 
-                        return "<button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' onclick=\"isiubah('" + row.id_nilai + "')\" >Edit</button>";
+                        return "<button class='btn btn-warning rounded btn-sm' data-toggle='modal' data-target='#exampleModal' onclick=\"isiubah('" + row.id_nilai + "')\" >Ubah</button>";
                     }
                 }
             ]
@@ -380,6 +379,7 @@
 
 
     function isiubah(params) {
+        console.log(params);
         $.post("../ajaxes/a_dos_nilai.php", {
                 jenis: "getinfo",
                 idnilai: params,
