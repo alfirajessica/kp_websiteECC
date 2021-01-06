@@ -57,7 +57,7 @@ if($_POST["jenis"]=="get_kelasdos"){
     $idnilai=$_POST["idnilai"];
     
     $conn=getConn();
-    $stmt=$conn->prepare("select * from nilai_mhs n,mahasiswa m where m.nrp=n.nrp and n.id_nilai='$idnilai' ");
+    $stmt=$conn->prepare("select * from nilai n,mahasiswa m where m.nrp=n.nrp and n.id_nilai='$idnilai' ");
     $stmt->execute();
     $res=$stmt->get_result();
     $row=$res->fetch_assoc();
