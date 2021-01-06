@@ -4,11 +4,12 @@
 <!-- head -->
 
 <?php 
-
 require_once("head.php");
+require_once "../config/conn.php";
 $arr = unserialize($_SESSION["user"]);
+
 $username = $arr->get_u();
-$nama = $arr->get_nama();
+$nama = $arr->getnama($username);
 
 ?>
 
@@ -215,6 +216,7 @@ $nama = $arr->get_nama();
         console.log(data);
         $("#input-nama").val(nama);
         $("#input-username").val(user);
+        window.location.reload();
       });
 
   }

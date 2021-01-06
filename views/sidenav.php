@@ -1,5 +1,6 @@
-
-<?php $arr=unserialize($_SESSION["user"]); 
+<?php
+require_once "../config/conn.php";
+$arr=unserialize($_SESSION["user"]); 
         
         $level = $arr->get_level();
 
@@ -35,7 +36,7 @@
                         <img class="user-avatar rounded-circle" alt="User Avatar" src="../images/admin.jpg">
                     </span>
                     <div class="media-body  ml-2  d-none d-lg-block">
-                        <span class="mb-0 text-sm  font-weight-bold"> <?php $arr=unserialize($_SESSION["user"]); echo $arr->get_nama();?></span>
+                        <span class="mb-0 text-sm  font-weight-bold"> <?php $arr=unserialize($_SESSION["user"]); $username=$arr->get_u();echo $arr->getnama($username);?></span>
                     </div>
                     </div>
                     </a>

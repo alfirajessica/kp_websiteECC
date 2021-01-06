@@ -1,7 +1,7 @@
 <?php
 require_once "../config/conn.php";
 $conn=getConn();
-
+session_start();
 if($_POST["jenis"]=="update_akun_nama"){
     $username = $_POST["user"];
     $nama = $_POST["nama"];
@@ -12,7 +12,10 @@ if($_POST["jenis"]=="update_akun_nama"){
     }else{
     echo "gagal";
     }
-    $conn->close();
+
+
+
+    
 }
 if ($_POST["jenis"]=="ganti_password") {
     $password=$_POST["password"];
