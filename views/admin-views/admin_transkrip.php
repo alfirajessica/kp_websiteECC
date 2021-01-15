@@ -52,10 +52,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>Semester</th>
-                                <th>Level</th>
+                                <th>Level/Kelas</th>
                                 <th>Grade</th>
-                                <th>Status</th>
-                                <th>Status</th>
+                                
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -115,12 +115,36 @@ function datatable_lihatkelasmhs(nrp) {
              "deferRender":true,
              "aLengthMenu":[[10,20,50],[10,20,50]], //combobox limit
              "columns":[
-            
-                {"data":"id_klsmhs",
-                    // "render": function (data, type, row) {
-                    //     return "#" + row.id_klsmhs;
-                    // }  
+                {"data":"id",
+                    "render": function (data,type,row) {
+                        return "#";
+                    }},
+                {"data":"semester",
+                    "render": function (data,type,row) {
+                        return row.semester + "-" + row.t_awal + "/" + row.t_akhir;
+                    }},
+                {"data":"levelecc",
+                    "render": function (data,type,row) {
+                        return row.levelecc + " " + row.namakls;
+                    }
                 },
+                //{"data":"namakls"},
+                {"data":"grade"},
+
+                // {"data":"id_klsmhs"},
+                // {"data":"id_periode",
+                //     "render": function(data,type,row){
+                //         return row.semester + " " + row.thn_akademik_awal + "/" + row.thn_akademik_akhir;
+                //     }
+                // },
+                // {"data":"id_kelas",
+                //     "render": function(data,type,row){
+                //         return row.level_ecc + " " + row.nama_kelas;
+                //     }
+                // },
+                // {"data":"id_klsmhs",
+                    
+                // },
                 // {"data":"id_periode",
                 //     // "searchable": true,
                 //     // "orderable":true,
