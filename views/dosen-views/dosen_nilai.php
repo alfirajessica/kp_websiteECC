@@ -1,3 +1,8 @@
+<?php require_once("head.php"); 
+$arr=unserialize($_SESSION["user"]); 
+$username = $arr->get_u();
+?>
+
 <div class="card-body">
     <form action="">
         <div class="form-group">
@@ -28,6 +33,7 @@
                     <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
                 </div>
             </div>
+            
         </div>
 
 
@@ -44,7 +50,9 @@
             </div>
         </div>
 
-
+        <div class="form-group">
+        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+        </div>      
     </form>
 
     <div class="modal fade" id="importuts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -133,27 +141,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table>
+                <table class="table table-borderless table-md text-right">
                     <input type="hidden" id="t_nilai">
                     <tr>
                         <td><strong>Nrp</strong></td>
-                        <td><input class='form-control' type="text" id="t_nrp"></td>
+                        <td><input class='form-control' type="text" id="t_nrp" disabled ></td>
                     </tr>
                     <tr>
                         <td><strong>Nama</strong></td>
-                        <td><input class='form-control' type="text" id="t_nama"></td>
+                        <td><input class='form-control' type="text" id="t_nama" disabled></td>
                     </tr>
                     <tr>
                         <td><strong>Uts</strong></td>
-                        <td><input class='form-control' type="text" id="t_uts"></td>
+                        <td><input class='form-control' type="number" id="t_uts"></td>
                     </tr>
                     <tr>
                         <td><strong>Uas</strong></td>
-                        <td><input class='form-control' type="text" id="t_uas"></td>
+                        <td><input class='form-control' type="number" id="t_uas"></td>
                     </tr>
                     <tr>
                         <td><strong>Nilai akhir</strong></td>
-                        <td><input class='form-control' type="text" onkey="getgrade()" id="t_na"></td>
+                        <td><input class='form-control' type="number" onkey="getgrade()" id="t_na"></td>
                     </tr>
                     <tr>
                         <td><strong>Grade</strong></td>
@@ -171,6 +179,7 @@
 </div>
 
 <script>
+var username= "<?php echo $username;?>";
     $(document).ready(function() {
         periode();
 
@@ -229,6 +238,11 @@
     function klschange() {
         datatable_lihatsemuamahasiswa();
     }
+
+    function exportfile() {
+    var periode = $("#periode").val();
+    window.location.href = "../custom_export/dosen_export/lihat_nilai.php?periode="+periode+"&user="+username;
+}
 
     
     function datatable_lihatsemuamahasiswa() {

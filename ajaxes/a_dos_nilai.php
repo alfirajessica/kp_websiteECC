@@ -49,7 +49,7 @@ if($_POST["jenis"]=="get_kelasdos"){
             $kal.="<option value='$level' >ECC Level $level </option>";
         }
     }else{
-        $kal.="<option value='-1' >~Tidak level di periode ini~ </option>";
+        $kal.="<option value='-1' >Tidak level di periode ini </option>";
     }
    
     echo $kal;
@@ -57,13 +57,15 @@ if($_POST["jenis"]=="get_kelasdos"){
     $idnilai=$_POST["idnilai"];
     
     $conn=getConn();
-    $stmt=$conn->prepare("select * from nilai n,mahasiswa m where m.nrp=n.nrp and n.id_nilai='$idnilai' ");
+    $stmt=$conn->prepare("select * from nilai_mhs n, kelas_mhs km, mahasiswa m where km.id_nilai=n.id_nilai and km.nrp=m.nrp and n.id_nilai='$idnilai' ");
     $stmt->execute();
     $res=$stmt->get_result();
     $row=$res->fetch_assoc();
     echo json_encode($row);
 }else if($_POST["jenis"]=="downloadtemplete"){
-    $sql="select * from kelas_mhs km,mahasiswa m,nilai n where n.id_nilai=km.id_nilai and km.nrp=m.nrp and m.nrp='$nrp' and km.id_kelas='$kelas'";
+    $sql = "select * from nilai_mhs n, kelas_mhs km, mahasiswa m where km.id_nilai=n.id_nilai and km.nrp=m.nrp and and km.id_kelas='$idkelas'";
+
+   // $sql="select * from kelas_mhs km, mahasiswa m, nilai_mhs n where n.id_nilai=km.id_nilai and km.nrp=m.nrp and m.nrp='$nrp' and km.id_kelas='$kelas'";
 }
 
 ?>

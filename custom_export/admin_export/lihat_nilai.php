@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>Daftar Kelas</title>
+	<title>Daftar Nilai Mahasiswa ECC</title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
 	<?php
 	header("Content-type: application/vnd-ms-excel");
 	$tgl = date("Ymd_his");
-	header("Content-Disposition: attachment; filename=" . $tgl . "_daftarkelas.xls");
+	header("Content-Disposition: attachment; filename=" . $tgl . "_NilaiECC.xls");
 	require_once "../../config/conn.php";
 		
     $conn = getConn();
@@ -51,57 +51,63 @@
 
         <table border="1" >
         <tr>
-            <th colspan="7"> Daftar Kelas ECC </th>      
+            <th colspan="7"> Daftar Nilai Mahasiswa ECC </th>      
         </tr>
         <tr>
             <th colspan="7"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
         </tr>
 		<tr>
 			<th>#</th>
-			<th>Nama Kelas</th>
-			<th>Hari</th>
-            <th>Jam</th>
-            <th>Ruang</th>
-            <th>Kuota</th>
-            <th>Dosen</th>
+			<th>Nrp</th>
+			<th>Nama Mahasiswa</th>
+            <th>UTS</th>
+            <th>UAS</th>
+            <th>NA</th>
+            <th>Grade</th>
 		</tr>
         
     <?php
     }
-        $sql1 = "SELECT * FROM kelas k
-        LEFT JOIN user u
-        ON k.dosen = u.username
-        LEFT JOIN ruang_kelas rk
-        ON k.id_ruangkelas=rk.id_ruangkelas
-        WHERE k.id_periode=$periode and k.status_kelas='1'";
+
+    // //$sql1 = "SELECT m.nrp, m.nama_mhs, n.nilai_uts, n.nilai_akhir, n.grade, m.level_ecc
+    // FROM mahasiswa m, nilai_mhs n,kelas_mhs km ,kelas k
+    // WHERE k.id_kelas=km.id_kelas and m.nrp=km.nrp and n.id_nilai=km.id_nilai and km.id_periode=$periode" ;
+
+        $sql1 = "SELECT * FROM nilai_mhs nm
+        LEFT JOIN kelas_mhs km
+        ON km.id_nilai = nm.id_nilai
+        LEFT JOIN mahasiswa m
+        ON m.nrp= km.nrp
+        LEFT JOIN kelas k
+        ON k.id_kelas = km.id_kelas
+        WHERE km.id_periode=$periode";
 
         $result = $conn->query($sql1);
         $stat="";
         
-
 		if ($result->num_rows > 0) {
 			// output data of each row
 			while ($row = $result->fetch_assoc()) {
-				$level = $row["level_ecc"];
-				$nama_kelas = $row["nama_kelas"];
-				$hari = $row["hari"];
-                $jam_awal = $row["jam_awal"];
-                $jam_akhir = $row["jam_akhir"];
-                $ruang = $row["nama_ruang"];
-                $kuota = $row["kuota"];
-                $dosen = $row["nama"];
+				$namamhs = $row["nama_mhs"];
+				$uts = $row["nilai_uts"];
+				$uas = $row["nilai_uas"];
+                $na = $row["nilai_akhir"];
+                $grade = $row["grade"];
+                $nrp = $row["nrp"];
+                $level = $row["level_ecc"];
+                
 
                 if ($level == "1") {
                     $collevel1="<tr><td colspan='7'>Level 1</td></tr>";
                     $kal1 .= "
                 <tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
+                    <td>$nrp</td>
+                    <td>$namamhs</td>
+                    <td>$uts</td>
+                    <td>$uas</td>
+                    <td>$na</td>
+                    <td>$grade</td>
                 </tr>"; 
                     
                 }
@@ -110,12 +116,12 @@
                     $kal2 .= "
                 <tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
+                    <td>$nrp</td>
+                    <td>$namamhs</td>
+                    <td>$uts</td>
+                    <td>$uas</td>
+                    <td>$na</td>
+                    <td>$grade</td>
                 </tr>";      
                 }
                 elseif ($level == "3") {
@@ -123,12 +129,12 @@
                     $kal3 .= "
                 <tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
+                    <td>$nrp</td>
+                    <td>$namamhs</td>
+                    <td>$uts</td>
+                    <td>$uas</td>
+                    <td>$na</td>
+                    <td>$grade</td>
                 </tr>";      
                 }
                 elseif ($level == "4") {
@@ -136,12 +142,12 @@
                     $kal4 .= "
                 <tr>
                     <td>-</td>
-                    <td>$nama_kelas</td>
-                    <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
-                    <td>$ruang</td>
-                    <td>$kuota</td>
-                    <td>$dosen</td>
+                    <td>$nrp</td>
+                    <td>$namamhs</td>
+                    <td>$uts</td>
+                    <td>$uas</td>
+                    <td>$na</td>
+                    <td>$grade</td>
                 </tr>";      
                 }
                 

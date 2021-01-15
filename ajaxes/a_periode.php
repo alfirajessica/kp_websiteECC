@@ -47,7 +47,7 @@ else if($_POST["jenis"]=="set_periodedb"){
             $thn_akademik_akhir=$row1["thn_akademik_akhir"];
             $val = $idperiode;
         }
-        if ($month == 5 && $semester == "Genap") //jika bulan sekarang = juni dan semester genap
+        if ($month == 5 && $semester == "Genap") //jika bulan sekarang = Juni dan semester genap
         {
             $thn_awal = $thn_akademik_awal+1;
             $thn_akhir = $thn_akademik_akhir+1;
@@ -60,7 +60,7 @@ else if($_POST["jenis"]=="set_periodedb"){
                 echo $thn_awal;
             }
         }
-        else if ($month == 9 && $semester == "Gasal") //jika bulan sekarang desember dan semester ganjil
+        else if ($month == 10 && $semester == "Gasal") //jika bulan sekarang November dan semester ganjil
         {
             $thn_awal = $thn_akademik_awal;
             $thn_akhir = $thn_akademik_akhir;

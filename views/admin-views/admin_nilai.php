@@ -4,7 +4,7 @@
             <label for="">Pilih Periode</label>
             <select name="select" id="periode" class="form-control" onchange="isikelas()" aria-describedby="help_pilihperiode">                                  
                 </select>
-            <small id="helpId" class="form-text text-muted">Help text</small>
+            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
         </div>
 
         <!-- <div class="form-group">
@@ -38,7 +38,9 @@
             </div>
         </div>
 
-                    
+        <div class="form-group">
+        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+        </div>      
     </form>
     
     <!-- tabel kelas yang tergenerate per hari-->
@@ -46,8 +48,8 @@
         <table class="table" id="example">
             <thead>
             <tr>
-                    <th>NRP</th>
-                    <th>Student Name</th>
+                    <th>Nrp</th>
+                    <th>Nama Mahasiswa</th>
                     <th>UTS</th>
                     <th>UAS</th>
                     <th>NA</th>
@@ -265,5 +267,10 @@
                 $("#example").DataTable().ajax.reload();
             });
     }
+
+    function exportfile() {
+    var periode = $("#periode").val();
+    window.location.href = "../custom_export/admin_export/lihat_nilai.php?periode="+periode+"";
+}
 
 </script>

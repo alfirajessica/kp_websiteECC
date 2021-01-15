@@ -39,8 +39,9 @@
 		
     $conn = getConn();
     $periode=$_REQUEST["periode"];
+    $user=$_REQUEST["user"];
     $collevel1=""; $collevel2=""; $collevel3=""; $collevel4="";
-    $kal1= ""; $kal2= ""; $kal3= ""; $kal4= "";
+    $kal1= ""; $kal2= ""; $kal3= ""; $kal4= ""; $dosen="";
 
     $sqlperiode = "select * from periode where id_periode='$periode'";
     $result = $conn->query($sqlperiode);
@@ -51,10 +52,10 @@
 
         <table border="1" >
         <tr>
-            <th colspan="7"> Daftar Kelas ECC </th>      
+            <th colspan="6"> Daftar Kelas ECC <br> <?php echo $dosen;?> </th>      
         </tr>
         <tr>
-            <th colspan="7"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
+            <th colspan="6"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
         </tr>
 		<tr>
 			<th>#</th>
@@ -63,7 +64,6 @@
             <th>Jam</th>
             <th>Ruang</th>
             <th>Kuota</th>
-            <th>Dosen</th>
 		</tr>
         
     <?php
@@ -73,7 +73,7 @@
         ON k.dosen = u.username
         LEFT JOIN ruang_kelas rk
         ON k.id_ruangkelas=rk.id_ruangkelas
-        WHERE k.id_periode=$periode and k.status_kelas='1'";
+        WHERE k.id_periode=$periode and k.status_kelas='1' and k.dosen='$user'";
 
         $result = $conn->query($sql1);
         $stat="";
@@ -92,7 +92,7 @@
                 $dosen = $row["nama"];
 
                 if ($level == "1") {
-                    $collevel1="<tr><td colspan='7'>Level 1</td></tr>";
+                    $collevel1="<tr><td colspan='6'>Level 1</td></tr>";
                     $kal1 .= "
                 <tr>
                     <td>-</td>
@@ -101,12 +101,12 @@
                     <td>$jam_awal - $jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
-                    <td>$dosen</td>
+                    
                 </tr>"; 
                     
                 }
                 elseif ($level == "2") {
-                    $collevel2="<tr><td colspan='7'>Level 2</td></tr>";
+                    $collevel2="<tr><td colspan='6'>Level 2</td></tr>";
                     $kal2 .= "
                 <tr>
                     <td>-</td>
@@ -115,11 +115,11 @@
                     <td>$jam_awal - $jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
-                    <td>$dosen</td>
+                    
                 </tr>";      
                 }
                 elseif ($level == "3") {
-                    $collevel3="<tr><td colspan='7'>Level 3</td></tr>";
+                    $collevel3="<tr><td colspan='6'>Level 3</td></tr>";
                     $kal3 .= "
                 <tr>
                     <td>-</td>
@@ -128,11 +128,11 @@
                     <td>$jam_awal - $jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
-                    <td>$dosen</td>
+                    
                 </tr>";      
                 }
                 elseif ($level == "4") {
-                    $collevel4="<tr><td colspan='7'>Level 4</td></tr>";
+                    $collevel4="<tr><td colspan='6'>Level 4</td></tr>";
                     $kal4 .= "
                 <tr>
                     <td>-</td>
@@ -141,7 +141,7 @@
                     <td>$jam_awal - $jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
-                    <td>$dosen</td>
+                    
                 </tr>";      
                 }
                 

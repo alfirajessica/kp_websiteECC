@@ -363,12 +363,12 @@ if ($_POST["jenis"]=="getadminlevel") {
     $res=$stmt->get_result();
    
     if ($res->num_rows>0) {
-        $kal.="<option value='all' >All</option>";
+        $kal.="<option value='all' >Semua</option>";
         while($row=$res->fetch_assoc()){ 
             $level=$row["level_ecc"];
             $idkelas=$row["id_kelas"];
             $namakelas=$row["nama_kelas"];
-            $kal.="<option value='$level' >ECC $level </option>";
+            $kal.="<option value='$level' >ECC Level $level </option>";
         }
     }else{
         $kal.="<option value='-1' >~Tidak level di periode ini~ </option>";

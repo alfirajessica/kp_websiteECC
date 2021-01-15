@@ -53,7 +53,23 @@
         $kelas = $_GET["kelas"];
         $kal="";
         $conn = getConn();
-        $stmt = $conn->prepare("select * from kelas_mhs km,mahasiswa m,nilai n where n.id_nilai=km.id_nilai and km.nrp=m.nrp and km.id_kelas='$kelas' ");
+
+        $stmt = $conn->prepare("SELECT * FROM nilai_mhs nm
+        LEFT JOIN kelas_mhs km
+        ON km.id_nilai = nm.id_nilai
+        LEFT JOIN mahasiswa m
+        ON m.nrp= km.nrp
+        LEFT JOIN kelas k
+        ON k.id_kelas = km.id_kelas
+        LEFT JOIN user u
+        ON u.username = k.dosen
+        WHERE km.id_kelas='$kelas'");
+        
+
+        //$stmt = $conn->prepare("select * from kelas_mhs km,mahasiswa m,nilai n where n.id_nilai=km.id_nilai and km.nrp=m.nrp and km.id_kelas='$kelas' ");
+
+        //select * from nilai_mhs n, kelas_mhs km, mahasiswa m where km.id_nilai=n.id_nilai and km.nrp=m.nrp and and km.id_kelas='$idkelas'
+
         $stmt->execute();
         $res = $stmt->get_result();
         while ($row = $res->fetch_assoc()) {

@@ -22,6 +22,9 @@ $username = $arr->get_u();
             <select class="form-control" name="" onchange="lvlchange()" id="filter1_level" aria-describedby="helpId" placeholder="">
             </select>
         </div>
+        <div class="form-group">
+        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+        </div>      
 
         <div class="table-responsive">
             <table id="table_kelasdosen" class="table table-striped table-bordered" width="100%">
@@ -41,6 +44,7 @@ $username = $arr->get_u();
         </div>
     </div>
     <!-- end of tabel kelas yang tergenerate -->
+    
 </div>
 
 <!-- Modal lihat mahasiswa  -->
@@ -107,6 +111,10 @@ function lvlchange(){
 }
 //----------end of filter berdasarkan level-------------//
 
+function exportfile() {
+    var periode = $("#periode_lihatkelas").val();
+    window.location.href = "../custom_export/dosen_export/jadwal_kelas.php?periode="+periode+"&user="+username;
+}
 
 function datatable_kelasdosen() {
     var periode = $("#periode_lihatkelas").val();
@@ -201,7 +209,7 @@ function datatable_kelasdosen() {
                     var detail = "Jadwal : " + row.hari + "/" + row.nama_ruang + "/" + row.jam_awal+ "-" + row.jam_akhir + "<br> Dosen : " + row.nama;
                     var table = "#table_kelasaktif";
 
-                    return "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\',\'"+kelas+"\',\'"+detail+"\')\" type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>List Mahasiswa </button>";
+                    return "<button onclick=\"lihat_mahasiswa(\'"+idkelas+"\',\'"+kelas+"\',\'"+detail+"\')\" type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_lihatmhs'>List Mahasiswa </button>";
                     
                     
                 }
