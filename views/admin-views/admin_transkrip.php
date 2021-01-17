@@ -11,19 +11,25 @@
             <div class="card-body">  
                 <div class="card-header">
                         <form>
-                            <div class="alert alert-info" role="alert"> Gunakan form ini untuk menambah user dosen baru</div>
+                            <div class="alert alert-info" role="alert"> Gunakan form ini untuk mencetak transkrip</div>
                             <div class="form-group">
-                                <table class="table table-borderless table-md text-right">
+                                <table class="table table-borderless table-sm text-right">
                                     <tbody>
                                     <tr>
                                         <td>Nrp</td>
                                         <td>:</td>
-                                        <td> <div class="input-group">
+                                        <td class="form-inline">
+                                            <div class="form-group mb-2">
+                                                <input type="text" class="form-control" id="nrpmhs" placeholder="NRP">
+                                            </div>
+                                            <button type="button" class="btn btn-primary mb-2" onclick="carimhs()">Cari</button>
+                                        </td>
+                                        <!-- <td> <div class="input-group">
                                             <input type="text" name="" id="nrpmhs" class="form-control" placeholder="" aria-describedby="help_username"> 
                                             <div class="input-group-append">
                                                 <button type="button" class="btn btn-primary" onclick="carimhs()">Cari</button>
                                                 </div>
-                                            </div></td>
+                                            </div></td> -->
                                     </tr>
                                     <tr>
                                         <td>Nama</td>
@@ -44,6 +50,10 @@
                         </form>
                     </div>
                     <br>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
+                        </div>
                 
                 
                 <div class="table-responsive">
@@ -81,7 +91,14 @@ function carimhs() {
     },
         function(data){
             $("#namamhs").text(data["nama_mhs"]);
-            $("#statusmhs").text(data["status_mhs"]);
+            var status = data["status_mhs"];
+            if (status == "1") {
+                $("#statusmhs").text("Aktif");
+            }
+            else{
+                $("#statusmhs").text("Tidak Aktif");
+            }
+            //$("#statusmhs").text(data["status_mhs"]);
             console.log(nrp);
             datatable_lihatkelasmhs(nrp);
     }); 
@@ -117,7 +134,7 @@ function datatable_lihatkelasmhs(nrp) {
              "columns":[
                 {"data":"id",
                     "render": function (data,type,row) {
-                        return "#";
+                        return "#"+row.id;
                     }},
                 {"data":"semester",
                     "render": function (data,type,row) {
@@ -125,7 +142,7 @@ function datatable_lihatkelasmhs(nrp) {
                     }},
                 {"data":"levelecc",
                     "render": function (data,type,row) {
-                        return row.levelecc + " " + row.namakls;
+                        return "ECC Level " +row.levelecc + "/" + row.namakls;
                     }
                 },
                 //{"data":"namakls"},
@@ -162,5 +179,11 @@ function datatable_lihatkelasmhs(nrp) {
              ],
         });     
 }
+
+function exportfile() {
+    var nrp = $("#nrpmhs").val();
+    window.location.href = "../custom_export/admin_export/cetak_transkrip.php?nrp="+nrp+"";
+}
+
 
 </script>
