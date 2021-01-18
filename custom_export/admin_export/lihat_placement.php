@@ -49,15 +49,15 @@
 
     ?>
 
-        <table>
+        <table border="1" >
         <thead>
         <tr>
-            <th colspan="5">Placement</th> 
-            <th colspan="2"></th>
+            <th colspan="6">Placement</th> 
+            
         </tr>
         <tr>
-            <th colspan="5"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> 
-            <th colspan="2"></th>
+            <th colspan="6"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> 
+            
         </tr>
             
 		<tr>
@@ -68,7 +68,6 @@
             <th>Nilai PT</th>
             <th>Semester</th>
             <th>Tahun Awal</th>
-            <th>Tahun Akhir</th>
 		</tr>
         </thead>
         <tbody>
@@ -81,7 +80,7 @@
         LEFT JOIN periode p
         ON p.id_periode = pt.id_periode
         WHERE m.id_periode='$periode' and m.status_mhs='1'
-        ORDER BY pt.nrp asc, ptest_level asc";
+        ORDER BY pt.ptest_level asc, pt.nrp asc";
 
         
         $result = $conn->query($sql1);
@@ -98,7 +97,9 @@
                 $t_awal = $row["thn_akademik_awal"];
                 $t_akhir = $row["thn_akademik_akhir"];
 
-                //$now_level = $row["now_level"];
+                if ($semester == "Gasal") {
+                    $semester = "1";
+                }else {$semester="2";}
 
                 $kal1 .= "<tr>
                     
@@ -108,7 +109,6 @@
                     <td>$nilai_placement</td>
                     <td>$semester</td>
                     <td>$t_awal</td>
-                    <td>$t_akhir</td>
                     </tr>";
             
                 /*if ($placement_level == "1") {

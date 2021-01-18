@@ -176,15 +176,12 @@
                         </div>
                     </div>
                     <label id="help_pilihperiode2" style="color:red;"></label>
-                    
                 </div>
 
                 <div class="card" id="cardform3" style="display:none">
-
                     <div class="card-body">
-
                         <div class="form-group">
-                            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
+                            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak Placement</button>
                         </div>
                         <div class="form-group">
                         <label for="">Filter berdasarkan Level</label>

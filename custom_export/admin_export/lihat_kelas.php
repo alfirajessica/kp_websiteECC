@@ -51,16 +51,17 @@
 
         <table border="1" >
         <tr>
-            <th colspan="7"> Daftar Kelas ECC </th>      
+            <th colspan="8"> Daftar Kelas ECC </th>      
         </tr>
         <tr>
-            <th colspan="7"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
+            <th colspan="8"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
         </tr>
 		<tr>
 			<th>#</th>
 			<th>Nama Kelas</th>
 			<th>Hari</th>
-            <th>Jam</th>
+            <th>Jam Awal</th>
+            <th>Jam Akhir</th>
             <th>Ruang</th>
             <th>Kuota</th>
             <th>Dosen</th>
@@ -98,7 +99,8 @@
                     <td>-</td>
                     <td>$nama_kelas</td>
                     <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
+                    <td>$jam_awal</td>
+                    <td>$jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
                     <td>$dosen</td>
@@ -112,7 +114,8 @@
                     <td>-</td>
                     <td>$nama_kelas</td>
                     <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
+                    <td>$jam_awal</td>
+                    <td>$jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
                     <td>$dosen</td>
@@ -125,7 +128,8 @@
                     <td>-</td>
                     <td>$nama_kelas</td>
                     <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
+                    <td>$jam_awal</td>
+                    <td>$jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
                     <td>$dosen</td>
@@ -138,7 +142,8 @@
                     <td>-</td>
                     <td>$nama_kelas</td>
                     <td>$hari</td>
-                    <td>$jam_awal - $jam_akhir</td>
+                    <td>$jam_awal</td>
+                    <td>$jam_akhir</td>
                     <td>$ruang</td>
                     <td>$kuota</td>
                     <td>$dosen</td>

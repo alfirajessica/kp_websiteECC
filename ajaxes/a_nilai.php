@@ -99,7 +99,7 @@ if ($na<=44) {
 
   $grade=$cumgrade;
 
-  $update = "update nilai set nilai_uas='$uas',nilai_uts='$uts',nilai_akhir='$na',grade='$cumgrade' where id_nilai='$idnilai' ";
+  $update = "update nilai_mhs set nilai_uas='$uas', nilai_uts='$uts',nilai_akhir='$na',grade='$cumgrade' where id_nilai='$idnilai' ";
   $updateres = mysqli_query($conn, $update);
 
   echo $updateres;

@@ -48,10 +48,10 @@
     // {
 
     ?>
-
+        
         <table border="1" >
         <tr>
-            <th colspan="9"> Daftar Nilai Mahasiswa ECC </th>      
+            <th colspan="10"> Daftar Seluruh Nilai Mahasiswa ECC </th>      
         </tr>
 
 		<tr>
@@ -59,11 +59,12 @@
 			<th>Nama Mahasiswa</th>
             <th>Level</th>
             <th>Kelas</th>
+            <th>UTS</th>
+            <th>UAS</th>
             <th>NA</th>
             <th>Grade</th>
             <th>Semester</th>
             <th>Tahun Awal </th>
-            <th>Tahun Akhir </th>
 		</tr>
         
     <?php
@@ -78,7 +79,7 @@
         ON k.id_kelas = km.id_kelas
         LEFT JOIN periode p
         ON p.id_periode = km.id_periode
-        ORDER BY m.nrp";
+        ORDER BY k.level_ecc asc, k.nama_kelas asc, km.nrp asc" ;
 
         $result = $conn->query($sql1);
         $stat="";
@@ -87,7 +88,9 @@
 			// output data of each row
 			while ($row = $result->fetch_assoc()) {
                 $nrp = $row["nrp"];
-				$namamhs = $row["nama_mhs"];
+                $namamhs = $row["nama_mhs"];
+                $uts = $row["nilai_uts"];
+                $uas = $row["nilai_uas"];
                 $na = $row["nilai_akhir"];
                 $grade = $row["grade"]; 
                 $level = $row["level_ecc"];
@@ -97,6 +100,10 @@
                 $t_awal = $row["thn_akademik_awal"];
                 $t_akhir = $row["thn_akademik_akhir"];
                 
+                if ($semester == "Gasal") {
+                    $semester = "1";
+                }
+                else{$semester="2";}
 
                 $kal1 .= "
                 <tr>
@@ -104,11 +111,12 @@
                     <td>$namamhs</td>
                     <td>$level</td>
                     <td>$namakls</td>
+                    <td>$uts</td>
+                    <td>$uas</td>
                     <td>$na</td>
                     <td>$grade</td>
                     <td>$semester</td>
                     <td>$t_awal</td>
-                    <td>$t_akhir</td>
                 </tr>"; 
 
                 // if ($level == "1") {

@@ -39,6 +39,14 @@
         </div>
 
         <div class="form-group">
+            <div class="alert alert-info" role="alert">
+                <strong>Info!</strong><br>
+                <label>* Pilih Tombol <b>Cetak Rekap Nilai Berdasarkan Periode</b> untuk mencetak berdasarkan pilihan periode Anda diatas  </label> <br>
+                <label>** Pilih Tombol <b>Cetak Rekap Nilai Keseluruhan</b> untuk mencetak seluruh data nilai </label> <br>
+            </div>
+        </div>
+
+        <div class="form-group">
             <button type="button" class="btn btn-success text-light" onclick="exportfile1()">Cetak Rekap Nilai Berdasarkan Periode</button>
             <button type="button" class="btn btn-success text-light" onclick="exportfile2()">Cetak Rekap Nilai Keseluruhan </button>
         </div>      
@@ -46,7 +54,7 @@
     
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
-        <table class="table" id="example">
+        <table id="example" class="table table-striped table-bordered" width="100%">
             <thead>
             <tr>
                     <th>Nrp</th>
@@ -57,10 +65,8 @@
                     <th>Grade </th>
                 </tr>
             </thead>
-            <tbody>
-             
-                
-            <tbody>
+            <tbody>   
+            </tbody>
         </table>
     </div>
     <!-- end of tabel kelas yang tergenerate -->
@@ -141,6 +147,11 @@
                 console.log(data);
                 $("#level").html(data);
                 //isikelas();
+
+                setTimeout(() => {
+                    $("#level").val("all");
+                    lvlchange();
+                }, 300);
             });
     }
 
@@ -169,7 +180,7 @@
     }
 
     function datatable_lihatsemuamahasiswa() {
-        //datatable list barang
+        
         var periode = $("#periode").val();
         var kelas = $("#kelas").val();
         var level = $("#level").val();

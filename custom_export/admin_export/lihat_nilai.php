@@ -51,10 +51,10 @@
 
         <table border="1" >
         <tr>
-            <th colspan="7"> Daftar Nilai Mahasiswa ECC </th>      
+            <th colspan="8"> Daftar Nilai Mahasiswa ECC </th>      
         </tr>
         <tr>
-            <th colspan="7"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
+            <th colspan="8"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
         </tr>
 		<tr>
 			<th>Nrp</th>
@@ -77,7 +77,8 @@
         ON m.nrp= km.nrp
         LEFT JOIN kelas k
         ON k.id_kelas = km.id_kelas
-        WHERE km.id_periode=$periode";
+        WHERE km.id_periode=$periode
+        ORDER BY k.level_ecc asc, k.nama_kelas asc, km.nrp asc" ;
 
         $result = $conn->query($sql1);
         $stat="";

@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .navbar-nav .nav-item .nav-link {
     color: red;
 }
@@ -8,7 +8,7 @@
 }
 }
      
-</style>
+</style> -->
 
 
 <aside id="left-panel" class="left-panel">
@@ -28,11 +28,11 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" id="dashboard" href="dashboard.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    <a class="nav-link" id="dashboard" href="dashboard.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <h3 class="menu-title">Fitur</h3><!-- /.menu-title -->
                 <li id="place">
-                    <a id="placement" href="placement.php" onclick="dipilih(this.id)"> <i class="menu-icon fa fa-laptop"></i>Placement</a>
+                    <a id="placement" href="placement.php"> <i class="menu-icon fa fa-laptop"></i>Placement</a>
                 </li>
                 <li>
                     <a href="kelas.php"> <i class="menu-icon fa fa-laptop"></i>Kelas</a>
@@ -52,19 +52,7 @@
                 <li>
                     <a href="transkrip.php"> <i class="menu-icon fa fa-laptop"></i>Transkrip ECC</a>
                 </li>
-                
-                <!-- <li>
-                    <a href="Splacement.php"> <i class="menu-icon fa fa-laptop"></i>Splacement</a>
-                </li> -->
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
 </aside><!-- /#left-panel -->
-
-<script>
-function dipilih(clicked_id) {
-    console.log(clicked_id);
-    $("#place").addClass("active");
-}
-
-</script>

@@ -52,7 +52,7 @@
                     <br>
 
                     <div class="form-group">
-                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
+                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak Transkrip</button>
                         </div>
                 
                 

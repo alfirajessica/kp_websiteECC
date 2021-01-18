@@ -49,15 +49,13 @@
 
     ?>
 
-        <table>
+        <table border="1">
         <thead>
         <tr>
-            <th colspan="5">Perwalian</th> 
-            <th colspan="2"></th>
+            <th colspan="4">Perwalian</th> 
         </tr>
         <tr>
-            <th colspan="5"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> 
-            <th colspan="2"></th>
+            <th colspan="4"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th> 
         </tr>
             
 		<tr>

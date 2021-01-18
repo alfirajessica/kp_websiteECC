@@ -31,9 +31,7 @@ $level = $arr->get_level();
 </body>
 <?php include_once('scripts.php')?>
 <script>
-$(document).ready(function(){
-    //datatable_lihatsemuaruang();
-});    
+  
 
 </script>
 

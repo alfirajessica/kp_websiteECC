@@ -116,13 +116,15 @@
                 <div class="card" id="cardform3" style="display:none">
                     <div class="card-body">
                         <div class="form-group">
+                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak Jadwal Kelas</button>
+                        </div>
+
+                        <div class="form-group">
                             <label for="">Filter Level</label>
                                 <select class="form-control" name="" onchange="lvlchange()" id="filter2_level" aria-describedby="helpId" placeholder="">
                                 </select>
                         </div>
-                        <div class="form-group">
-                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
-                        </div>
+                        
         
                         <div class="table-responsive">
                             <table id="table_kelasaktif" class="table table-striped table-bordered" style="width:100%">

@@ -4,39 +4,31 @@ $username = $arr->get_u();
 ?>
 
 <div class="card-body">
-    <form action="">
+    <form>
         <div class="form-group">
             <label for="">Periode</label>
             <select name="select" id="periode" onchange="isikelas()" class="form-control" aria-describedby="help_pilihperiode">
             </select>
         </div>
 
-
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <label for="">Pilih Level</label>
-                    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">
-                        <!-- <option>ECC Level 1 - Kelas A</option>
-                <option>ECC Level 1 - Kelas B</option> -->
+                    <select class="form-control" name="" onchange="lvlchange()" id="level" aria-describedby="helpId" placeholder="">  
                     </select>
-                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
                 </div>
             </div>
+
             <div class="col">
-            <div class="form-group">
+                <div class="form-group">
                     <label for="">Pilih Kelas</label>
                     <select class="form-control" name="" onchange="klschange()" id="kelas" aria-describedby="helpId" placeholder="">
-                        <!-- <option>ECC Level 1 - Kelas A</option>
-                <option>ECC Level 1 - Kelas B</option> -->
                     </select>
-                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                    
                 </div>
-            </div>
-            
+            </div>    
         </div>
-
-
 
         <div class="form-group">
             <label> Gunakan template ini untuk mengimport nilai </label>
@@ -44,14 +36,14 @@ $username = $arr->get_u();
         </div>
 
         <div class="form-group">
-            <div class="alert alert-info" role="alert">
-                Lakukan Import file excel pada tombol disamping               
-                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#importuts">Import Nilai</button>
+            <div class="alert alert-warning" role="alert">
+                <b> Lakukan Import file excel pada tombol dibawah ini! </b> <br>         
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importuts">Import Nilai</button>
             </div>
         </div>
 
         <div class="form-group">
-        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak Rekap Nilai</button>
         </div>      
     </form>
 
@@ -79,36 +71,12 @@ $username = $arr->get_u();
         </div>
     </div>
 
-    <!--<div class="modal fade" id="importuas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    UAS
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="uas">
-                        <label class="custom-file-label" for="uas" id='file_uas'>Pilih file uas ...</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="imuas()">IMPORT UAS</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 
     <!-- tabel kelas yang tergenerate per hari-->
     <div class="table-responsive">
-        <table class="table" id="example">
+        <table id="example" class="table table-striped table-bordered" width="100%">
             <thead>
-                <tr>
+                <tr>    
                     <th>Nrp</th>
                     <th>Nama Mahasiswa</th>
                     <th>UTS</th>
@@ -118,16 +86,11 @@ $username = $arr->get_u();
                     <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-
-                </tr>
-
-            <tbody>
+            <tbody>   
+            </tbody>
         </table>
     </div>
-    <!-- end of tabel kelas yang tergenerate -->
 </div>
-
 
 
 <!-- Modal -->
@@ -168,7 +131,6 @@ $username = $arr->get_u();
                         <td><input class='form-control' type="text" id="t_grade"></td>
                     </tr>
                 </table>
-
             </div>
             <div class="modal-footer">
 
@@ -241,8 +203,8 @@ var username= "<?php echo $username;?>";
 
     function exportfile() {
     var periode = $("#periode").val();
-    window.location.href = "../custom_export/dosen_export/lihat_nilai.php?periode="+periode+"&user="+username;
-}
+    window.location.href = "../custom_export/dosen_export/cetak_nilai.php?periode="+periode+"&user="+username;
+    }
 
     
     function datatable_lihatsemuamahasiswa() {
@@ -430,7 +392,7 @@ var username= "<?php echo $username;?>";
 
             },
             function(data) {
-                console.log(data);
+                console.log(data); 
                 $("#example").DataTable().ajax.reload();
             });
     }
