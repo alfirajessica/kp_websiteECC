@@ -121,7 +121,7 @@
                                 </select>
                         </div>
                         <div class="form-group">
-                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+                        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
                         </div>
         
                         <div class="table-responsive">

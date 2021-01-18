@@ -123,6 +123,7 @@
                 <div class="card" id="cardform2" style="display:none">
                     
                     <div class="card-body">
+                    
                     <div class="form-group">
                         <label for="">Filter berdasarkan Level</label>
                             <select class="form-control" name="" onchange="lvlchange()" id="filter1_level" aria-describedby="helpId" placeholder="">
@@ -173,6 +174,9 @@
 
                 <div class="card" id="cardform3" style="display:none">
                     <div class="card-body">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
+                        </div>
                         <div class="form-group">
                             <label for="">Filter berdasarkan Level</label>
                                 <select class="form-control" name="" onchange="lvlchange()" id="filter2_level" aria-describedby="helpId" placeholder="">
@@ -862,6 +866,12 @@ function datatable_table_klsmhs() {
 function close_btn() {
     resetmodal();
 }
+
+function exportfile() {
+    var periode = $("#periode_lihatkelas").val();
+    window.location.href = "../custom_export/admin_export/cetak_perwalian.php?periode="+periode+"";
+}
+
 
 
 

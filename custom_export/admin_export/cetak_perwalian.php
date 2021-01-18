@@ -34,7 +34,7 @@
 	<?php
 	header("Content-type: application/vnd-ms-excel");
 	$tgl = date("Ymd_his");
-	header("Content-Disposition: attachment; filename=" . $tgl . "_hasilplacement.xls");
+	header("Content-Disposition: attachment; filename=" . $tgl . "_Perwalian.xls");
 	require_once "../../config/conn.php";
 		
     $conn = getConn();
@@ -52,7 +52,7 @@
         <table>
         <thead>
         <tr>
-            <th colspan="5">Placement</th> 
+            <th colspan="5">Perwalian</th> 
             <th colspan="2"></th>
         </tr>
         <tr>
@@ -64,24 +64,22 @@
             
             <th>Nrp</th>
             <th>Nama Mahasiswa</th>
-            <th>Level PT</th>
-            <th>Nilai PT</th>
-            <th>Semester</th>
-            <th>Tahun Awal</th>
-            <th>Tahun Akhir</th>
+            <th>Level</th>
+            <th>Kelas</th>
+            
 		</tr>
         </thead>
         <tbody>
         
     <?php
     }
-        $sql1 = "SELECT * FROM placement pt
+        $sql1 = "SELECT * FROM kelas_mhs k
         LEFT JOIN mahasiswa m
-        ON m.nrp = pt.nrp
-        LEFT JOIN periode p
-        ON p.id_periode = pt.id_periode
-        WHERE m.id_periode='$periode' and m.status_mhs='1'
-        ORDER BY pt.nrp asc, ptest_level asc";
+        ON k.nrp = m.nrp
+        LEFT JOIN kelas ks
+        ON k.id_kelas=ks.id_kelas
+        WHERE k.id_periode='$periode' and m.status_mhs='1'
+        ORDER BY m.nrp asc";
 
         
         $result = $conn->query($sql1);
@@ -92,23 +90,15 @@
 			while ($row = $result->fetch_assoc()) {
 				$nrp = $row["nrp"];
 				$nama_mhs = $row["nama_mhs"];
-				$nilai_placement = $row["nilai_ptest"];
-                $placement_level = $row["ptest_level"];
-                $semester = $row["semester"];
-                $t_awal = $row["thn_akademik_awal"];
-                $t_akhir = $row["thn_akademik_akhir"];
-
-                //$now_level = $row["now_level"];
-
+				$level = $row["level_ecc"];
+                $namakls = $row["nama_kelas"];
+                
                 $kal1 .= "<tr>
                     
                     <td>$nrp</td>
                     <td>$nama_mhs</td>
-                    <td>$placement_level</td>
-                    <td>$nilai_placement</td>
-                    <td>$semester</td>
-                    <td>$t_awal</td>
-                    <td>$t_akhir</td>
+                    <td>$level</td>
+                    <td>$namakls</td>
                     </tr>";
             
                 /*if ($placement_level == "1") {

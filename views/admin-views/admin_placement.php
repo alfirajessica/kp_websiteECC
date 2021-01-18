@@ -1,5 +1,5 @@
 <div class="card shadow"> <!-- card shadow -->
-    <div class="card-header border-1 bg-dark text-white">
+    <div class="card-header border-1 bg-dark">
         <div class="nav-wrapper">
             <!-- tabs -->
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -7,7 +7,7 @@
                     <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Atur Placement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Hasil Placement</a>
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Lihat Hasil Placement</a>
                 </li>
             </ul>
             <!--end tabs -->
@@ -182,6 +182,10 @@
                 <div class="card" id="cardform3" style="display:none">
 
                     <div class="card-body">
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Cetak</button>
+                        </div>
                         <div class="form-group">
                         <label for="">Filter berdasarkan Level</label>
                             <select class="form-control" name="" onchange="lvlchange()" id="filter2_level" aria-describedby="helpId" placeholder="">
@@ -189,9 +193,7 @@
                         <option>ECC Level 1 - Kelas B</option> -->
                             </select>
                         </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
-                        </div>
+                        
         
                         <div class="table-responsive">
                             <table id="table_mhspt" class="table table-striped table-bordered" style="width:100%">

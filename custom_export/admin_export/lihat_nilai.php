@@ -57,9 +57,10 @@
             <th colspan="7"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
         </tr>
 		<tr>
-			<th>#</th>
 			<th>Nrp</th>
 			<th>Nama Mahasiswa</th>
+            <th>Level</th>
+            <th>Kelas</th>
             <th>UTS</th>
             <th>UAS</th>
             <th>NA</th>
@@ -68,10 +69,6 @@
         
     <?php
     }
-
-    // //$sql1 = "SELECT m.nrp, m.nama_mhs, n.nilai_uts, n.nilai_akhir, n.grade, m.level_ecc
-    // FROM mahasiswa m, nilai_mhs n,kelas_mhs km ,kelas k
-    // WHERE k.id_kelas=km.id_kelas and m.nrp=km.nrp and n.id_nilai=km.id_nilai and km.id_periode=$periode" ;
 
         $sql1 = "SELECT * FROM nilai_mhs nm
         LEFT JOIN kelas_mhs km
@@ -95,15 +92,28 @@
                 $grade = $row["grade"];
                 $nrp = $row["nrp"];
                 $level = $row["level_ecc"];
+                $namakls = $row["nama_kelas"];
                 
+                $kal1 .= "
+                <tr>
+                    <td>$nrp</td>
+                    <td>$namamhs</td>
+                    <td>$level</td>
+                    <td>$namakls</td>
+                    <td>$uts</td>
+                    <td>$uas</td>
+                    <td>$na</td>
+                    <td>$grade</td>
+                </tr>"; 
 
-                if ($level == "1") {
+                /*if ($level == "1") {
                     $collevel1="<tr><td colspan='7'>Level 1</td></tr>";
                     $kal1 .= "
                 <tr>
-                    <td>-</td>
                     <td>$nrp</td>
                     <td>$namamhs</td>
+                    <td>$level</td>
+                    <td>$namakls</td>
                     <td>$uts</td>
                     <td>$uas</td>
                     <td>$na</td>
@@ -118,6 +128,7 @@
                     <td>-</td>
                     <td>$nrp</td>
                     <td>$namamhs</td>
+
                     <td>$uts</td>
                     <td>$uas</td>
                     <td>$na</td>
@@ -149,13 +160,14 @@
                     <td>$na</td>
                     <td>$grade</td>
                 </tr>";      
-                }
+                }*/
                 
 			}
 		} else {
 			$kal1 = "";
         }
-		echo $collevel1.$kal1.$collevel2.$kal2.$collevel3.$kal3.$collevel4.$kal4;
+        //echo $collevel1.$kal1.$collevel2.$kal2.$collevel3.$kal3.$collevel4.$kal4;
+        echo $kal1;
 		?>
 	</table>
     

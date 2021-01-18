@@ -8,16 +8,6 @@ $arr = unserialize($_SESSION["user"]);
 $level = $arr->get_level();
 
 ?>
-<style>
-    .navbar{position: fixed;
-        width: 160px; }
-
-    .nav-item:hover .nav-link{background-color:#fff;}
-    .nav > li > a:hover{
-    background-color:#FCC;
-}
-     
-</style>
 
 
 <body>

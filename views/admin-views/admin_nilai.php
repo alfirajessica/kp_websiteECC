@@ -39,7 +39,8 @@
         </div>
 
         <div class="form-group">
-        <button type="button" class="btn btn-success text-light" onclick="exportfile()">Export</button>
+            <button type="button" class="btn btn-success text-light" onclick="exportfile1()">Cetak Rekap Nilai Berdasarkan Periode</button>
+            <button type="button" class="btn btn-success text-light" onclick="exportfile2()">Cetak Rekap Nilai Keseluruhan </button>
         </div>      
     </form>
     
@@ -133,7 +134,7 @@
 
     function isilevel() {
         $.post("../ajaxes/a_kelas.php", {
-                jenis: "getadminlevel",
+                jenis: "get_level_placement",
                 periode:$("#periode").val()
             },
             function(data) {
@@ -224,10 +225,6 @@
                 {"data":"grade"}
             ]
 
-
-
-
-
         });
     }
 
@@ -268,9 +265,13 @@
             });
     }
 
-    function exportfile() {
+    function exportfile1() {
     var periode = $("#periode").val();
     window.location.href = "../custom_export/admin_export/lihat_nilai.php?periode="+periode+"";
-}
+    }
+
+    function exportfile2() {
+        window.location.href = "../custom_export/admin_export/cetak_nilaiseluruh.php";
+    }
 
 </script>

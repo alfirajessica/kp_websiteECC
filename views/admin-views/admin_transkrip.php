@@ -5,7 +5,7 @@
     <div class="col-md-12"> <!-- col-md-12 -->
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">List Dosen</strong>
+                <strong class="card-title">Transkrip</strong>
             </div>
 
             <div class="card-body">  

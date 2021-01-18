@@ -102,7 +102,7 @@
                 <tr>
                     <td>#$kode</td>
                     <td>$semester - $t_awal/$t_akhir</td>
-                    <td>ECC Level $level/ $namakls</td>
+                    <td>$level/ $namakls</td>
                     <td>$grade</td>
                 </tr>"; 
                 

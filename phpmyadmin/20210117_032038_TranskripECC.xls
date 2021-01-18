@@ -1,0 +1,67 @@
+<html>
+
+<head>
+	<title>Transkrip ECC</title>
+</head>
+
+<body>
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+		}
+
+		table {
+			margin: 20px auto;
+			border-collapse: collapse;
+		}
+
+		table th,
+		table td {
+			border: 1px solid #3c3c3c;
+			padding: 3px 8px;
+
+		}
+
+		a {
+			background: blue;
+			color: #fff;
+			padding: 8px 10px;
+			text-decoration: none;
+			border-radius: 2px;
+		}
+	</style>
+
+	
+        <table border="1" >
+        <tr>
+            <th colspan="7"> TRANSKRIP ECC </th>      
+        </tr>
+        <tr> </tr>
+        <tr>
+            <td> Nrp </td>
+            <td> : </td>
+            <td> 218120681 </td>
+        </tr>
+        <tr>
+            <td> Nama </td>
+            <td> : </td>
+            <td> Siva Wahyu Harijanto </td>
+        </tr>
+        <tr></tr>
+		<tr>
+			<th>#Kode</th>
+			<th>Semester</th>
+			<th>Level/Kelas</th>
+            <th>Grade</th>
+		</tr>
+        
+    
+                <tr>
+                    <td>7</td>
+                    <td>Genap. 2020./.2021</td>
+                    <td>ECC Level. 1./ A</td>
+                    <td>A</td>
+                </tr>	</table>
+    
+</body>
+</html>

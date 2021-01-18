@@ -52,9 +52,9 @@ $arr=unserialize($_SESSION["user"]);
 
     
 <script>
-function dipilih(clicked_id) {
-    console.log(clicked_id);
-    $("#place").addClass("active");
-}
+// function dipilih(clicked_id) {
+//     console.log(clicked_id);
+//     $("#place").addClass("active");
+// }
 
 </script>
