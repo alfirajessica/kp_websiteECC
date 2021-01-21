@@ -17,28 +17,12 @@ $level = $arr->get_level();
     <!-- ini content -->
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      
       <div class="row">
-        <div class="col-xl-8">
-          <div class="card">
-            
+          <div class="card-body">
+            <h2> Selamat Datang, Admin</h2> <br>
+            <h4> Silakan Pilih Menu pada kanan layar </h4>
+            <h4> Terima Kasih :) </h4>
           </div>
-        </div>
-        <div class="col-xl-4">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Social traffic</h3>
-                </div>
-                <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </div>
       </div>
 
       

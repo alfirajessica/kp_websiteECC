@@ -52,7 +52,19 @@
 
         <table border="1" >
         <tr>
-            <th colspan="6"> Daftar Kelas ECC <br> <?php echo $dosen;?> </th>      
+            <th colspan="6"> Daftar Kelas ECC <br> </th>      
+        </tr>
+        <tr>
+            <th colspan="6">
+                <?php 
+                    $sqlceknama = "select * from user where username='$user'";
+                    $result1 = $conn->query($sqlceknama);
+                    while($row1 = mysqli_fetch_array($result1))
+                    {
+                        echo "Dosen : ".$row1["nama"];
+                    }
+                ?>
+            </th>  
         </tr>
         <tr>
             <th colspan="6"> Periode <?php echo $row["semester"]." ".$row["thn_akademik_awal"]."/".$row["thn_akademik_akhir"]; ?></th>
