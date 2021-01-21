@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2021 at 04:24 AM
+-- Generation Time: Jan 21, 2021 at 02:48 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -158,6 +158,8 @@ INSERT INTO `mahasiswa` (`id_periode`, `nrp`, `nama_mhs`, `status_mhs`) VALUES
 (16, '216170333', 'Radwitya Prasidhi Taufik Putra', '1'),
 (16, '217116607', 'Ivan', '1'),
 (16, '217140071', 'Eric San Fokalie', '1'),
+(16, '217180399', 'Edward Gid', '0'),
+(16, '217180878', 'Albert Wijaya', '0'),
 (16, '218116687', 'Gilberto Joshua Ramiro Abdinta', '1'),
 (16, '218116705', 'Vincent Verrianto Chang', '1'),
 (16, '218116756', 'I Gede Sriwibawa', '1'),
@@ -218,9 +220,9 @@ INSERT INTO `mahasiswa` (`id_periode`, `nrp`, `nama_mhs`, `status_mhs`) VALUES
 CREATE TABLE `nilai_mhs` (
   `id_nilai` int(10) NOT NULL,
   `id_klsmhs` int(10) NOT NULL,
-  `nilai_uts` int(10) NOT NULL,
-  `nilai_uas` int(10) NOT NULL,
-  `nilai_akhir` int(10) NOT NULL,
+  `nilai_uts` float NOT NULL,
+  `nilai_uas` float NOT NULL,
+  `nilai_akhir` float NOT NULL,
   `grade` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -229,16 +231,16 @@ CREATE TABLE `nilai_mhs` (
 --
 
 INSERT INTO `nilai_mhs` (`id_nilai`, `id_klsmhs`, `nilai_uts`, `nilai_uas`, `nilai_akhir`, `grade`) VALUES
-(1, 1, 0, 0, 0, '-'),
-(2, 2, 0, 0, 0, '-'),
-(3, 3, 0, 0, 0, '-'),
-(4, 4, 0, 0, 0, '-'),
-(5, 5, 0, 0, 0, '-'),
-(6, 6, 0, 0, 0, '-'),
+(1, 1, 70, 78, 74, 'B'),
+(2, 2, 68, 78, 73, 'B'),
+(3, 3, 88, 80, 84, 'A'),
+(4, 4, 70, 70, 70, 'B'),
+(5, 5, 75, 82, 79, 'B+'),
+(6, 6, 83.4, 80, 81.7, 'A'),
 (7, 7, 80, 89, 85, 'A'),
-(8, 8, 0, 0, 0, '-'),
-(9, 9, 0, 0, 0, '-'),
-(10, 10, 0, 0, 0, '-'),
+(8, 8, 91, 85, 88, 'A'),
+(9, 9, 50, 78, 64, 'C+'),
+(10, 10, 77, 74, 75.5, 'B+'),
 (11, 11, 0, 0, 0, '-'),
 (12, 12, 0, 0, 0, '-'),
 (13, 13, 0, 0, 0, '-'),
@@ -268,20 +270,20 @@ INSERT INTO `nilai_mhs` (`id_nilai`, `id_klsmhs`, `nilai_uts`, `nilai_uas`, `nil
 (37, 37, 0, 0, 0, '-'),
 (38, 38, 0, 0, 0, '-'),
 (39, 39, 0, 0, 0, '-'),
-(40, 40, 0, 0, 0, '-'),
-(41, 41, 0, 0, 0, '-'),
+(40, 40, 80, 81, 80, 'A'),
+(41, 41, 76, 80, 78, 'B+'),
 (42, 42, 0, 0, 0, '-'),
 (43, 43, 0, 0, 0, '-'),
 (44, 44, 0, 0, 0, '-'),
 (45, 45, 0, 0, 0, '-'),
 (46, 46, 0, 0, 0, '-'),
-(47, 47, 0, 0, 0, '-'),
+(47, 47, 74, 77, 75.5, 'B+'),
 (48, 48, 0, 0, 0, '-'),
-(49, 49, 0, 0, 0, '-'),
-(50, 50, 0, 0, 0, '-'),
+(49, 49, 77, 80, 79, 'B+'),
+(50, 50, 89, 88, 88.5, 'A'),
 (51, 51, 0, 0, 0, '-'),
-(52, 52, 0, 0, 0, '-'),
-(53, 53, 0, 0, 0, '-');
+(52, 52, 68, 87, 77.5, 'B+'),
+(53, 53, 80, 89, 84.5, 'A');
 
 -- --------------------------------------------------------
 
@@ -384,7 +386,8 @@ INSERT INTO `placement` (`id_ptest`, `id_periode`, `nrp`, `nilai_ptest`, `ptest_
 (50, 16, '218170451', 603, 4, 0),
 (51, 16, '219140089', 608, 4, 0),
 (52, 16, '216170333', 607, 4, 0),
-(53, 16, '218180418', 633, 4, 0);
+(53, 16, '218180418', 633, 4, 0),
+(55, 16, '217180878', 340, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -590,7 +593,7 @@ ALTER TABLE `periode`
 -- AUTO_INCREMENT for table `placement`
 --
 ALTER TABLE `placement`
-  MODIFY `id_ptest` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id_ptest` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `ruang_kelas`
